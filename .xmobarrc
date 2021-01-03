@@ -1,25 +1,26 @@
 Config { 
 
    -- appearance
-     font =         "xft:Hack:size=9:bold:antialias=true"
-   , bgColor =      "#222222"
-   , fgColor =      "#aaaaaa"
-   , position =     Top
-   , border =       BottomB
-   , borderColor =  "#646464"
+     font = "xft:Hack:size=9:bold:antialias=true"
+   , additionalFonts         = [ "xft:mononoki Nerd Font:pixelsize=16:antialias=true:hinting=true" ]
+   , bgColor      = "#222222"
+   , fgColor      = "#aaaaaa"
+   , position     = Top --TopP 0 20
+   , border       = BottomB
+   , borderColor  = "#646464"
 
    -- layout
-   , sepChar =  "%"   -- delineator between plugin names and straight text
-   , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader%    %cpu% | Memory: %memory% %swap% | %dynnetwork% }{ %battery% | %date% "
+   , sepChar  =  "%"   -- delineator between plugin names and straight text
+   , alignSep = "}{"   -- separator between left-right alignment
+   , template = " <fn=1> </fn>  %StdinReader% } %date% { %cpu% | %memory% | %dynnetwork% | %battery% "
 
    -- general behavior
-   , lowerOnStart =     False   -- send to bottom of window stack on start
-   , hideOnStart =      False   -- start with window unmapped (hidden)
-   , allDesktops =      True    -- show on all desktops
+   , lowerOnStart     = False   -- send to bottom of window stack on start
+   , hideOnStart      = False   -- start with window unmapped (hidden)
+   , allDesktops      = True    -- show on all desktops
    , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
-   , pickBroadest =     False   -- choose widest display (multi-monitor)
-   , persistent =       True    -- enable/disable hiding (True = disabled)
+   , pickBroadest     = False   -- choose widest display (multi-monitor)
+   , persistent       = True    -- enable/disable hiding (True = disabled)
 
    -- plugins
    --   Numbers can be automatically colored according to their value. xmobar
@@ -42,25 +43,32 @@ Config {
 	-- get the information that xmonad is sending it for display.
 	Run StdinReader
 
-        -- Battery monitor
-        , Run Battery      [ "--template" , "Battery: <acstatus>"
-                             , "--Low"      , "20"        -- units: %
-                             , "--High"     , "70"        -- units: %
-                             , "--low"      , "red"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkgreen"
-
+        , Run Battery [ "--template" , "<acstatus>"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "#BF616A"
+                             , "--normal"   , "#EBCB8B"
+                             , "--high"     , "#A3BE8C"
                              , "--" -- battery specific options
-                                       -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
+                                       -- discharging status - use icons
+                                       , "-l"   ,  "#BF616A"
+                                       , "-m"   ,  "#EBCB8B"
+                                       , "-h"   ,  "#A3BE8C"
+                                       , "-o"   , ""
+                                       , "--lows"     , "<fn=1> </fn> <left>% <timeleft>"
+                                       , "--mediums"  , "<fn=1> </fn> <left>% <timeleft>"
+                                       , "--highs"    , "<fn=1> </fn> <left>% <timeleft>"
                                        -- AC "on" status
-                                       , "-O"	, "<left>% (charging)"
+                                       , "-O"  , "<fn=1> </fn> <left>%"
                                        -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
-                           ] 50
+                                       , "-i"  , "<fn=1> </fn> <left>%"
+                                       , "-a", "notify-send -u critical 'Battery running out!!'"
+                                       , "-A", "20"
+                             ] 50
 
         -- Cpu monitor
-        , Run Cpu          [ "--Low"        , "40"
+        , Run Cpu          [ "--template"   , "<fn=1> </fn> <total>%" 
+                             ,"--Low"       , "40"
                              , "--High"     , "90"
                              , "--low"      , "darkgreen"
                              , "--normal"   , "darkorange"
@@ -68,7 +76,7 @@ Config {
                            ] 10
 
         -- Memory usage monitor
-        , Run Memory       [ "--template" , "<usedratio>%"
+        , Run Memory       [ "--template" , "<fn=1> </fn> <usedratio>%"
                              , "--Low"      , "40"        -- units: %
                              , "--High"     , "90"        -- units: %
                              , "--low"      , "darkgreen"
@@ -77,17 +85,17 @@ Config {
                            ] 10
         
         -- Swap usage monitor 
-        , Run Swap         [ "--template" , "<usedratio>%"
-                             , "--High"     , "256"
-                             , "--Low"      , "0"
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "red"
-                           ] 10
+        -- , Run Swap         [ "--template" , "<usedratio>%"
+        --                     , "--High"     , "256"
+        --                     , "--Low"      , "0"
+        --                     , "--low"      , "darkgreen"
+        --                     , "--normal"   , "darkorange"
+        --                     , "--high"     , "red"
+        --                  ] 10
 
         -- Network activity monitor (dynamic interface resolution)
         -- This configuration is not very dynamic, add "<dev>" to template to make it really dynamic
-        , Run DynNetwork   [ "--template" , "Up: <tx>kB/s | Down: <rx>kB/s"
+        , Run DynNetwork   [ "--template"   , "<fn=1>\xF0EE </fn> <tx>kB/s  <fn=1>\xF0ED </fn> <rx>kB/s"
                              , "--Low"      , "250000"     -- units: B/s
                              , "--High"     , "1000000"     -- units: B/s
                              , "--low"      , "darkgreen"

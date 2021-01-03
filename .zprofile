@@ -6,7 +6,7 @@ source "$HOME/.config/user-dirs.dirs"
 
 alias ls='ls --color'
 
-alias cl=clear
+alias cl='clear; pfetch'
 alias l=ls
 alias s=ls
 alias sl=ls

@@ -20,7 +20,7 @@ import XMonad.Hooks.DynamicLog
 -- to set the WMName to something else, otherwise clion is unhappy and refuses to work
 import XMonad.Hooks.SetWMName
 
--- Allow spacing (gaps) to be dispayed around windows (definitly more beauty this way)
+-- Allow spacing (gaps) to be displayed around windows (definitly more beauty this way)
 import XMonad.Layout.Spacing
 
 -- Remove window borders if they aren't needed
@@ -47,9 +47,9 @@ import Data.List
 myApplicationLauncher = "/home/kalex/.config/rofi/bin/launcher_colorful"
 
 myKeyBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm, xK_p), spawn myApplicationLauncher) -- bind M-p to the application launcher
+    [ ((modm, xK_p), spawn myApplicationLauncher)       -- bind M-p to the application launcher
       , ((modm .|. shiftMask, xK_s), spawn "spectacle") -- take a screenshot with M-shift-s
-      -- , ((modm, xK_f), sendMessage $ Toggle FULL) -- to fix
+      -- , ((modm, xK_f), sendMessage $ Toggle FULL)    -- to fix
     ]
 
 -- Add myKeyBindings to the default keybindings and save into myKeys
@@ -91,7 +91,7 @@ myLayoutHook
 --------------------------------------------------------------------------------
 
 -- Define my workspaces (statically)
-myWorkspaces = ["1:main","2:dev", "3:dev", "4:irc", "5:music"] ++ map show [6..9]
+myWorkspaces = ["<fn=1>\xE745 </fn>","<fn=1>\xFCB5 </fn>", "<fn=1>\xE235 </fn>", "<fn=1>\xFB6E </fn>", "<fn=1>\xFB75 </fn>"] ++ map show [6..9]
 
 -- Define the manageHook to use
 myManageHook = composeAll . concat $
@@ -127,7 +127,7 @@ myManageHook = composeAll . concat $
       , [ fmap ( t `isInfixOf` ) title     --> doFloat | t <- myFloatsTitle]
     ]
   where viewShift = doF . liftM2 (.) W.greedyView W.shift
-        myWs0Class   = ["Firefox-bin"]
+        myWs0Class   = ["firefox"]
         myWs1Class   = ["code-oss", "pycharm", "clion", "webstorm", "phpstorm", "okular"]
         myWs2Class   = []
         myWs3Class   = []
@@ -140,7 +140,7 @@ myManageHook = composeAll . concat $
         myWs4Title   = []
 
         myFloatsClass     = []
-        myFloatsTitle     = []        
+        myFloatsTitle     = ["KCalc"]        
 
         myIgnoreClass     = []
         myIgnoreTitle     = ["win0"] -- jetbrains ide opens this when starting
@@ -177,7 +177,7 @@ main = do
           ppOutput = hPutStrLn xmob                         -- where to write
           , ppCurrent = xmobarColor "yellow" ""             -- color of selected workspace
           , ppLayout = const ""                             -- layout string to show
-          , ppTitle = xmobarColor "#6093ac" "" . shorten 20 -- Title of the focused window
+          , ppTitle = xmobarColor "#6093ac" "" . shorten 40 -- Title of the focused window
           , ppSep = "    "                                  -- separator between things
           }
     , keys = myKeys
