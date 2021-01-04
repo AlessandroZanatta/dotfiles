@@ -1,0 +1,12 @@
+#!/bin/bash
+
+BLUETOOTH_STATUS=$(bluetoothctl info)
+BLUETOOTH_ON='Name'
+
+if [[ $BLUETOOTH_STATUS == *$BLUETOOTH_ON* ]]; then
+    echo -n "<fn=1> </fn><fn=1>|</fn>"
+else
+	echo ""
+fi
+
+exit 0
