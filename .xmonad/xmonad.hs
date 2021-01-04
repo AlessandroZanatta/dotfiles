@@ -105,10 +105,10 @@ myLayoutHook
 
 
 -- Define my workspaces (statically)
-myWorkspaces = ["1: <fn=1>\xE745 </fn>","2: <fn=1>\xF120 </fn>", "3: <fn=1>\xF668 </fn>", "4: <fn=1>\xFB6E </fn>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
+-- myWorkspaces = ["1: <fn=1>\xE745 </fn>","2: <fn=1>\xF120 </fn>", "3: <fn=1>\xF668 </fn>", "4: <fn=1>\xFB6E </fn>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
 
 
-myClickableWorkspaces = clickable $ ["1: <fn=1>\xE745 </fn>","2: <fn=1>\xF120 </fn>", "3: <fn=1>\xF668 </fn>", "4: <fn=1>\xFB6E </fn>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
+myWorkspaces = clickable $ ["1: <fn=1>\xE745 </fn>","2: <fc=#33ff00><fn=1>\xF120 </fn></fc>", "3: <fc=#ffff00><fn=1>\xF668 </fn></fc>", "4: <fc=#289ed9><fn=1>\xF2C6 </fn></fc>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
   where                                                                       
          clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
                              (i,ws) <- zip [1..9] l,                                        
@@ -210,12 +210,12 @@ myLogHook h = dynamicLogWithPP $
 main = do
 
   -- Create a xmobar instance and keep a pipe open
-  xmob <- spawnPipe "/usr/bin/xmobar /home/kalex/.xmobarrc"
+  xmob <- spawnPipe "/usr/bin/xmobar /home/kalex/.xmonad/xmobar.hs"
   xmonad kde4Config
     { 
       modMask = mod4Mask -- use the Windows button as mod
       , manageHook = manageHook kde4Config <+> myManageHook -- Start up applications as specified in myManageHook
-      , workspaces = myClickableWorkspaces
+      , workspaces = myWorkspaces
       , borderWidth = myBorderWidth
       , startupHook = myStartupHook
       , layoutHook = myLayoutHook

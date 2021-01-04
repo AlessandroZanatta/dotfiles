@@ -12,7 +12,7 @@ Config {
    -- layout
    , sepChar  =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"   -- separator between left-right alignment
-   , template = "<action=xdotool key super+p> <fn=1> </fn> </action>    %UnsafeStdinReader% } %date% { %cpu% <fn=1>|</fn> %memory% <fn=1>|</fn> <fn=1> </fn> %wifipower% <fn=1>|</fn> %bluetooth% %battery% %traypad% "
+   , template = "<action=xdotool key super+p> <fc=#1793d1><fn=1> </fn></fc> </action>    %UnsafeStdinReader% } %date% { %cpu% <fn=1>|</fn> %memory% <fn=1>|</fn> <fn=1> </fn> %wifipower% <fn=1>|</fn> %bluetooth% %traypad% %battery% "
 
    -- general behavior
    , lowerOnStart     = False   -- send to bottom of window stack on start
@@ -102,9 +102,9 @@ Config {
         --                     , "--normal"   , "darkorange"
         --                     , "--high"     , "darkred"
         --                   ] 10
-        , Run Com "wirelesspower" [] "wifipower" 10
-        , Run Com "bluetoothstatus" [] "bluetooth" 10
-        , Run Com "tray-padding-icon" [] "traypad" 10
+        , Run Com "/home/kalex/.xmonad/scripts/wirelesspower" [] "wifipower" 10
+        , Run Com "/home/kalex/.xmonad/scripts/bluetoothstatus" [] "bluetooth" 10
+        , Run Com "/home/kalex/.xmonad/scripts/tray-padding-icon" [] "traypad" 10
 
         -- Time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
