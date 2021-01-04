@@ -11,8 +11,9 @@ import XMonad.Config.Desktop
 -- avoidStruts lives here
 import XMonad.Hooks.ManageDocks
 
--- spawnPipe is here
+-- spawnPipe
 import XMonad.Util.Run
+import XMonad.Actions.SpawnOn(spawnAndDo)
 
 -- stuff to manage xmobar
 import XMonad.Hooks.DynamicLog
@@ -40,6 +41,12 @@ import XMonad.Layout.MultiToggle.Instances
 -- Data.List provides isPrefixOf isSuffixOf and isInfixOf
 import Data.List
 
+-- Used to create rationals with %
+import Data.Ratio
+
+-- Move and resize floating window
+import XMonad.Hooks.XPropManage
+
 --------------------------------------------------------------------------------
 -- KEYBINDS
 --------------------------------------------------------------------------------
@@ -56,7 +63,12 @@ myKeyBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 myKeys = \c -> myKeyBindings c `M.union` keys kde4Config c
  
 -- Define wheter the window focus should follow the mouse or not 
-myFocusFollowsMouse = True
+myFocusFollowsMouse :: Bool
+myFocusFollowsMouse = False
+
+-- Whether clicking on a window to focus also passes the click to the window
+myClickJustFocuses :: Bool
+myClickJustFocuses = False
 
 --------------------------------------------------------------------------------
 -- AESTHETICS
@@ -90,9 +102,17 @@ myLayoutHook
 -- WORKSPACE
 --------------------------------------------------------------------------------
 
--- Define my workspaces (statically)
-myWorkspaces = ["<fn=1>\xE745 </fn>","<fn=1>\xFCB5 </fn>", "<fn=1>\xE235 </fn>", "<fn=1>\xFB6E </fn>", "<fn=1>\xFB75 </fn>"] ++ map show [6..9]
 
+
+-- Define my workspaces (statically)
+myWorkspaces = ["1: <fn=1>\xE745 </fn>","2: <fn=1>\xF120 </fn>", "3: <fn=1>\xF668 </fn>", "4: <fn=1>\xFB6E </fn>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
+
+
+myClickableWorkspaces = clickable $ ["1: <fn=1>\xE745 </fn>","2: <fn=1>\xF120 </fn>", "3: <fn=1>\xF668 </fn>", "4: <fn=1>\xFB6E </fn>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
+  where                                                                       
+         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
+                             (i,ws) <- zip [1..9] l,                                        
+                            let n = i ]
 -- Define the manageHook to use
 myManageHook = composeAll . concat $
     [  
@@ -100,9 +120,12 @@ myManageHook = composeAll . concat $
       [ className =? "plasmashell" <&&> isInProperty "_NET_WM_WINDOW_TYPE" "_NET_WM_WINDOW_TYPE_NOTIFICATION" --> doIgnore
           , isDialog --> doFloat
           , isFullscreen --> doFullFloat]
+
+      -- KDE system tray support (NOTICE: this works because there is a single plasma object started with plasmawindowed!)
+      , [ className =? "plasmawindowed" --> doFloat ]
+
       
       -- Either by classname or title, use the infix 'cause i'm laxy!
-
 
       -- Shift to
       -- By classname
@@ -125,6 +148,8 @@ myManageHook = composeAll . concat $
       -- Floats
       , [ fmap ( c `isInfixOf` ) className --> doFloat | c <- myFloatsClass] 
       , [ fmap ( t `isInfixOf` ) title     --> doFloat | t <- myFloatsTitle]
+      , [ fmap ( c `isInfixOf` ) className --> doCenterFloat | c <- myCenterFloatsClass]
+      , [ fmap ( t `isInfixOf` ) title --> doCenterFloat | t <- myCenterFloatsTitle ]
     ]
   where viewShift = doF . liftM2 (.) W.greedyView W.shift
         myWs0Class   = ["firefox"]
@@ -140,10 +165,13 @@ myManageHook = composeAll . concat $
         myWs4Title   = []
 
         myFloatsClass     = []
-        myFloatsTitle     = ["KCalc"]        
+        myFloatsTitle     = []
 
         myIgnoreClass     = []
         myIgnoreTitle     = ["win0"] -- jetbrains ide opens this when starting
+
+        myCenterFloatsClass = []
+        myCenterFloatsTitle = ["KCalc"]
 
 --------------------------------------------------------------------------------
 -- STARTUP
@@ -151,7 +179,29 @@ myManageHook = composeAll . concat $
 
 -- Some appplication, as CLion, refuses to work with xmonad.
 -- Simply take them think this is not xmonad fixes everything!
-myStartupHook = setWMName "LG3D"
+myStartupHook = do
+  setWMName "LG3D"
+  -- start the following programs if they are not already running
+  spawn "if ! pgrep -x 'keepassxc' > /dev/null; then keepassxc; fi"
+  spawn "if ! pgrep -x 'redshift' > /dev/null; then redshift; fi"
+  spawn "if ! pgrep -x 'mailspring' > /dev/null; then mailsprint; fi"
+  -- NOTICE: this works because there is a single plasma object started with plasmawindowed!
+  spawn "if ! pgrep -x 'plasmawindowed' > /dev/null; then plasmawindowed org.kde.plasma.systemtray; fi"
+ 
+--------------------------------------------------------------------------------
+-- XMOBAR
+--------------------------------------------------------------------------------
+
+myLogHook h = dynamicLogWithPP $ 
+  xmobarPP 
+    {
+      ppOutput = hPutStrLn h                                            -- where to write
+      , ppCurrent = wrap "<box type=Bottom width=3 color=red>" "</box>" -- color of selected workspace
+      , ppLayout = const ""                                             -- layout string to show
+      , ppTitle = xmobarColor "#6093ac" "" . shorten 40                 -- Title of the focused window
+      , ppSep = "    "                                                  -- separator between things
+    }
+
 
 --------------------------------------------------------------------------------
 -- MAIN
@@ -160,26 +210,19 @@ myStartupHook = setWMName "LG3D"
 main = do
 
   -- Create a xmobar instance and keep a pipe open
-  xmob <- spawnPipe "/usr/bin/xmobar ~/.xmobarrc"
+  xmob <- spawnPipe "/usr/bin/xmobar /home/kalex/.xmobarrc"
   xmonad kde4Config
     { 
-    modMask = mod4Mask -- use the Windows button as mod
-    , manageHook = manageHook kde4Config <+> myManageHook -- Start up applications as specified in myManageHook
-    , workspaces = myWorkspaces
-    , borderWidth = myBorderWidth
-    , startupHook = myStartupHook
-    , layoutHook = myLayoutHook
-    , normalBorderColor = myNormalBorderColor
-    , focusedBorderColor = myFocusedBorderColor
-    , logHook = dynamicLogWithPP $ -- xmobar properties
-        xmobarPP 
-          {
-          ppOutput = hPutStrLn xmob                         -- where to write
-          , ppCurrent = xmobarColor "yellow" ""             -- color of selected workspace
-          , ppLayout = const ""                             -- layout string to show
-          , ppTitle = xmobarColor "#6093ac" "" . shorten 40 -- Title of the focused window
-          , ppSep = "    "                                  -- separator between things
-          }
-    , keys = myKeys
-    , focusFollowsMouse  = myFocusFollowsMouse
+      modMask = mod4Mask -- use the Windows button as mod
+      , manageHook = manageHook kde4Config <+> myManageHook -- Start up applications as specified in myManageHook
+      , workspaces = myClickableWorkspaces
+      , borderWidth = myBorderWidth
+      , startupHook = myStartupHook
+      , layoutHook = myLayoutHook
+      , normalBorderColor = myNormalBorderColor
+      , focusedBorderColor = myFocusedBorderColor
+      , logHook = myLogHook xmob
+      , keys = myKeys
+      , focusFollowsMouse  = myFocusFollowsMouse
+      , clickJustFocuses   = myClickJustFocuses
     }

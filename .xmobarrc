@@ -4,7 +4,7 @@ Config {
      font = "xft:Hack:size=9:bold:antialias=true"
    , additionalFonts         = [ "xft:mononoki Nerd Font:pixelsize=16:antialias=true:hinting=true" ]
    , bgColor      = "#222222"
-   , fgColor      = "#aaaaaa"
+   , fgColor      = "#dddddd"
    , position     = Top --TopP 0 20
    , border       = BottomB
    , borderColor  = "#646464"
@@ -12,7 +12,7 @@ Config {
    -- layout
    , sepChar  =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"   -- separator between left-right alignment
-   , template = " <fn=1> </fn>  %StdinReader% } %date% { %cpu% | %memory% | %dynnetwork% | %battery% "
+   , template = "<action=xdotool key super+p> <fn=1> </fn> </action>    %UnsafeStdinReader% } %date% { %cpu% <fn=1>|</fn> %memory% <fn=1>|</fn> <fn=1> </fn> %wifipower% <fn=1>|</fn> %bluetooth% %battery% %traypad% "
 
    -- general behavior
    , lowerOnStart     = False   -- send to bottom of window stack on start
@@ -41,10 +41,10 @@ Config {
         [ 
         -- This line tells xmobar to read input from stdin. That's how we
 	-- get the information that xmonad is sending it for display.
-	Run StdinReader
+	Run UnsafeStdinReader
 
         , Run Battery [ "--template" , "<acstatus>"
-                             , "--Low"      , "10"        -- units: %
+                             , "--Low"      , "20"        -- units: %
                              , "--High"     , "80"        -- units: %
                              , "--low"      , "#BF616A"
                              , "--normal"   , "#EBCB8B"
@@ -55,15 +55,15 @@ Config {
                                        , "-m"   ,  "#EBCB8B"
                                        , "-h"   ,  "#A3BE8C"
                                        , "-o"   , ""
-                                       , "--lows"     , "<fn=1> </fn> <left>% <timeleft>"
-                                       , "--mediums"  , "<fn=1> </fn> <left>% <timeleft>"
-                                       , "--highs"    , "<fn=1> </fn> <left>% <timeleft>"
+                                       , "--lows"     , "<fn=1> </fn><left>% <timeleft>"
+                                       , "--mediums"  , "<fn=1> </fn><left>% <timeleft>"
+                                       , "--highs"    , "<fn=1> </fn><left>% <timeleft>"
                                        -- AC "on" status
-                                       , "-O"  , "<fn=1> </fn> <left>%"
+                                       , "-O"  , "<fn=1> </fn><left>%"
                                        -- charged status
-                                       , "-i"  , "<fn=1> </fn> <left>%"
-                                       , "-a", "notify-send -u critical 'Battery running out!!'"
-                                       , "-A", "20"
+                                       , "-i"  , "<fn=1> </fn><left>%"
+                                       -- , "-a", "notify-send -u critical 'Battery running out!!'"
+                                       -- , "-A", "20"
                              ] 50
 
         -- Cpu monitor
@@ -76,7 +76,7 @@ Config {
                            ] 10
 
         -- Memory usage monitor
-        , Run Memory       [ "--template" , "<fn=1> </fn> <usedratio>%"
+        , Run Memory       [ "--template" , "<fn=1> </fn> <usedratio>%"
                              , "--Low"      , "40"        -- units: %
                              , "--High"     , "90"        -- units: %
                              , "--low"      , "darkgreen"
@@ -95,13 +95,16 @@ Config {
 
         -- Network activity monitor (dynamic interface resolution)
         -- This configuration is not very dynamic, add "<dev>" to template to make it really dynamic
-        , Run DynNetwork   [ "--template"   , "<fn=1>\xF0EE </fn> <tx>kB/s  <fn=1>\xF0ED </fn> <rx>kB/s"
-                             , "--Low"      , "250000"     -- units: B/s
-                             , "--High"     , "1000000"     -- units: B/s
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
-                           ] 10
+        -- , Run DynNetwork   [ "--template"   , "<fn=1>\xF0EE </fn> <tx>kB/s  <fn=1>\xF0ED </fn> <rx>kB/s"
+        --                     , "--Low"      , "250000"     -- units: B/s
+        --                     , "--High"     , "1000000"     -- units: B/s
+        --                     , "--low"      , "darkgreen"
+        --                     , "--normal"   , "darkorange"
+        --                     , "--high"     , "darkred"
+        --                   ] 10
+        , Run Com "wirelesspower" [] "wifipower" 10
+        , Run Com "bluetoothstatus" [] "bluetooth" 10
+        , Run Com "tray-padding-icon" [] "traypad" 10
 
         -- Time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
