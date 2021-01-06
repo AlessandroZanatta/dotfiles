@@ -3,14 +3,17 @@
 INTERFACE="wlp3s0"
 
 iwconfig "$INTERFACE" 2>&1 | grep -q no\ wireless\ extensions\. && {
-  echo wired
+  echo "<fn=1> </fn>"
   exit 0
 }
 
 essid=`iwconfig "$INTERFACE" | awk -F '"' '/ESSID/ {print $2}'`
 stngth=`iwconfig "$INTERFACE" | awk -F '=' '/Quality/ {print $2}' | cut -d '/' -f 1`
-bars=`expr $stngth / 10`
 
+echo "<fn=1> </fn> $stngth"
+exit 0
+
+bars=`expr $stngth / 10`
 case $bars in
   0)  bar='[----------]' ;;
   1)  bar='[/---------]' ;;

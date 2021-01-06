@@ -13,7 +13,6 @@ import XMonad.Hooks.ManageDocks
 
 -- spawnPipe
 import XMonad.Util.Run
-import XMonad.Actions.SpawnOn(spawnAndDo)
 
 -- stuff to manage xmobar
 import XMonad.Hooks.DynamicLog
@@ -54,9 +53,9 @@ import XMonad.Hooks.XPropManage
 myApplicationLauncher = "/home/kalex/.config/rofi/bin/launcher_colorful"
 
 myKeyBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm, xK_p), spawn myApplicationLauncher)       -- bind M-p to the application launcher
-      , ((modm .|. shiftMask, xK_s), spawn "spectacle") -- take a screenshot with M-shift-s
-      -- , ((modm, xK_f), sendMessage $ Toggle FULL)    -- to fix
+    [ ((modm, xK_p), spawn myApplicationLauncher)       -- Mod-p        --> open application launcher
+      , ((modm .|. shiftMask, xK_s), spawn "spectacle") -- Mod+Shift+S  --> take a screenshot
+      , ((modm, xK_f), sendMessage $ Toggle FULL)       -- Mod-f        --> switch to fullscreen layout  
     ]
 
 -- Add myKeyBindings to the default keybindings and save into myKeys
@@ -91,18 +90,30 @@ myNormalBorderColor, myFocusedBorderColor :: [Char]
 myNormalBorderColor = "#7c7c7c"
 myFocusedBorderColor = "#6093ac"
 
+myLayout = tiled ||| Mirror tiled
+  where
+    -- default tiling algorithm partitions the screen into two panes
+    tiled   = Tall nmaster delta ratio
+
+    -- The default number of windows in the master pane
+    nmaster = 1
+
+    -- Default proportion of screen occupied by master pane
+    ratio   = 1/2
+
+    -- Percent of screen to increment by when resizing panes
+    delta   = 3/100
 
 myLayoutHook 
   = avoidStruts 
-  $ mySpacing 
-  -- $ mkToggle (NOBORDERS ?? FULL ?? EOT) -- to fix to switch instantly to fullscreen layout  
-  $ smartBorders ( layoutHook desktopConfig )
+  $ mySpacing
+  $ smartBorders
+  $ mkToggle (NOBORDERS ?? FULL ?? EOT) -- switch to fullscreen layout  
+   ( myLayout )
 
 --------------------------------------------------------------------------------
 -- WORKSPACE
 --------------------------------------------------------------------------------
-
-
 
 -- Define my workspaces (statically)
 -- myWorkspaces = ["1: <fn=1>\xE745 </fn>","2: <fn=1>\xF120 </fn>", "3: <fn=1>\xF668 </fn>", "4: <fn=1>\xFB6E </fn>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
@@ -113,6 +124,8 @@ myWorkspaces = clickable $ ["1: <fn=1>\xE745 </fn>","2: <fc=#33ff00><fn=1>\xF120
          clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
                              (i,ws) <- zip [1..9] l,                                        
                             let n = i ]
+
+
 -- Define the manageHook to use
 myManageHook = composeAll . concat $
     [  
@@ -122,8 +135,10 @@ myManageHook = composeAll . concat $
           , isFullscreen --> doFullFloat]
 
       -- KDE system tray support (NOTICE: this works because there is a single plasma object started with plasmawindowed!)
-      , [ className =? "plasmawindowed" --> doFloat ]
+      , [ className =? "plasmawindowed" --> doIgnore ]
 
+      -- Start SpeedCrunch at the center of the screen, resized to be small enough
+      , [ title =? "SpeedCrunch" --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)]
       
       -- Either by classname or title, use the infix 'cause i'm laxy!
 
@@ -186,7 +201,8 @@ myStartupHook = do
   spawn "if ! pgrep -x 'redshift' > /dev/null; then redshift; fi"
   spawn "if ! pgrep -x 'mailspring' > /dev/null; then mailsprint; fi"
   -- NOTICE: this works because there is a single plasma object started with plasmawindowed!
-  spawn "if ! pgrep -x 'plasmawindowed' > /dev/null; then plasmawindowed org.kde.plasma.systemtray; fi"
+  --spawn "if ! pgrep -x 'plasmawindowed' > /dev/null; then plasmawindowed org.kde.plasma.systemtray; fi"
+  spawn "killall plasmawindowed; plasmawindowed org.kde.plasma.systemtray"
  
 --------------------------------------------------------------------------------
 -- XMOBAR
@@ -198,7 +214,7 @@ myLogHook h = dynamicLogWithPP $
       ppOutput = hPutStrLn h                                            -- where to write
       , ppCurrent = wrap "<box type=Bottom width=3 color=red>" "</box>" -- color of selected workspace
       , ppLayout = const ""                                             -- layout string to show
-      , ppTitle = xmobarColor "#6093ac" "" . shorten 40                 -- Title of the focused window
+      , ppTitle = xmobarColor "#6093ac" "" . shorten 20                 -- Title of the focused window
       , ppSep = "    "                                                  -- separator between things
     }
 

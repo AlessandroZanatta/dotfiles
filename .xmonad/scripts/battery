@@ -1,0 +1,61 @@
+#!/bin/bash
+
+BAT_0=""
+BAT_10=""
+BAT_20=""
+BAT_30=""
+BAT_40=""
+BAT_50=""
+BAT_60=""
+BAT_70=""
+BAT_80=""
+BAT_90=""
+BAT_100=""
+BAT_CHARGING=""
+
+CHARGING_STRING="Charging"
+
+function is_charging(){
+	acpi -b | cut -d " " -f 3 | cut -d"," -f1
+}
+
+function current_charge(){
+	acpi -b | cut -d" " -f4 | cut -d"%" -f1
+}
+
+CHARGE=$(current_charge)
+IS_CHARGING=$(is_charging)
+
+OUTPUT_LINE="<fn=1>"
+
+if ! [ "$CHARGING_STRING" = "$IS_CHARGING" ]; then
+	if (( $CHARGE < 10 )); then
+		OUTPUT_LINE+="$BAT_0";
+	elif (( $CHARGE < 20 )) ; then
+		OUTPUT_LINE+="$BAT_10"
+	elif (( $CHARGE < 30 )); then
+		OUTPUT_LINE+="$BAT_20"
+	elif (( $CHARGE < 40 )); then
+		OUTPUT_LINE+="$BAT_30";
+	elif (( $CHARGE < 50 )); then
+		OUTPUT_LINE+="$BAT_40";
+	elif (( $CHARGE < 60 )); then
+		OUTPUT_LINE+="$BAT_50";
+	elif (( $CHARGE < 70 )); then
+		OUTPUT_LINE+="$BAT_60";
+	elif (( $CHARGE < 80 )); then
+		OUTPUT_LINE+="$BAT_70";
+	elif (( $CHARGE < 90 )); then
+		OUTPUT_LINE+="$BAT_80";
+	elif (( $CHARGE < 100 )); then
+		OUTPUT_LINE+="$BAT_90";
+	else
+		OUTPUT_LINE+="$BAT_100";
+	fi;
+else
+	OUTPUT_LINE+="$BAT_CHARGING"
+fi;
+
+OUTPUT_LINE+=" </fn>$CHARGE%"
+
+echo "$OUTPUT_LINE"
