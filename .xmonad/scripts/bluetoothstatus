@@ -4,7 +4,7 @@ BLUETOOTH_STATUS=$(bluetoothctl info)
 BLUETOOTH_ON='Name'
 
 if [[ $BLUETOOTH_STATUS == *$BLUETOOTH_ON* ]]; then
-    echo -n "<fc=#777777,#A0A0A0><fn=2></fn></fc>  <fn=1> </fn>"
+    echo -n "<fc=#777777,#A0A0A0:0> <fn=2></fn></fc> <fn=1></fn>"
 else
 	echo ""
 fi

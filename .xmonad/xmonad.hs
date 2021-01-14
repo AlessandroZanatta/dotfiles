@@ -13,6 +13,7 @@ import XMonad.Hooks.ManageDocks
 
 -- spawnPipe
 import XMonad.Util.Run
+import XMonad.Util.SpawnOnce
 
 -- stuff to manage xmobar
 import XMonad.Hooks.DynamicLog
@@ -46,6 +47,10 @@ import Data.Ratio
 -- Move and resize floating window
 import XMonad.Hooks.XPropManage
 
+
+-- Additional keys (like XF85AudioPlay, ...)
+import Graphics.X11.ExtraTypes.XF86
+
 --------------------------------------------------------------------------------
 -- KEYBINDS
 --------------------------------------------------------------------------------
@@ -53,9 +58,14 @@ import XMonad.Hooks.XPropManage
 myApplicationLauncher = "/home/kalex/.config/rofi/bin/launcher_colorful"
 
 myKeyBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm, xK_p), spawn myApplicationLauncher)       -- Mod-p        --> open application launcher
-      , ((modm .|. shiftMask, xK_s), spawn "spectacle") -- Mod+Shift+S  --> take a screenshot
-      , ((modm, xK_f), sendMessage $ Toggle FULL)       -- Mod-f        --> switch to fullscreen layout  
+    [ ((modm, xK_p)                       , spawn myApplicationLauncher)                                -- Mod-p                  --> open application launcher
+      , ((modm .|. shiftMask, xK_s)       , spawn "spectacle")                                          -- Mod+Shift+S            --> take a screenshot
+      , ((modm, xK_f)                     , sendMessage $ Toggle FULL)                                  -- Mod-f                  --> switch to fullscreen layout
+      , ((0, xF86XK_AudioPlay)            , spawn "/home/kalex/.xmonad/scripts/mpctoggle")              -- XF86AudioPlay          --> MPD: Toggle pause/play
+      , ((0, xF86XK_AudioPrev)            , spawn "/home/kalex/.xmonad/scripts/mpcsongcontrol prev")    -- XF86AudioPrev          --> MPD: Go to previous song
+      , ((0, xF86XK_AudioNext)            , spawn "/home/kalex/.xmonad/scripts/mpcsongcontrol next")    -- XF86AudioNext          --> MPD: Go to next song
+      , ((modm, xF86XK_AudioLowerVolume)  , spawn "mpc volume -5")                                      -- XF86AudioLowerVolume   --> MPD: lower volume
+      , ((modm, xF86XK_AudioRaiseVolume)  , spawn "mpc volume +5")                                      -- XF86AudioRaiseVolume   --> MPD: raise volume
     ]
 
 -- Add myKeyBindings to the default keybindings and save into myKeys
@@ -88,18 +98,20 @@ myBorderWidth = 1
 
 myNormalBorderColor, myFocusedBorderColor :: [Char]
 myNormalBorderColor = "#7c7c7c"
-myFocusedBorderColor = "#6093ac"
+myFocusedBorderColor = "darkorange"
 
-myLayout = tiled ||| Mirror tiled
+myLayout
+    = tiling
+  ||| Mirror tiling
   where
     -- default tiling algorithm partitions the screen into two panes
-    tiled   = Tall nmaster delta ratio
+    tiling   = Tall nmaster delta ratio
 
     -- The default number of windows in the master pane
     nmaster = 1
 
     -- Default proportion of screen occupied by master pane
-    ratio   = 1/2
+    ratio   = 3/5
 
     -- Percent of screen to increment by when resizing panes
     delta   = 3/100
@@ -119,7 +131,7 @@ myLayoutHook
 -- myWorkspaces = ["1: <fn=1>\xE745 </fn>","2: <fn=1>\xF120 </fn>", "3: <fn=1>\xF668 </fn>", "4: <fn=1>\xFB6E </fn>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
 
 
-myWorkspaces = clickable $ ["1: <fn=1>\xE745 </fn>","2: <fc=#33ff00><fn=1>\xF120 </fn></fc>", "3: <fc=#ffff00><fn=1>\xF668 </fn></fc>", "4: <fc=#289ed9><fn=1>\xF2C6 </fn></fc>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
+myWorkspaces = clickable $ ["1: <fc=yellow><fn=1>\xF79F </fn></fc>","2: <fc=#33ff00><fn=1>\xF120 </fn></fc>", "3: <fc=#ffff00><fn=1>\xF668 </fn></fc>", "4: <fc=#289ed9><fn=1>\xF2C6 </fn></fc>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
   where                                                                       
          clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
                              (i,ws) <- zip [1..9] l,                                        
@@ -168,16 +180,16 @@ myManageHook = composeAll . concat $
     ]
   where viewShift = doF . liftM2 (.) W.greedyView W.shift
         myWs0Class   = ["firefox"]
-        myWs1Class   = ["code-oss", "pycharm", "clion", "webstorm", "phpstorm", "okular"]
-        myWs2Class   = []
+        myWs1Class   = ["code-oss", "pycharm", "clion", "webstorm", "phpstorm"]
+        myWs2Class   = ["okular"]
         myWs3Class   = []
         myWs4Class   = ["Chromium"]
         
         myWs0Title   = []
-        myWs1Title   = ["Ghidra", "Lutris"]
-        myWs2Title   = ["League"]
-        myWs3Title   = ["Discord", "Teams", "Telegram"]
-        myWs4Title   = []
+        myWs1Title   = ["Ghidra"]
+        myWs2Title   = ["Lutris","League"]
+        myWs3Title   = ["Discord", "Teams", "Telegram", "Signal"]
+        myWs4Title   = ["Cantata"]
 
         myFloatsClass     = []
         myFloatsTitle     = []
@@ -192,18 +204,11 @@ myManageHook = composeAll . concat $
 -- STARTUP
 --------------------------------------------------------------------------------
 
--- Some appplication, as CLion, refuses to work with xmonad.
--- Simply take them think this is not xmonad fixes everything!
 myStartupHook = do
+  -- Some appplication, as CLion, refuses to work with xmonad.
+  -- Simply make them think this is not xmonad fixes everything!
   setWMName "LG3D"
-  -- start the following programs if they are not already running
-  spawn "if ! pgrep -x 'keepassxc' > /dev/null; then keepassxc; fi"
-  spawn "if ! pgrep -x 'redshift' > /dev/null; then redshift; fi"
-  spawn "if ! pgrep -x 'mailspring' > /dev/null; then mailsprint; fi"
-  -- NOTICE: this works because there is a single plasma object started with plasmawindowed!
-  --spawn "if ! pgrep -x 'plasmawindowed' > /dev/null; then plasmawindowed org.kde.plasma.systemtray; fi"
-  spawn "killall plasmawindowed; plasmawindowed org.kde.plasma.systemtray"
- 
+
 --------------------------------------------------------------------------------
 -- XMOBAR
 --------------------------------------------------------------------------------
@@ -214,7 +219,7 @@ myLogHook h = dynamicLogWithPP $
       ppOutput = hPutStrLn h                                            -- where to write
       , ppCurrent = wrap "<box type=Bottom width=3 color=red>" "</box>" -- color of selected workspace
       , ppLayout = const ""                                             -- layout string to show
-      , ppTitle = xmobarColor "#6093ac" "" . shorten 20                 -- Title of the focused window
+      , ppTitle = xmobarColor "#6093ac" "" . shorten 30                 -- Title of the focused window
       , ppSep = "    "                                                  -- separator between things
     }
 

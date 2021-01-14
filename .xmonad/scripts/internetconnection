@@ -1,34 +1,23 @@
 #!/bin/sh
 
-INTERFACE="wlp3s0"
+# REFACTOR THIS, it's ugly!
 
-iwconfig "$INTERFACE" 2>&1 | grep -q no\ wireless\ extensions\. && {
-  echo "<fn=1> </fn>"
-  exit 0
-}
+WIFI_INTERFACE="wlp3s0"
+ETH_INTERFACE="enp2s0"
 
-essid=`iwconfig "$INTERFACE" | awk -F '"' '/ESSID/ {print $2}'`
-stngth=`iwconfig "$INTERFACE" | awk -F '=' '/Quality/ {print $2}' | cut -d '/' -f 1`
+iwconfig "$WIFI_INTERFACE" 2>&1 | grep -q Not-Associated && {
 
-echo "<fn=1> </fn> $stngth"
-exit 0
+	ifconfig "$ETH_INTERFACE" | grep -q inet && {
+  		echo "<fn=1></fn>"
+  		exit 0
+	}
 
-bars=`expr $stngth / 10`
-case $bars in
-  0)  bar='[----------]' ;;
-  1)  bar='[/---------]' ;;
-  2)  bar='[//--------]' ;;
-  3)  bar='[///-------]' ;;
-  4)  bar='[////------]' ;;
-  5)  bar='[/////-----]' ;;
-  6)  bar='[//////----]' ;;
-  7)  bar='[///////---]' ;;
-  8)  bar='[////////--]' ;;
-  9)  bar='[/////////-]' ;;
-  10) bar='[//////////]' ;;
-  *)  bar='[----!!----]' ;;
-esac
+	echo "<fn=1> </fn>"
+	exit 0
+} 
 
-echo $bar
+essid=`iwconfig "$WIFI_INTERFACE" | awk -F '"' '/ESSID/ {print $2}'`
+strength=`iwconfig "$WIFI_INTERFACE" | awk -F '=' '/Quality/ {print $2}' | cut -d '/' -f 1`
 
+echo "<fn=1> </fn> $strength"
 exit 0

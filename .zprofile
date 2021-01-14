@@ -12,7 +12,13 @@ alias s=ls
 alias sl=ls
 
 # Docker utility for fast connection
-docker_connect(){ docker exec -it $(docker ps | grep $1 | cut -d ' ' -f 1) /bin/bash; }
+docker_connect(){
+    if [[ $# -eq 1 ]]; then
+        docker exec -it $(docker ps | grep $1 | cut -d ' ' -f 1) /bin/bash; 
+    else
+        echo "Usage: $0"
+    fi
+}
 
 
 # Creating pwn scripts with a command!
@@ -32,8 +38,6 @@ md2pdf(){
                 # exit 2
         fi
 }
-
-alias make_pdf='pandoc --from markdown --template eisvogel --listings --pdf-engine=xelatex'
 
 # Faster init of pwndocker
 pwndocker(){
@@ -160,17 +164,35 @@ activate(){
     if [[ $# -eq 1 ]]; then
        workon "$1" 
     else
-        echo 'Usage $0 py-env'
+        echo "Usage: $0 py-env"
         exit 1
     fi;
 }
 
 # Start background programs without output with ease
 noout(){
-    if [[ $# > 1 ]]; then
+    if [[ $# -ne 0 ]]; then
         nohup $@ > /dev/null &
     else
-        echo 'Usage: $0 program'
+        echo "Usage: $0 program"
+        exit 1
+    fi;
+}
+
+# Colored radeontop
+alias radeontop='sudo radeontop -c'
+
+# Do NOT kill child processes of the shell when the shell is killed
+setopt NO_HUP
+
+# Download youtube videos' audio
+youtube-download(){
+    if [[ $# -eq 1 ]]; then 
+        youtube-dl --no-overwrites --ignore-errors --yes-playlist -f bestaudio -o '/home/kalex/Music/%(title)s.%(ext)s' "$1"
+    elif [[ $# -eq 2 ]]; then
+        youtube-dl --no-overwrites --ignore-errors --yes-playlist -f bestaudio -o "$2/%(title)s.%(ext)s" "$1"
+    else
+        echo "Usage $0 youtube-url"
         exit 1
     fi;
 }

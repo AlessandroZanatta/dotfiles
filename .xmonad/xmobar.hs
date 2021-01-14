@@ -17,11 +17,12 @@ Config {
    , template = "<fc=white,#434343:0><action=xdotool key super+p>   <fn=1> </fn>  <fc=#434343,#141a21><fn=2></fn></fc></action></fc>\
      \    %UnsafeStdinReader% } \
      \%date% { \
-     \<fc=#A0A0A0><fn=2></fn></fc><fc=#222222,#A0A0A0:0>  %internet%  %bluetooth% </fc>\
+     \%microphone%\
+     \<fc=#222222,#A0A0A0:0> %internet%%bluetooth% </fc>\
      \<fc=#5A5A5A,#A0A0A0><fn=2></fn></fc><fc=#eeeeee,#5A5A5A:0>  %cpu%  </fc><fc=#999999,#5A5A5A>\
      \<fn=2></fn></fc><fc=#eeeeee,#5A5A5A:0>  %memory%  </fc><fc=white,#434343:0></fc>\
      \<fc=#434343,#5A5A5A><fn=2></fn></fc><fc=#eeeeee,#434343:0>  %battery%  </fc>\
-     \<action=xdotool key super+shift+q><fc=#222222,#434343><fn=2></fn></fc><fc=darkorange,#222222:0> <fn=1>⏻ </fn> </fc></action>"
+     \<action=xdotool key super+shift+q><fc=#222222,#434343><fn=2></fn></fc><fc=#ffbb00,#222222:0> <fn=1>⏻ </fn> </fc></action>"
 
    -- general behavior
    , lowerOnStart     = False   -- send to bottom of window stack on start
@@ -115,7 +116,7 @@ Config {
         , Run Com "/home/kalex/.xmonad/scripts/bluetoothstatus" [] "bluetooth" 10
         -- , Run Com "/home/kalex/.xmonad/scripts/tray-padding-icon" [] "traypad" 10
         , Run Com "/home/kalex/.xmonad/scripts/battery" [] "battery" 10 
-        
+        , Run Com "/home/kalex/.xmonad/scripts/microphone" ["#A0A0A0"] "microphone" 10 
 
         -- Time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
