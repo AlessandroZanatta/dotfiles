@@ -61,11 +61,12 @@ myKeyBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm, xK_p)                       , spawn myApplicationLauncher)                                -- Mod-p                  --> open application launcher
       , ((modm .|. shiftMask, xK_s)       , spawn "spectacle")                                          -- Mod+Shift+S            --> take a screenshot
       , ((modm, xK_f)                     , sendMessage $ Toggle FULL)                                  -- Mod-f                  --> switch to fullscreen layout
-      , ((0, xF86XK_AudioPlay)            , spawn "/home/kalex/.xmonad/scripts/mpctoggle")              -- XF86AudioPlay          --> MPD: Toggle pause/play
-      , ((0, xF86XK_AudioPrev)            , spawn "/home/kalex/.xmonad/scripts/mpcsongcontrol prev")    -- XF86AudioPrev          --> MPD: Go to previous song
-      , ((0, xF86XK_AudioNext)            , spawn "/home/kalex/.xmonad/scripts/mpcsongcontrol next")    -- XF86AudioNext          --> MPD: Go to next song
+      , ((0, xF86XK_AudioPlay)            , spawn "/home/kalex/.xmonad/scripts/mpc_wrap toggle")        -- XF86AudioPlay          --> MPD: Toggle pause/play
+      , ((0, xF86XK_AudioPrev)            , spawn "/home/kalex/.xmonad/scripts/mpc_wrap prev")          -- XF86AudioPrev          --> MPD: Go to previous song
+      , ((0, xF86XK_AudioNext)            , spawn "/home/kalex/.xmonad/scripts/mpc_wrap next")          -- XF86AudioNext          --> MPD: Go to next song
       , ((modm, xF86XK_AudioLowerVolume)  , spawn "mpc volume -5")                                      -- XF86AudioLowerVolume   --> MPD: lower volume
       , ((modm, xF86XK_AudioRaiseVolume)  , spawn "mpc volume +5")                                      -- XF86AudioRaiseVolume   --> MPD: raise volume
+      , ((modm, xK_q)                     , spawn "ghc --make /home/kalex/.xmonad/xmobar.hs && xmonad --recompile && xmonad --restart")
     ]
 
 -- Add myKeyBindings to the default keybindings and save into myKeys
@@ -217,7 +218,7 @@ myLogHook h = dynamicLogWithPP $
   xmobarPP 
     {
       ppOutput = hPutStrLn h                                            -- where to write
-      , ppCurrent = wrap "<box type=Bottom width=3 color=red>" "</box>" -- color of selected workspace
+      , ppCurrent = wrap "<box type=Bottom width=1 color=red>" "</box>" -- color of selected workspace
       , ppLayout = const ""                                             -- layout string to show
       , ppTitle = xmobarColor "#6093ac" "" . shorten 30                 -- Title of the focused window
       , ppSep = "    "                                                  -- separator between things
@@ -231,7 +232,7 @@ myLogHook h = dynamicLogWithPP $
 main = do
 
   -- Create a xmobar instance and keep a pipe open
-  xmob <- spawnPipe "/usr/bin/xmobar /home/kalex/.xmonad/xmobar.hs"
+  xmob <- spawnPipe "/home/kalex/.xmonad/xmobar"
   xmonad kde4Config
     { 
       modMask = mod4Mask -- use the Windows button as mod

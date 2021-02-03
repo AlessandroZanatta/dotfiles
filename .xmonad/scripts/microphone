@@ -1,0 +1,37 @@
+#!/bin/bash
+
+NEXT_BACKGROUND=${1}
+
+MIC_IN_USE=$(pacmd list-sink-inputs | cut -d" " -f1)
+STATE_FILE="/home/kalex/.xmonad/scripts/microphone_state"
+CHANGE_STATE_SCRIPT="/home/kalex/.xmonad/scripts/change_mic_state"
+
+TEXT="#222222"
+BACKGROUND="#DDDDDD"
+
+MIC_ON="<fn=1> </fn>"
+MIC_OFF="<fn=1> </fn>"
+
+OUTPUT_LINE=""
+
+if ! [ "$MIC_IN_USE" = "0" ]; then
+
+	STATE=$(cat $STATE_FILE)
+	OUTPUT_LINE+="<action=$CHANGE_STATE_SCRIPT $STATE>"
+	OUTPUT_LINE+="<fc=$BACKGROUND><fn=2></fn></fc><fc=$TEXT,$BACKGROUND:0> "
+
+	if [ "$STATE" = "0" ]; then # off state
+		OUTPUT_LINE+="<fc=darkred,$BACKGROUND>$MIC_OFF</fc>"
+	else
+		OUTPUT_LINE+="$MIC_ON"
+	fi
+
+	OUTPUT_LINE+="</fc></action><fc=$NEXT_BACKGROUND,$BACKGROUND>"
+else
+	OUTPUT_LINE+="<fc=$NEXT_BACKGROUND>"
+fi
+
+OUTPUT_LINE+="<fn=2></fn></fc>"
+
+echo "$OUTPUT_LINE"
+exit 0

@@ -4,7 +4,7 @@ source "$HOME/.config/user-dirs.dirs"
 
 # Never misstype again!
 
-alias ls='ls --color'
+alias ls='colorls'
 
 alias cl='clear; pfetch'
 alias l=ls
@@ -196,6 +196,27 @@ youtube-download(){
         exit 1
     fi;
 }
+
+
+from_symbol(){
+    if [[ $# -eq 1 ]]; then
+        if [ ${#1} -eq 1 ]; then
+            echo -n "$1" |              # -n ignore trailing newline
+            iconv -f utf8 -t utf32be |  # UTF-32 big-endian happens to be the code point
+            xxd -p |                    # -p just give me the plain hex
+            sed -r 's/^0+/0x/' |        # remove leading 0's, replace with 0x
+            xargs printf '\\x%04X\n'     # pretty print the code point
+        else
+            echo "Only single characters allowed!"
+        fi
+    else
+        echo "Usage: $0 single-character"
+        exit 1
+    fi
+}
+
+# Add Cabal binaries to PATH
+export PATH=$PATH:/home/kalex/.cabal/bin
 
 # Better welcome screen with pfetch!!
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet

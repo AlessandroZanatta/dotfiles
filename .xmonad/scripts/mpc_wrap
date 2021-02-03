@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [[ $# -eq 0 ]]; then
+        echo "Usage: $0 args"
+        exit 1
+fi
+
+source '/home/kalex/.xmonad/scripts/mpc_env'
+
+ICON="/home/kalex/.xmonad/icons/music.svg"
+TIME=2000
+URGENCY='low'
+CALLER='Music Player Daemon'
+
+PLAYING='playing'
+
+if [ "$1" = "toggle" ]; then
+	STATUS=$(mpc | head -n2 | tail -n1 | cut -d"[" -f2 | cut -d"]" -f1)
+	if [ "$STATUS" = "$PLAYING" ]; then
+		TITLE='Stopped playing'
+	else
+		TITLE='Started playing'
+	fi
+elif [ "$1" = "next" ] || [ "$1" = "prev" ]; then
+	TITLE='Now playing'
+else
+	TITLE='???'
+fi
+
+COMMAND="mpc $@"
+CMD_OUT=$(eval $COMMAND)
+
+SONG=$(echo -n "$CMD_OUT" | head -n 1 | cut -d'.' -f1 | cut -d'/' -f2)
+GENRE=$(echo -n "$CMD_OUT" | head -n 1 | cut -d'.' -f1 | cut -d '/' -f1)
+
+notify-send -u "$URGENCY" -i "$ICON" -a "$CALLER" -t "$TIME" "$TITLE" "$SONG\n($GENRE)"

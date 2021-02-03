@@ -5,17 +5,19 @@
 WIFI_INTERFACE="wlp3s0"
 ETH_INTERFACE="enp2s0"
 
+# Connected via cable
+ifconfig "$ETH_INTERFACE" | grep -q inet && {
+  	echo "<fn=1></fn>"
+  	exit 0
+}
+
+# Not connected via cable nor wifi
 iwconfig "$WIFI_INTERFACE" 2>&1 | grep -q Not-Associated && {
-
-	ifconfig "$ETH_INTERFACE" | grep -q inet && {
-  		echo "<fn=1></fn>"
-  		exit 0
-	}
-
 	echo "<fn=1> </fn>"
 	exit 0
-} 
+}
 
+# Connected via wifi
 essid=`iwconfig "$WIFI_INTERFACE" | awk -F '"' '/ESSID/ {print $2}'`
 strength=`iwconfig "$WIFI_INTERFACE" | awk -F '=' '/Quality/ {print $2}' | cut -d '/' -f 1`
 
