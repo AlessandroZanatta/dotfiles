@@ -8,7 +8,6 @@
 ---------------------------------------------- 
 
 import Xmobar
-import Data.Optional
 import Data.Data
 import Text.Printf
 
@@ -29,20 +28,28 @@ myBorderColor     = "#646464"   -- color of the border (ignored if myBorder is "
 mySepChar         =  "%"        -- delineator between plugin names and straight text
 myAlignSep        = "}{"        -- separator between left-right alignment
 
+configDir         = "/home/kalex/.xmonad/"  -- where this file and xmonad.hs are
+scriptsDir        = configDir ++ "scripts/" -- where my xmobar scripts are in
+
 --------------------------------------------------------------------------------
 -- SYMBOLS-LOGOS
 --------------------------------------------------------------------------------
 
+withFont :: String -> Int -> String
+withFont logo fontNum = 
+  "<fn=" ++ show fontNum ++ ">" ++ logo ++ "</fn>"
+
 -- Font 1
-archLogo        = "<fn=1>\xF303 </fn>"
-cpuLogo         = "<fn=1>\xF85A </fn>"
-ramLogo         = "<fn=1>\xE266 </fn>"
+archLogo        = "\xF303 " `withFont` 1
+cpuLogo         = "\xF85A " `withFont` 1
+ramLogo         = "\xE266 " `withFont` 1
+calendarLogo    = "\xF133 " `withFont` 1
 
 -- Font 2
-arrowRight      = "<fn=2>\xE0B0</fn>" -- use font 2, fixed the default y position
-arrowLeft       = "<fn=2>\xE0B2</fn>" -- use font 2, fixed the default y position
-emptyArrowRight = "<fn=2>\xE0B1</fn>" -- use font 2, fixed the default y position
-emptyArrowLeft  = "<fn=2>\xE0B3</fn>" -- use font 2, fixed the default y position
+arrowRight      = "\xE0B0" `withFont` 2
+arrowLeft       = "\xE0B2" `withFont` 2
+emptyArrowRight = "\xE0B1" `withFont` 2
+emptyArrowLeft  = "\xE0B3" `withFont` 2
 
 --------------------------------------------------------------------------------
 -- POWERLINE-LIKE TEMPLATE
@@ -54,7 +61,9 @@ data ArrowType = LeftArrow
   | EmptyRightArrow
   deriving Eq
 
--- Create the arrow based on passed stuff 
+
+-- Create the arrow based on passed stuff
+doArrow :: ArrowType -> String -> String -> String -> String -> String 
 doArrow arrowType content bg fg afterColor =
   case arrowType of
     LeftArrow       -> arrowTemplate bg afterColor arrowLeft ++ template 
@@ -65,18 +74,23 @@ doArrow arrowType content bg fg afterColor =
     template = printf "<fc=%s,%s:0>%s</fc>" fg bg content
     arrowTemplate = printf "<fc=%s,%s>%s</fc>" 
 
+
 -- Wrap with an action the given string
 wrapWithAction :: String -> String -> String
 wrapWithAction toWrap action = printf "<action=%s>%s</action>" action toWrap
 
 
+
+-- Powerline-like Template
 powerlineTemplate :: String
 powerlineTemplate = 
   (wrapWithAction (doArrow RightArrow ("   " ++ archLogo ++ "  ") "#434343" "white" myBgColor) "xdotool key super+p") 
   ++ "    %UnsafeStdinReader%"
   ++ "}%date%{"
   ++ "%microphone%"
-  ++ doArrow LeftArrow "%internet%%bluetooth% " "#a0a0a0" "#222222" "#a0a0a0"
+  ++ doArrow LeftArrow 
+        "%internet%%bluetooth% " 
+        "#a0a0a0" "#222222" "#a0a0a0"
   ++ doArrow LeftArrow 
         "  %cpu%  " 
         "#5a5a5a" "#eeeeee" "#a0a0a0"
@@ -95,23 +109,23 @@ config :: Config
 config = defaultConfig { 
 
    -- Appearance
-     font = myFont
-   , additionalFonts = myAdditionalFonts
-   , textOffsets  = xftAlign -- align xft fonts correctly
-   , bgColor      = myBgColor
-   , fgColor      = myFgColor
-   , position     = myPosition
-   , border       = myBorder
-   , borderColor  = myBorderColor
+     font             = myFont
+   , additionalFonts  = myAdditionalFonts
+   , textOffsets      = xftAlign -- align xft fonts correctly
+   , bgColor          = myBgColor
+   , fgColor          = myFgColor
+   , position         = myPosition
+   , border           = myBorder
+   , borderColor      = myBorderColor
 
    -- Layout
-   , sepChar  = mySepChar
-   , alignSep = myAlignSep
-   , template = powerlineTemplate
+   , sepChar          = mySepChar
+   , alignSep         = myAlignSep
+   , template         = powerlineTemplate
    
    -- General behavior
-   , lowerOnStart     = False   -- send to bottom of window stack on start
-   , hideOnStart      = False   -- start with window unmapped (hidden)
+   , lowerOnStart     = False   -- do NOT send to bottom of window stack on start
+   , hideOnStart      = False   -- do NOT start with window unmapped (hidden)
    , allDesktops      = True    -- show on all desktops
    , overrideRedirect = True    -- set the Override Redirect flag (Xlib)
    , pickBroadest     = False   -- choose widest display (multi-monitor)
@@ -130,11 +144,11 @@ config = defaultConfig {
         -- Memory usage monitor
         , Run $ Memory       [ "--template" , ramLogo ++ "<usedratio>%" ] 10
         
-        , Run $ Com "/home/kalex/.xmonad/scripts/internetconnection" [] "internet" 10
-        , Run $ Com "/home/kalex/.xmonad/scripts/bluetoothstatus" [] "bluetooth" 10
-        , Run $ Com "/home/kalex/.xmonad/scripts/battery" [] "battery" 10 
-        
-        , Run $ Com "/home/kalex/.xmonad/scripts/microphone" ["#A0A0A0"] "microphone" 10 
+        -- Run my scripts
+        , Run $ Com (scriptsDir ++ "internetconnection") [] "internet" 10
+        , Run $ Com (scriptsDir ++ "bluetoothstatus") [] "bluetooth" 10
+        , Run $ Com (scriptsDir ++ "battery") [] "battery" 10 
+        , Run $ Com (scriptsDir ++ "microphone") ["#A0A0A0"] "microphone" 10
 
         -- Time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
