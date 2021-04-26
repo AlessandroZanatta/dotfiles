@@ -15,12 +15,14 @@ BAT_CHARGING=""
 
 CHARGING_STRING="Charging"
 
+BATTERY_INFO=$(acpi -b | egrep "until|remaining|full|unknown" -i)
+
 function is_charging(){
-	acpi -b | cut -d " " -f 3 | cut -d"," -f1
+	echo "$BATTERY_INFO" | cut -d " " -f 3 | cut -d"," -f1
 }
 
 function current_charge(){
-	acpi -b | cut -d" " -f4 | cut -d"%" -f1
+	echo "$BATTERY_INFO" | cut -d" " -f4 | cut -d"%" -f1
 }
 
 CHARGE=$(current_charge)

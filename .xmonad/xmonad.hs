@@ -47,9 +47,12 @@ import Data.Ratio
 -- Move and resize floating window
 import XMonad.Hooks.XPropManage
 
-
 -- Additional keys (like XF85AudioPlay, ...)
 import Graphics.X11.ExtraTypes.XF86
+
+-- Multiple xmobars on different screens
+import XMonad.Layout.IndependentScreens
+
 
 --------------------------------------------------------------------------------
 -- KEYBINDS
@@ -187,8 +190,8 @@ myManageHook = composeAll . concat $
         myWs4Class   = ["Chromium"]
         
         myWs0Title   = []
-        myWs1Title   = ["Ghidra"]
-        myWs2Title   = ["Lutris","League"]
+        myWs1Title   = []
+        myWs2Title   = ["Lutris", "League", "Ghidra", "Steam"]
         myWs3Title   = ["Discord", "Teams", "Telegram", "Signal"]
         myWs4Title   = ["Cantata"]
 
@@ -233,6 +236,10 @@ main = do
 
   -- Create a xmobar instance and keep a pipe open
   xmob <- spawnPipe "/home/kalex/.xmonad/xmobar"
+  
+  -- Count the number of screens dynamically
+  -- n <- countScreen 
+  -- xmprocs <- mapM (\i -> spawnPipe $ "xmobar -x " ++ show i) [0..n]
   xmonad kde4Config
     { 
       modMask = mod4Mask -- use the Windows button as mod

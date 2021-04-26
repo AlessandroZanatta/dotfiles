@@ -1,10 +1,11 @@
-# Configurations!
+
 
 source "$HOME/.config/user-dirs.dirs"
 
 # Never misstype again!
 
-alias ls='colorls'
+# Currently broken
+# alias ls='colorls'
 
 alias cl='clear; pfetch'
 alias l=ls
@@ -42,11 +43,10 @@ md2pdf(){
 # Faster init of pwndocker
 pwndocker(){
         if [[ $# -eq 1 ]]; then
-                docker run -d --rm -h $1 --name $1 -v $(pwd)/$1:/ctf/work -p 23946:23946 --cap-add=SYS_PTRACE skysider/pwndocker
+                docker run -d --rm -h $1 --name $1 -v "$(pwd)/$1":/ctf/work -p 23946:23946 --cap-add=SYS_PTRACE skysider/pwndocker
         else
-                echo 'Usage: $0 container_name'
-                exit 1
-        fi;
+                echo "Usage: pwndocker container_name"
+        fi
 }
 
 
@@ -215,8 +215,33 @@ from_symbol(){
     fi
 }
 
+# Activate/deactivate ASLR
+aslr(){
+    if [[ $# -eq 1 ]]; then
+        if [[ "$1" == "on" ]]; then
+            echo "2" | sudo tee /proc/sys/kernel/randomize_va_space
+        elif [[ "$1" == "off" ]]; then
+            echo "0" | sudo tee /proc/sys/kernel/randomize_va_space
+        else
+            echo "Usage: $0 [on/off]"
+        fi
+    else
+        echo "Usage: $0 [on/off]"
+    fi
+}
+
+# Always run tamarin with this flag to avoid errors not showing up
+tp(){
+    /home/kalex/.local/bin/tamarin-prover $@ --quit-on-warning
+}
+
 # Add Cabal binaries to PATH
 export PATH=$PATH:/home/kalex/.cabal/bin
+
+export XDG_DOCUMENTS_DIR=/home/kalex/Documents
+
+# Add GOPATH to env
+export GOPATH=$HOME/Programs
 
 # Better welcome screen with pfetch!!
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
