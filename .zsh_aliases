@@ -1,14 +1,14 @@
-# Better clear screen
-alias cl='clear; pfetch'
-
-# Never misstype again!
 #         _ _                     
 #    __ _| (_) __ _ ___  ___  ___ 
 #   / _` | | |/ _` / __|/ _ \/ __|
 #  | (_| | | | (_| \__ \  __/\__ \
 #   \__,_|_|_|\__,_|___/\___||___/
-#                                 
+#    
 
+# Better clear screen
+alias cl='clear; pfetch'
+
+# Never misstype again!
 alias l=ls
 alias s=ls
 alias sl=ls
