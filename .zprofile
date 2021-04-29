@@ -1,16 +1,58 @@
+#           _      
+#   _______| |__   
+#  |_  / __| '_ \  
+#   / /\__ \ | | | 
+#  /___|___/_| |_| 
+#                  
 
 
+# ----------------------- #
+# -------- MISC --------- # 
+# ----------------------- #
+
+# Better welcome screen with pfetch!!
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+pfetch
+
+# Do NOT kill child processes of the shell when the shell is killed
+setopt NO_HUP
+
+# -------------------------- #
+# -------- SOURCES --------- # 
+# -------------------------- #
+
+# XDG directories
 source "$HOME/.config/user-dirs.dirs"
 
-# Never misstype again!
+# Aliases
+source "$HOME/.zsh_aliases"
 
-# Currently broken
-# alias ls='colorls'
+# Virtualenv
+source /usr/bin/virtualenvwrapper.sh
 
-alias cl='clear; pfetch'
-alias l=ls
-alias s=ls
-alias sl=ls
+# -------------------------- #
+# -------- EXPORTS --------- # 
+# -------------------------- #
+
+# Add Cabal binaries to PATH
+export PATH=$PATH:/home/kalex/.cabal/bin
+
+# Add GOPATH to env
+export GOPATH=$HOME/Programs
+
+# Add Android Emulator to PATH
+export PATH=$PATH:/opt/android-sdk/emulator:/opt/android-sdk/tools/bin/
+
+# HackNotes requires an EDITOR variable to be set
+export EDITOR=nvim
+
+# Virtualenv
+# export PROJECT_HOME=$HOME/Projects
+export WORKON_HOME=$HOME/.virtualenvs
+
+# -------------------------- #
+# ------- FUNCTIONS -------- # 
+# -------------------------- #
 
 # Docker utility for fast connection
 docker_connect(){
@@ -20,11 +62,6 @@ docker_connect(){
         echo "Usage: $0"
     fi
 }
-
-
-# Creating pwn scripts with a command!
-alias pwninit='pwninit --template-path=/usr/local/bin/pwninit_template.py'
-
 
 # okular should start in background...
 pdf(){ nohup okular "$1" > /dev/null & }
@@ -40,7 +77,8 @@ md2pdf(){
         fi
 }
 
-# Faster init of pwndocker
+
+# Easier init of pwndocker
 pwndocker(){
         if [[ $# -eq 1 ]]; then
                 docker run -d --rm -h $1 --name $1 -v "$(pwd)/$1":/ctf/work -p 23946:23946 --cap-add=SYS_PTRACE skysider/pwndocker
@@ -50,29 +88,6 @@ pwndocker(){
 }
 
 
-# The fuck alias
-eval "$(thefuck --alias)"
-
-
-# volatility framework alias
-alias "volatility"="vol.py"
-
-
-# Add Android Emulator to PATH
-export PATH=$PATH:/opt/android-sdk/emulator:/opt/android-sdk/tools/bin/
-# This broke Clion (java version too hold), so switching to the alias!
-# export JAVA_HOME=/opt/android-studio/jre
-alias android='JAVA_HOME=/opt/android-studio/jre android-studio'
-
-# Colored grep
-alias grep='grep --color'
-
-
-# Start with AMDGPU programs that are video intensive
-alias teams='DRI_PRIME=1 nohup teams > /dev/null &'
-alias discord='DRI_PRIME=1 nohup discord > /dev/null &' # This actually is pretty heavy on the GPU and makes it go over 70°C, should probably avoid!
-
-
 # Clean swap
 swap_clean(){
         sudo swapoff /dev/sda10
@@ -80,86 +95,7 @@ swap_clean(){
 }
 
 
-# Cutter is bad, cutter is better
-alias cutter=Cutter
-
-# HackNotes EDITOR
-export EDITOR=nvim
-
-# Same for binaryninja
-alias binaryninja='binaryninja-demo'
-
-# NeoVim alias
-alias vi=nvim
-alias vim=nvim
-
-# Start Clion in background without output
-alias clion='nohup clion > /dev/null &'
-
-# Start BurpSuite in background without output
-alias burpsuite='nohup burpsuite > /dev/null &'
-
-# A remainder!
-# A reminder
-function githelp {
-    echo "-------------------------------------------------------------------------------"
-    echo "git clone http://... [repo-name]"
-    echo "git init [repo-name]"
-    echo "-------------------------------------------------------------------------------"
-    echo "git add -A <==> git add . ; git add -u # Add to the staging area (index)"
-    echo "-------------------------------------------------------------------------------"
-    echo "git commit -m 'message' -a"
-    echo "git commit -m 'message' -a --amend"
-    echo "-------------------------------------------------------------------------------"
-    echo "git status"
-    echo "git log --stat # Last commits, --stat optional"
-    echo "git ls-files"
-    echo "git diff HEAD~1..HEAD"
-    echo "-------------------------------------------------------------------------------"
-    echo "git push origin master"
-    echo "git push origin master:master"
-    echo "-------------------------------------------------------------------------------"
-    echo "git remote add origin http://..."
-    echo "git remote set-url origin git://..."
-    echo "-------------------------------------------------------------------------------"
-    echo "git stash"
-    echo "git pull origin master"
-    echo "git stash list ; git stash pop"
-    echo "-------------------------------------------------------------------------------"
-    echo "git submodule add /absolute/path repo-name"
-    echo "git submodule add http://... repo-name"
-    echo "-------------------------------------------------------------------------------"
-    echo "git checkout -b new-branch <==> git branch new-branch ; git checkout new-branch"
-    echo "git merge old-branch"
-    echo "git branch local_name origin/remote_name # Associate branches"
-    echo "-------------------------------------------------------------------------------"
-    echo "git update-index --assume-unchanged <file> # Ignore changes"
-    echo "git rm --cached <file> # Untrack a file"
-    echo "-------------------------------------------------------------------------------"
-    echo "git reset --hard HEAD # Repair what has been done since last commit"
-    echo "git revert HEAD # Repair last commit"
-    echo "git checkout [file] # Reset a file to its previous state at last commit"
-    echo "-------------------------------------------------------------------------------"
-    echo "git tag # List"
-    echo "git tag v0.5 # Lightwieght tag"
-    echo "git tag -a v1.4 -m 'my version 1.4' # Annotated tag"
-    echo "git push origin v1.4 # Pushing"
-    echo "-------------------------------------------------------------------------------"
-    echo "HOW TO RENAME A BRANCH LOCALLY AND REMOTELY"
-    echo "git branch -m old_name new_name"
-    echo "git push origin new_name"
-    echo "git push origin :old_name"
-    echo "------"
-    echo "Each other client of the repository has to do:"
-    echo "git fetch origin ; git remote prune origin"
-    echo "-------------------------------------------------------------------------------"
-}
-
-# Virtualenvwrapper things
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Projects
-source /usr/bin/virtualenvwrapper.sh
-
+# activate/deactivate >> workon/deactivate
 activate(){
     if [[ $# -eq 1 ]]; then
        workon "$1" 
@@ -168,6 +104,7 @@ activate(){
         exit 1
     fi;
 }
+
 
 # Start background programs without output with ease
 noout(){
@@ -179,11 +116,6 @@ noout(){
     fi;
 }
 
-# Colored radeontop
-alias radeontop='sudo radeontop -c'
-
-# Do NOT kill child processes of the shell when the shell is killed
-setopt NO_HUP
 
 # Download youtube videos' audio
 youtube-download(){
@@ -198,6 +130,7 @@ youtube-download(){
 }
 
 
+# Convert symbol into unicode code
 from_symbol(){
     if [[ $# -eq 1 ]]; then
         if [ ${#1} -eq 1 ]; then
@@ -215,7 +148,8 @@ from_symbol(){
     fi
 }
 
-# Activate/deactivate ASLR
+
+# Activate/deactivate ASLR (very useful for pwn)
 aslr(){
     if [[ $# -eq 1 ]]; then
         if [[ "$1" == "on" ]]; then
@@ -230,19 +164,11 @@ aslr(){
     fi
 }
 
+
 # Always run tamarin with this flag to avoid errors not showing up
+# Notice: the flag --quit-on-warning must come after everything, an alias would break everything
 tp(){
     /home/kalex/.local/bin/tamarin-prover $@ --quit-on-warning
 }
 
-# Add Cabal binaries to PATH
-export PATH=$PATH:/home/kalex/.cabal/bin
 
-export XDG_DOCUMENTS_DIR=/home/kalex/Documents
-
-# Add GOPATH to env
-export GOPATH=$HOME/Programs
-
-# Better welcome screen with pfetch!!
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-pfetch
