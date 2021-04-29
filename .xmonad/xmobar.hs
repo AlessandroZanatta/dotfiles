@@ -1,3 +1,5 @@
+{-# LANGUAGE LambdaCase #-}
+
 ----------------------------------------------
 -- __   __                _                 --
 -- \ \ / /               | |                --
@@ -18,6 +20,9 @@ import DBus
 import DBus.Client
 import Data.Maybe (fromJust)
 import Sound.ALSA.Mixer
+import Data.IORef
+import Control.Concurrent.Async (concurrently_)
+import XmobarAppTimer -- I really think I need this module for some stuff, but it is hidden by default
 
 --------------------------------------------------------------------------------
 -- CONFIGURATION STUFF
@@ -186,8 +191,9 @@ instance Exec MyNetwork where
 
 btIcon = "\xF294" `withFont` 1
 
-btGetPairedDevices :: Client -> IO [String]
-btGetPairedDevices client = do
+btGetPairedDevices :: IO [String]
+btGetPairedDevices = do
+    client <- connectSystem
     let objectPath      = objectPath_ "/org/bluez/hci0"
     let interfaceName   = interfaceName_ "org.freedesktop.DBus.Introspectable"
     let memberName      = memberName_ "Introspect"
@@ -199,9 +205,21 @@ btGetPairedDevices client = do
     let unwrapped_reply = fromJust $ fromVariant (methodReturnBody reply !! 0) :: String 
 
     let matches = (unwrapped_reply =~ ("(dev_[0-9A-F]{2}_[0-9A-F]{2}_[0-9A-F]{2}_[0-9A-F]{2}_[0-9A-F]{2}_[0-9A-F]{2})") :: [[String]])
-    if null matches
-        then return []
-        else return $ firsts matches
+    let pairedDevices = if null matches
+                            then []
+                            else firsts matches
+  
+    print ("Updated paired devices list: " ++ show(pairedDevices))
+    
+    disconnect client
+    return pairedDevices
+
+btWithRefreshPairedDevices :: Int -> (IORef [String] -> IO ()) -> IO ()
+btWithRefreshPairedDevices r action = do
+    paired <- newIORef =<< btGetPairedDevices
+    let refresh = atomicWriteIORef paired =<< btGetPairedDevices
+    concurrently_ (doEveryTenthSeconds r refresh) (action paired)
+
 
 btCheckConnection :: Client -> String -> IO Bool
 btCheckConnection client device = do
@@ -225,16 +243,15 @@ btAnyDeviceConnected client devices = do
         else btAnyDeviceConnected client (drop 1 devices)
 
 
-btStatusText :: IO String
-btStatusText = do
+btStatusText :: IORef [String] -> IO String
+btStatusText pairedDevicesRef = do
     client <- connectSystem
-    pairedDevices <- btGetPairedDevices client
-   
+    pairedDevices <- readIORef pairedDevicesRef
     anyPaired <- btAnyDeviceConnected client pairedDevices
     let statusText = if anyPaired
                          then (" " ++ (doArrow EmptyLeftArrow (" " ++ btIcon) "#A0A0A0" "#222222" "#777777"))
                          else ""
-
+      
     disconnect client
     return statusText
     
@@ -242,10 +259,15 @@ btStatusText = do
 data MyBluetooth = MyBluetooth Int
     deriving (Read, Show)
 
+-- Implementation HIGHLY inspired by https://github.com/jaor/xmobar/blob/master/src/Xmobar/Plugins/Date.hs
 instance Exec MyBluetooth where
     rate  (MyBluetooth r) = r
     alias (MyBluetooth _) = "mybt"
-    run   (MyBluetooth r) = btStatusText 
+    -- Update the actual list of paired devices every 10 minutes as it requires to 
+    -- run a regex against ~4kB of data (and I don't really pair new stuff often) 
+    start (MyBluetooth r) cb =
+        btWithRefreshPairedDevices (600*10) $ \paired ->  
+            doEveryTenthSeconds r $ btStatusText paired >>= cb
 
 ----------------------------------------
 -- MICROPHONE PLUGIN
