@@ -33,7 +33,7 @@ pdf(){ nohup okular "$1" > /dev/null & }
 # Pandoc shortcut for a md to pdf render
 md2pdf(){
         if [[ $# -eq 1 ]]; then
-                pandoc -f markdown -t latex "$1" -o "${1%.md}.tex" -s --number-sections && pdflatex "${1%.md}.tex" && rm "${1%.md}.tex" "${1%.md}.aux" "${1%.md}.log"
+                pandoc -f markdown -t latex "$1" -o "${1%.md}.tex" -s --number-sections -V colorlinks=true -V linkcolor=blue -V urlcolor=red && pdflatex "${1%.md}.tex" && rm "${1%.md}.tex" "${1%.md}.aux" "${1%.md}.log"
         else
                 echo 'Usage: md2tex input.md'
                 # exit 2

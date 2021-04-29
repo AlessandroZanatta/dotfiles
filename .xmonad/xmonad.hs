@@ -1,58 +1,35 @@
+---------------------------------------------
+--  __   ____  __                       _  --
+--  \ \ / /  \/  |                     | | --
+--   \ V /| \  / | ___  _ __   __ _  __| | --
+--    > < | |\/| |/ _ \| '_ \ / _` |/ _` | --
+--   / . \| |  | | (_) | | | | (_| | (_| | --
+--  /_/ \_\_|  |_|\___/|_| |_|\__,_|\__,_| --
+---------------------------------------------
+
 import XMonad
 import XMonad.Config.Kde
-
--- to shift and float windows
 import qualified XMonad.StackSet as W
 import Control.Monad (liftM2)
-
--- default desktopConfig
 import XMonad.Config.Desktop 
-
--- avoidStruts lives here
 import XMonad.Hooks.ManageDocks
-
--- spawnPipe
 import XMonad.Util.Run
+import XMonad.Operations
 import XMonad.Util.SpawnOnce
-
--- stuff to manage xmobar
 import XMonad.Hooks.DynamicLog
-
--- to set the WMName to something else, otherwise clion is unhappy and refuses to work
 import XMonad.Hooks.SetWMName
-
--- Allow spacing (gaps) to be displayed around windows (definitly more beauty this way)
 import XMonad.Layout.Spacing
-
--- Remove window borders if they aren't needed
 import XMonad.Layout.NoBorders (smartBorders)
-
--- Needed to make plasmashell work properly (notifications, system tray)
 import XMonad.Hooks.ManageHelpers
-
--- Needed for the workspace names
 import XMonad.Actions.DynamicWorkspaces
-
--- For keybindings
 import qualified Data.Map as M
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
-
--- Data.List provides isPrefixOf isSuffixOf and isInfixOf
 import Data.List
-
--- Used to create rationals with %
 import Data.Ratio
-
--- Move and resize floating window
 import XMonad.Hooks.XPropManage
-
--- Additional keys (like XF85AudioPlay, ...)
 import Graphics.X11.ExtraTypes.XF86
-
--- Multiple xmobars on different screens
 import XMonad.Layout.IndependentScreens
-
 
 --------------------------------------------------------------------------------
 -- KEYBINDS
