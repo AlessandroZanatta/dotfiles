@@ -46,7 +46,7 @@ myKeyBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , ((0, xF86XK_AudioNext)            , spawn "/home/kalex/.xmonad/scripts/mpc_wrap next")          -- XF86AudioNext          --> MPD: Go to next song
       , ((modm, xF86XK_AudioLowerVolume)  , spawn "mpc volume -5")                                      -- XF86AudioLowerVolume   --> MPD: lower volume
       , ((modm, xF86XK_AudioRaiseVolume)  , spawn "mpc volume +5")                                      -- XF86AudioRaiseVolume   --> MPD: raise volume
-      , ((modm, xK_q)                     , spawn "ghc --make /home/kalex/.xmonad/xmobar.hs && xmonad --recompile && xmonad --restart")
+      , ((modm, xK_q)                     , spawn "xmonad --recompile && xmonad --restart")
     ]
 
 -- Add myKeyBindings to the default keybindings and save into myKeys

@@ -21,9 +21,6 @@ setopt NO_HUP
 # -------- SOURCES --------- # 
 # -------------------------- #
 
-# XDG directories
-source "$HOME/.config/user-dirs.dirs"
-
 # Aliases
 source "$HOME/.zsh_aliases"
 
@@ -34,8 +31,21 @@ source /usr/bin/virtualenvwrapper.sh
 # -------- EXPORTS --------- # 
 # -------------------------- #
 
+# XDG stuff
+export XDG_DESKTOP_DIR="$HOME/Desktop"
+export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+export XDG_TEMPLATES_DIR="$HOME/Templates"
+export XDG_PUBLICSHARE_DIR="$HOME/Public"
+export XDG_DOCUMENTS_DIR="$HOME/Documents"
+export XDG_MUSIC_DIR="$HOME/Music"
+export XDG_PICTURES_DIR="$HOME/Pictures"
+export XDG_VIDEOS_DIR="$HOME/Videos"
+
 # Add Cabal binaries to PATH
 export PATH=$PATH:/home/kalex/.cabal/bin
+
+# Add .local to PATH
+export PATH=$PATH:/home/kalex/.local/bin
 
 # Add GOPATH to env
 export GOPATH=$HOME/Programs
@@ -172,3 +182,12 @@ tp(){
 }
 
 
+# Proverif command
+pv(){
+    local OUT_DIR=${2:-out}
+    if [ ! -d "$OUT_DIR" ]; then
+        mkdir "$OUT_DIR"
+    fi
+
+    proverif -graph "$OUT_DIR" "$1"
+}       

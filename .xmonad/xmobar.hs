@@ -1,5 +1,3 @@
-{-# LANGUAGE LambdaCase #-}
-
 ----------------------------------------------
 -- __   __                _                 --
 -- \ \ / /               | |                --
@@ -22,7 +20,9 @@ import Data.Maybe (fromJust)
 import Sound.ALSA.Mixer
 import Data.IORef
 import Control.Concurrent.Async (concurrently_)
-import XmobarAppTimer -- I really think I need this module for some stuff, but it is hidden by default
+
+-- I really think I need this module for some stuff, but it is hidden by default
+import XmobarAppTimer 
 
 --------------------------------------------------------------------------------
 -- CONFIGURATION STUFF
@@ -209,8 +209,6 @@ btGetPairedDevices = do
                             then []
                             else firsts matches
   
-    print ("Updated paired devices list: " ++ show(pairedDevices))
-    
     disconnect client
     return pairedDevices
 
