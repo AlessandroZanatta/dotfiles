@@ -170,7 +170,7 @@ networkStatusText = do
     statusText    <- if wirelessState == netStateUp
                      then do
                          signalStrength <- getWirelessSignalStrength netWirelessAdapter
-                         return (netWirelessIcon ++ " " ++ signalStrength) :: IO String
+                         return (netWirelessIcon ++ " " ++ signalStrength ++ " dB") :: IO String
                      else if cableState == netStateUp
                          then return netCableIcon
                          else return netNoConnectionIcon
