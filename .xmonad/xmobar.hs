@@ -14,14 +14,18 @@ import Plugins.Battery
 import Plugins.Connection
 import Plugins.Bluetooth
 import Plugins.Microphone
+import Plugins.VPN
 
 --------------------------------------------------------------------------------
 -- CONFIGURATION STUFF
 --------------------------------------------------------------------------------
 
 myFont            = "xft:Hack:size=9:bold:antialias=true"
-myAdditionalFonts = ["xft:mononoki Nerd Font:pixelsize=16:antialias=true:hinting=true", "xft:mononoki Nerd Font:pixelsize=20:Regular:antialias=true" ]
-xftAlign          = [14, 15]    -- some xft fonts are not correctly aligned
+myAdditionalFonts = ["xft:mononoki Nerd Font:pixelsize=16:antialias=true:hinting=true"
+                    , "xft:mononoki Nerd Font:pixelsize=20:Regular:antialias=true"
+                    , "xft:mononoki Nerd Font:pixelsize=18:Regular:antialias=true" 
+                    ]
+xftAlign          = [14, 15, 15]    -- some xft fonts are not correctly aligned
 
 myBgColor         = "#141a21"   -- background color
 myFgColor         = "#dddddd"   -- text color
@@ -56,9 +60,12 @@ powerlineTemplate =
   ++ "    %UnsafeStdinReader%"
   ++ "}%date%{"
   ++ "%mymic%"
-  ++ doArrow NoArrow
-        "%mynet%%mybt% "
+  ++ doArrow LeftArrow
+        "%myvpn%"
         "#a0a0a0" "#222222" "#a0a0a0"
+  ++ doArrow EmptyLeftArrow
+        "%mynet%%mybt% "
+        "#a0a0a0" "#222222" "#777777"
   ++ doArrow LeftArrow
         "  %cpu%  "
         "#5a5a5a" "#eeeeee" "#a0a0a0"
@@ -118,6 +125,7 @@ config = defaultConfig {
         , Run $ MyBluetooth 50
         , Run $ MyBattery 30
         , Run $ MyNetwork 30
+        , Run $ VPN ["HomeVPN"] 100
 
         -- Time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)

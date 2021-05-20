@@ -200,3 +200,20 @@ gdb-libc(){
         echo "Usage: $0 libc-to-preload patched-binary"
     fi
 }
+
+# Toggle my HomeVPN with wireguard
+toggleVPN(){
+    vpname=""
+    if [[ $# -eq 1 ]]; then
+        vpnname="$1"
+    else
+        vpnname="HomeVPN"
+    fi
+    
+    vpnstatus=$(sudo wg show "$vpnname")
+    if [[ $vpnstatus == "" ]]; then # Offline
+        sudo wg-quick up "$vpnname"
+    else # Online
+        sudo wg-quick down "$vpnname"
+    fi
+}
