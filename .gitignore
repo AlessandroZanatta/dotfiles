@@ -1,0 +1,53 @@
+# Ignore all files by default
+*
+
+# Then specify a list of allowed ones...
+
+# ------------------ GIT ------------------ #
+# This .gitignore
+!.gitignore
+
+# ------------------ BASH ------------------ #
+!.bashrc
+!.bash_profile
+
+# ------------------ ZSH ------------------ #
+!.zshrc
+!.zprofile
+!.zsh_aliases
+
+# ------------------ X11 ------------------ #
+!.xinitrc
+
+# ------------------ XMONAD/XMOBAR ------------------ #
+# Allow directory
+!.xmonad/
+
+# Base files
+!.xmonad/Makefile
+!.xmonad/xmonad.hs
+!.xmonad/xmobar.hs
+
+# Plugins and others
+!.xmonad/Plugins/
+!.xmonad/Plugins/*
+!.xmonad/Utils.hs
+!.xmonad/scripts/*
+!.xmonad/icons/*
+
+# ------------------ DISALLOWED DIRS ------------------ #
+# ...and specify a list of directories we don't want too
+.local
+.cache/
+.cargo/
+.oh-my-zsh/
+Desktop/
+Programs/
+Projects/
+.vscode-oss/
+Arduino/
+Videos/
+Pictures/
+Documents/
+Games/
+Music/
