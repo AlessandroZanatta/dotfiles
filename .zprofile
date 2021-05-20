@@ -100,8 +100,8 @@ pwndocker(){
 
 # Clean swap
 swap_clean(){
-        sudo swapoff /dev/sda10
-        sudo swapon /dev/sda10
+        sudo swapoff /dev/sda4
+        sudo swapon /dev/sda4
 }
 
 
@@ -190,4 +190,13 @@ pv(){
     fi
 
     proverif -graph "$OUT_DIR" "$1"
-}       
+} 
+
+# Start GDB with given libc
+gdb-libc(){
+    if [[ $# -eq 2 ]]; then
+        gdb -iex "set exec-wrapper env LD_PRELOAD=$1" "$2"
+    else
+        echo "Usage: $0 libc-to-preload patched-binary"
+    fi
+}
