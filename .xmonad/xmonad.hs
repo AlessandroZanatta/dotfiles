@@ -58,21 +58,17 @@ toggleMic = do
 --------------------------------------------------------------------------------
 
 myApplicationLauncher = "$HOME/.config/rofi/bin/launcher_colorful"
+xmonadDir             = "$HOME/.xmonad"
 myScreenshotUtility   = "spectacle"
 
 myKeyBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-    [ ((modm, xK_p)                       , spawn myApplicationLauncher)                                -- Mod-p                  --> open application launcher
-      , ((modm .|. shiftMask, xK_s)       , spawn  myScreenshotUtility)                                 -- Mod+Shift+S            --> take a screenshot
-      , ((modm, xK_f)                     , sendMessage $ Toggle FULL)                                  -- Mod-f                  --> switch to fullscreen layout
-      -- , ((0, xF86XK_AudioPlay)            , spawn "/home/kalex/.xmonad/scripts/mpc_wrap toggle")        -- XF86AudioPlay          --> MPD: Toggle pause/play
-      -- , ((0, xF86XK_AudioPrev)            , spawn "/home/kalex/.xmonad/scripts/mpc_wrap prev")          -- XF86AudioPrev          --> MPD: Go to previous song
-      -- , ((0, xF86XK_AudioNext)            , spawn "/home/kalex/.xmonad/scripts/mpc_wrap next")          -- XF86AudioNext          --> MPD: Go to next song
-      -- , ((modm, xF86XK_AudioLowerVolume)  , spawn "mpc volume -5")                                      -- XF86AudioLowerVolume   --> MPD: lower volume
-      -- , ((modm, xF86XK_AudioRaiseVolume)  , spawn "mpc volume +5")                                      -- XF86AudioRaiseVolume   --> MPD: raise volume
-      , ((modm, xK_q)                     , spawn "xmonad --recompile && xmonad --restart")
-      , ((modm .|. shiftMask, xK_m)       , liftIO toggleMic)                                           -- Mod-Shift-L            --> Toggle mic mute 
-      , ((modm .|. shiftMask, xK_Up)      , spawn "systemctl suspend")                                  -- Mod-Shift-Up           --> Suspend to RAM
-      , ((modm .|. shiftMask, xK_Down)    , spawn "systemctl hibernate")                                -- Mod-Shift-Down         --> Hibernate to DISK
+    [ ((modm, xK_p)                       , spawn myApplicationLauncher)                -- Mod-p            --> Open application launcher
+      , ((modm .|. shiftMask, xK_s)       , spawn  myScreenshotUtility)                 -- Mod+Shift+S      --> Take a screenshot
+      , ((modm, xK_f)                     , sendMessage $ Toggle FULL)                  -- Mod-f            --> Switch to fullscreen layout
+      , ((modm, xK_q)                     , spawn ("cd " ++ xmonadDir ++ " && make"))   -- Mod-q            --> Re-build and restart xmonad and xmobar
+      , ((modm .|. shiftMask, xK_m)       , liftIO toggleMic)                           -- Mod-Shift-M      --> Toggle mic mute 
+      , ((modm .|. shiftMask, xK_Up)      , spawn "systemctl suspend")                  -- Mod-Shift-Up     --> Suspend to RAM
+      , ((modm .|. shiftMask, xK_Down)    , spawn "systemctl hibernate")                -- Mod-Shift-Down   --> Hibernate to DISK
     ]
 
 -- Add myKeyBindings to the default keybindings and save into myKeys
