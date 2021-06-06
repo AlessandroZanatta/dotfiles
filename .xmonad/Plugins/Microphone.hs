@@ -40,7 +40,7 @@ micStatusText bgColor = do
 
     -- Formatting stuff 
     if stateString == ""
-        then return (stateString ++ wrapWithColors arrowLeft "#a0a0a0" "#222222")
+        then return (stateString ++ wrapWithColors arrowLeft "#a0a0a0" bgColor)
         else return (doArrow LeftArrow stateString "#DDDDDD" "#222222" bgColor ++ wrapWithColors arrowLeft "#a0a0a0" "#DDDDDD")
 
 data MyMicrophone = MyMicrophone String Int

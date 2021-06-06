@@ -178,7 +178,7 @@ aslr(){
 # Always run tamarin with this flag to avoid errors not showing up
 # Notice: the flag --quit-on-warning must come after everything, an alias would break everything
 tp(){
-    /home/kalex/.local/bin/tamarin-prover $@ --quit-on-warning
+    $HOME/.local/bin/tamarin-prover $@ --quit-on-warning
 }
 
 
@@ -217,3 +217,5 @@ toggleVPN(){
         sudo wg-quick down "$vpnname"
     fi
 }
+
+

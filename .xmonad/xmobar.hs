@@ -60,9 +60,9 @@ powerlineTemplate =
   ++ "    %UnsafeStdinReader%"
   ++ "}%date%{"
   ++ "%mymic%"
-  ++ doArrow LeftArrow
-        "%myvpn%"
-        "#a0a0a0" "#222222" "#a0a0a0"
+  ++ doArrow NoArrow 
+        " %myvpn%"
+        "#a0a0a0" "#222222" ""
   ++ doArrow EmptyLeftArrow
         "%mynet%%mybt% "
         "#a0a0a0" "#222222" "#777777"
@@ -129,7 +129,7 @@ config = defaultConfig {
 
         -- Time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run $ Date           "<fc=#dddddd>%F (%a) %T</fc>" "date" 10
+        , Run $ Date           "<fc=#dddddd>%F (%a) <fc=#ee9a00>%H:%M</fc></fc>" "date" 10
         ]
    }
 

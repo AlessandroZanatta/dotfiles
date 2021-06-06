@@ -45,3 +45,6 @@ alias burpsuite='nohup burpsuite > /dev/null &'
 
 # Colored radeontop
 alias radeontop='sudo radeontop -c'
+
+# Don't save env in R
+alias R='R --no-save'
