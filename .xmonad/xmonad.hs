@@ -31,27 +31,14 @@ import XMonad.Hooks.XPropManage
 import Graphics.X11.ExtraTypes.XF86
 import XMonad.Layout.IndependentScreens
 
-import Sound.ALSA.Mixer
-import System.Exit
+import Microphone
 
 --------------------------------------------------------------------------------
 -- DEFINED FUNCTIONS 
 --------------------------------------------------------------------------------
 
-micIsNotMuted :: IO Bool
-micIsNotMuted =
-    withMixer "default" $ \mixer -> do 
-        Just control <- getControlByName mixer "Capture"
-        let Just captureSwitch = capture $ switch control
-        Just sw <- getChannel FrontLeft captureSwitch
-        return sw
-
 toggleMic :: IO ()
-toggleMic = do
-    notMuted <- micIsNotMuted
-    if notMuted
-        then spawn "pactl set-source-mute 1 1"
-        else spawn "pactl set-source-mute 1 0"
+toggleMic = do spawn micToggleMuteCommand    
 
 --------------------------------------------------------------------------------
 -- KEYBINDS
@@ -61,9 +48,9 @@ myApplicationLauncher = "$HOME/.config/rofi/bin/launcher_colorful"
 xmonadDir             = "$HOME/.xmonad"
 myScreenshotUtility   = "spectacle"
 
-myKeyBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeyBindings conf@ XConfig {XMonad.modMask = modm} = M.fromList  
     [ ((modm, xK_p)                       , spawn myApplicationLauncher)                -- Mod-p            --> Open application launcher
-      , ((modm .|. shiftMask, xK_s)       , spawn  myScreenshotUtility)                 -- Mod+Shift+S      --> Take a screenshot
+      , ((modm .|. shiftMask, xK_s)       , spawn myScreenshotUtility)                  -- Mod+Shift+S      --> Take a screenshot
       , ((modm, xK_f)                     , sendMessage $ Toggle FULL)                  -- Mod-f            --> Switch to fullscreen layout
       , ((modm, xK_q)                     , spawn ("cd " ++ xmonadDir ++ " && make"))   -- Mod-q            --> Re-build and restart xmonad and xmobar
       , ((modm .|. shiftMask, xK_m)       , liftIO toggleMic)                           -- Mod-Shift-M      --> Toggle mic mute 

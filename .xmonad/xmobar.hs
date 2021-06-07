@@ -10,11 +10,11 @@
 import Xmobar
 
 import Utils
-import Plugins.Battery
-import Plugins.Connection
-import Plugins.Bluetooth
-import Plugins.Microphone
-import Plugins.VPN
+import Battery
+import Connection
+import Bluetooth
+import Microphone
+import VPN
 
 --------------------------------------------------------------------------------
 -- CONFIGURATION STUFF
