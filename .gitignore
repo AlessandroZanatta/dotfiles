@@ -1,15 +1,14 @@
 # Ignore all files by default
 *
-
-# Then specify a list of allowed ones...
+.*
 
 # ------------------ GIT ------------------ #
 # This .gitignore
 !.gitignore
 
 # ------------------ BASH ------------------ #
-!.bashrc
-!.bash_profile
+# !.bashrc
+# !.bash_profile
 
 # ------------------ ZSH ------------------ #
 !.zshrc
@@ -23,29 +22,19 @@
 # Allow directory
 !.xmonad/
 
-# Base files
-!.xmonad/Makefile
-!.xmonad/xmonad.hs
-!.xmonad/xmobar.hs
+# But do NOT include built binaries
+.xmonad/xmonad
+.xmonad/xmobar
+.xmonad/xmonad-x86_64-linux
 
-# Plugins and others
-!.xmonad/lib/
-!.xmonad/lib/*
-!.xmonad/icons/*
-
-# ------------------ DISALLOWED DIRS ------------------ #
-# ...and specify a list of directories we don't want too
-.local
-.cache/
-.cargo/
-.oh-my-zsh/
-Desktop/
-Programs/
-Projects/
-.vscode-oss/
-Arduino/
-Videos/
-Pictures/
-Documents/
-Games/
-Music/
+# ------------- NVIM -------------- #
+!.config
+.config/*
+!.config/nvim
+!.config/nvim/*
+!.config/nvim/*/*
+!.config/nvim/*/*/*
+!.config/nvim/*/*/*/*
+!.config/nvim/*/*/*/*/*
+!.config/nvim/*/*/*/*/*/*
+.config/nvim/plugged

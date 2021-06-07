@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/kalex/Projects/DatabaseProject/database'
+let g:netrw_dirhist_9='/home/kalex/Desktop/University/thesis/proverif-tamarin-translations/toy_protocol/toy_1'
+let g:netrw_dirhist_8='/tmp/awesome-vim-colorschemes'
+let g:netrw_dirhist_7='/tmp/awesome-vim-colorschemes/autoload'
+let g:netrw_dirhist_6='/tmp/awesome-vim-colorschemes'
+let g:netrw_dirhist_5='/home/kalex/Projects/DatabaseProject/database'
+let g:netrw_dirhist_4='/home/kalex/Desktop/CyberSecurity/CyberChallenge/CCIT-2021/challenges/web_security_3/xss_simple_2'
+let g:netrw_dirhist_3='/home/kalex/Desktop/CyberSecurity/CyberChallenge/CCIT-2021/challenges/web_security_3/xss_simple_1'
+let g:netrw_dirhist_2='/home/kalex/Desktop/University/translations/.git'
+let g:netrw_dirhist_1='/home/kalex/Projects/DatabaseProject/database/scripts'
