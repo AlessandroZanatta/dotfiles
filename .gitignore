@@ -29,10 +29,8 @@
 !.xmonad/xmobar.hs
 
 # Plugins and others
-!.xmonad/Plugins/
-!.xmonad/Plugins/*
-!.xmonad/Utils.hs
-!.xmonad/scripts/*
+!.xmonad/lib/
+!.xmonad/lib/*
 !.xmonad/icons/*
 
 # ------------------ DISALLOWED DIRS ------------------ #
