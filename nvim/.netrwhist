@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/home/kalex/Desktop/University/thesis/mtproto2-tamarin/src/debug'
+let g:netrw_dirhist_5='/home/kalex/Programs/tamarin-prover/lib/term/src/Term/Builtin'
+let g:netrw_dirhist_4='/home/kalex/Desktop/University/thesis/mtproto2-tamarin/libsrc/mtproto2-encryption/model2'
+let g:netrw_dirhist_3='/home/kalex/Desktop/University/thesis/mtproto2-tamarin/libsrc/mtproto2-encryption'
+let g:netrw_dirhist_2='/home/kalex/Desktop/CyberSecurity/CTFs/..bfg-report/2021-06-21/15-53-20'
+let g:netrw_dirhist_1='/home/kalex/Desktop/University/thesis/mtproto2-tamarin/libsrc'
+let g:netrw_dirhist_0='/home/kalex/Desktop/CyberSecurity/CTFs/W3challs/pwn/ranchar/ranchar/rootfs/home/ranchar'
+let g:netrw_dirhist_9='/home/kalex/Desktop/CyberSecurity/CTFs/hackthebox/pwn/kernel_adventures_1/release'
+let g:netrw_dirhist_8='/home/kalex/Desktop/CyberSecurity/CTFs/hackthebox/pwn/kernel_adventures_1/src'
+let g:netrw_dirhist_7='/home/kalex/Projects/mhpacket/user_actions/python'

@@ -1,0 +1,11 @@
+*.o
+*.error
+*.hi
+.stack-work
+build-x86_64-linux
+xmobar-git
+xmonad-git
+xmonad-contrib-git
+xmobar-1
+xmobar-2
+xmonad-x86_64-linux

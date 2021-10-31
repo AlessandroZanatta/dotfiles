@@ -1,0 +1,50 @@
+#         _ _                     
+#    __ _| (_) __ _ ___  ___  ___ 
+#   / _` | | |/ _` / __|/ _ \/ __|
+#  | (_| | | | (_| \__ \  __/\__ \
+#   \__,_|_|_|\__,_|___/\___||___/
+#    
+
+# Better clear screen
+alias cl='clear; pfetch'
+
+# Never misstype again!
+alias l=ls
+alias s=ls
+alias sl=ls
+
+# Creating pwn scripts with a command!
+alias pwninit='pwninit --template-path=/usr/local/bin/pwninit_template.py'
+
+# Volatility framework
+alias volatility=vol
+
+# Changing JAVA_HOME broke Clion (java version too old), it's better to use the alias
+# export JAVA_HOME=/opt/android-studio/jre # BAD!
+alias android='JAVA_HOME=/opt/android-studio/jre android-studio'
+
+# Colored grep
+alias grep='grep --color'
+
+# Start with AMDGPU programs that are video intensive (currently unsure if this is a good thing)
+# alias teams='DRI_PRIME=1 nohup teams > /dev/null &'
+# alias discord='DRI_PRIME=1 nohup discord > /dev/null &' # This actually is pretty heavy on the GPU and makes it go over 70°C, should probably avoid!
+
+# Same for binaryninja
+alias binaryninja='binaryninja-demo'
+
+# NeoVim alias
+alias vi=nvim
+alias vim=nvim
+
+# Start Clion in background without output
+alias clion='nohup clion > /dev/null &'
+
+# Start BurpSuite in background without output
+# alias burpsuite='nohup burpsuite > /dev/null &'
+
+# Colored radeontop
+alias radeontop='sudo radeontop -c'
+
+# Don't save env in R
+alias R='R --no-save'

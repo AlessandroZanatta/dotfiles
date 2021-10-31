@@ -1,0 +1,65 @@
+{
+    "coc.preferences.formatOnSaveFiletypes": [
+        "css",
+        "markdown",
+        "javascript",
+        "graphql",
+        "html",
+        "haskell",
+        "yaml",
+        "python",
+        "c",
+        "rust",
+        "latex",
+        "dockerfile",
+        "tex",
+        "cpp"
+    ],
+    "rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
+    // python config
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "snippets.ultisnips.directories": [
+        "UltiSnips",
+        "~/.config/nvim/utils/snips"
+    ],
+    "languageserver": {
+        // haskell config
+        "haskell": {
+            "command": "haskell-language-server-wrapper",
+            "args": [
+                "--lsp"
+            ],
+            "rootPatterns": [
+                "*.cabal",
+                "stack.yaml",
+                "cabal.project",
+                "package.yaml",
+                "hie.yaml"
+            ],
+            "filetypes": [
+                "haskell",
+                "lhaskell"
+            ]
+        },
+        // Dockerfile
+        "dockerfile": {
+            "command": "docker-langserver",
+            "filetypes": [
+                "dockerfile"
+            ],
+            "args": [
+                "--stdio"
+            ]
+        },
+        // Latex
+        "digestif": {
+            "command": "digestif",
+            "filetypes": [
+                "tex",
+                "plaintex",
+                "context"
+            ]
+        }
+    }
+}
