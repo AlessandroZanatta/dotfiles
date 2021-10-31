@@ -213,29 +213,19 @@ myStartupHook = do
 
 myLogHook :: [Handle] -> X ()
 myLogHook xmprocs =
-  case length xmprocs of
-    1 ->
-      dynamicLogWithPP $
-        xmobarPP
-          { ppOutput = hPutStrLn (xmprocs !! 1), -- where to write
-            ppCurrent = wrap "<box type=Bottom width=1 color=red>" "</box>", -- color of selected workspace
-            ppLayout = const "", -- layout string to show
-            ppTitle = xmobarColor "#6093ac" "" . shorten 30, -- Title of the focused window
-            ppSep = "    " -- separator between things
-          }
-    _ ->
-      mapM_
-        ( \h ->
-            dynamicLogWithPP $
-              xmobarPP
-                { ppOutput = hPutStrLn h, -- where to write
-                  ppCurrent = wrap "<box type=Bottom width=1 color=red>" "</box>", -- color of selected workspace
-                  ppLayout = const "", -- layout string to show
-                  ppTitle = xmobarColor "#6093ac" "" . shorten 30, -- Title of the focused window
-                  ppSep = "    " -- separator between things
-                }
-        )
-        xmprocs
+  -- Multiple monitors
+  mapM_
+    ( \h ->
+        dynamicLogWithPP $
+          xmobarPP
+            { ppOutput = hPutStrLn h, -- where to write
+              ppCurrent = wrap "<box type=Bottom width=1 color=red>" "</box>", -- color of selected workspace
+              ppLayout = const "", -- layout string to show
+              ppTitle = xmobarColor "#6093ac" "" . shorten 30, -- Title of the focused window
+              ppSep = "    " -- separator between things
+            }
+    )
+    xmprocs
 
 --------------------------------------------------------------------------------
 -- MAIN
@@ -247,6 +237,10 @@ main = do
 
   -- Count the number of screens dynamically
   n <- IS.countScreens
+
+  -- Compiled xmobar executables MUST be named "xmobar-X", where X is a progressive
+  -- number from 1 to the number of screens that you may (or may not) use
+  -- (two, in my case).
   xmprocs <- mapM (\i -> spawnPipe $ "./xmobar-" ++ show i) [1 .. n]
   xmonad
     kde4Config
