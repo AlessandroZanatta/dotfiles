@@ -1,5 +1,6 @@
 *.o
-*.error
+*.errors
+*.state
 *.hi
 .stack-work
 build-x86_64-linux

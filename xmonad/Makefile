@@ -6,11 +6,11 @@ PWD=$(shell pwd)
 
 all: build-xmobar build-xmonad
 		@echo -n "${YELLOW}Restarting everything...${RESET}"
-		@./xmonad-x86_64-linux --replace &
+		@./xmonad-x86_64-linux --restart
 		@echo "${GREEN} Done!${RESET}"
 
 restart: 	
-	@./xmonad-x86_64-linux --replace &
+	@./xmonad-x86_64-linux --restart
 
 build-xmobar:
 		@echo -n "${YELLOW}Compiling xmobar...${RESET}"
