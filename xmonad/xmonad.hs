@@ -26,6 +26,8 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.StatusBar
+import XMonad.Hooks.StatusBar.PP
 import XMonad.Hooks.XPropManage
 import qualified XMonad.Layout.IndependentScreens as IS
 import XMonad.Layout.MultiToggle
@@ -211,49 +213,55 @@ myStartupHook = do
 -- XMOBAR
 --------------------------------------------------------------------------------
 
-myLogHook :: [Handle] -> X ()
-myLogHook xmprocs =
-  -- Multiple monitors
-  mapM_
-    ( \h ->
-        dynamicLogWithPP $
-          xmobarPP
-            { ppOutput = hPutStrLn h, -- where to write
-              ppCurrent = wrap "<box type=Bottom width=1 color=red>" "</box>", -- color of selected workspace
-              ppLayout = const "", -- layout string to show
-              ppTitle = xmobarColor "#6093ac" "" . shorten 30, -- Title of the focused window
-              ppSep = "    " -- separator between things
-            }
-    )
-    xmprocs
+mainPP =
+  def
+    { ppCurrent = wrap "<box type=Bottom width=2 color=red>" "</box>", -- color of selected workspace
+      ppLayout = const "", -- layout string to show
+      ppTitle = xmobarColor "#6093ac" "" . shorten 30, -- Title of the focused window
+      ppTitleSanitize = xmobarStrip,
+      ppSep = "    ", -- separator between things
+      ppVisible = wrap "<box type=Bottom width=2 color=#73dae6>" "</box>"
+    }
+
+secondPP =
+  def
+    { ppCurrent = wrap "<box type=Bottom width=2 color=red>" "</box>", -- color of selected workspace
+      ppLayout = const "", -- layout string to show
+      ppTitle = xmobarColor "#6093ac" "" . shorten 70, -- Title of the focused window
+      ppTitleSanitize = xmobarStrip,
+      ppSep = "    ", -- separator between things
+      ppVisible = wrap "<box type=Bottom width=2 color=#73dae6>" "</box>"
+    }
+
+xmobarMain = statusBarPropTo "_XMONAD_LOG_1" "/home/kalex/.xmonad/xmobar-1" (pure mainPP)
+
+xmobarSecond = statusBarPropTo "_XMONAD_LOG_2" "/home/kalex/.xmonad/xmobar-2" (pure secondPP)
+
+barSpawner :: ScreenId -> IO StatusBarConfig
+barSpawner 0 = pure $ xmobarMain
+barSpawner 1 = pure $ xmobarSecond
+barSpawner _ = mempty -- nothing on the rest of the screens
 
 --------------------------------------------------------------------------------
 -- MAIN
 --------------------------------------------------------------------------------
 
 main = do
-  -- Create a xmobar instance and keep a pipe open
-  -- xmob <- spawnPipe "/home/kalex/.xmonad/xmobar"
-
-  -- Count the number of screens dynamically
-  n <- IS.countScreens
-
-  -- Compiled xmobar executables MUST be named "xmobar-X", where X is a progressive
-  -- number from 1 to the number of screens that you may (or may not) use
-  -- (two, in my case).
-  xmprocs <- mapM (\i -> spawnPipe $ "./xmobar-" ++ show i) [1 .. n]
-  xmonad
-    kde4Config
-      { modMask = mod4Mask, -- use the Windows button as mod
-        manageHook = manageHook kde4Config <+> myManageHook, -- Start up applications as specified in myManageHook
-        workspaces = myWorkspaces,
-        borderWidth = myBorderWidth,
-        startupHook = myStartupHook,
-        layoutHook = myLayoutHook,
-        normalBorderColor = myNormalBorderColor,
-        focusedBorderColor = myFocusedBorderColor,
-        logHook = myLogHook xmprocs,
-        keys = myKeys,
-        focusFollowsMouse = myFocusFollowsMouse,
-        clickJustFocuses = myClickJustFocuses
-      }
+  xmonad $
+    -- Start xmobars dynamically
+    dynamicSBs
+      barSpawner
+      ( kde4Config
+          { modMask = mod4Mask, -- use the Windows button as mod
+            manageHook = manageHook kde4Config <+> myManageHook, -- Start up applications as specified in myManageHook
+            workspaces = myWorkspaces,
+            borderWidth = myBorderWidth,
+            startupHook = myStartupHook,
+            layoutHook = myLayoutHook,
+            normalBorderColor = myNormalBorderColor,
+            focusedBorderColor = myFocusedBorderColor,
+            keys = myKeys,
+            focusFollowsMouse = myFocusFollowsMouse,
+            clickJustFocuses = myClickJustFocuses
+          }
+      )
