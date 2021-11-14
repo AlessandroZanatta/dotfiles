@@ -57,10 +57,10 @@ map <leader>oe :setlocal spell spelllang=en<CR>
 map <leader>oo :setlocal spell!<CR>
 
 " Split navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+" map <C-h> <C-w>h
+" map <C-j> <C-w>j
+" map <C-k> <C-w>k
+" map <C-l> <C-w>l
 
 " Tab navigation
 map <leader>h :tabp<CR>

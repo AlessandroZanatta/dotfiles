@@ -225,3 +225,19 @@ pptx2pdf(){
 xpp(){
     noout xournalpp "$1"
 }
+
+set_tablet_screen(){
+    if [[ $# -eq 1 ]]; then
+        MONITOR=${1}
+        PAD_NAME='HUION Huion Tablet Pad'
+        ID_STYLUS=`xinput | egrep "Pen|stylus" | cut -f 2 | cut -c 4-5`
+
+        xinput map-to-output $ID_STYLUS $MONITOR
+    else
+        echo "Usage: $0 <screen name>"
+    fi
+}
+
+rftoggle(){
+    rfkill toggle 0 1 2 3
+}
