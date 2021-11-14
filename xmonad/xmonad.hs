@@ -10,6 +10,7 @@
 ---------------------------------------------
 
 import Control.Monad (liftM2)
+import Data.Function (on)
 import Data.List
 import qualified Data.Map as M
 import Data.Ratio
@@ -22,6 +23,7 @@ import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.WindowMenu
 import XMonad.Config.Desktop
 import XMonad.Config.Kde
+import qualified XMonad.DBus as D
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
@@ -36,6 +38,7 @@ import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.Spacing
 import XMonad.Operations
 import qualified XMonad.StackSet as W
+import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 
@@ -50,7 +53,7 @@ toggleMic = do spawn micToggleMuteCommand
 -- KEYBINDS
 --------------------------------------------------------------------------------
 
-myApplicationLauncher = "$HOME/.config/rofi/bin/launcher_colorful"
+myApplicationLauncher = "~/.config/polybar/grayblocks/scripts/launcher.sh"
 
 xmonadDir = "$HOME/.xmonad"
 
@@ -130,17 +133,17 @@ myLayoutHook =
 --------------------------------------------------------------------------------
 -- WORKSPACE
 --------------------------------------------------------------------------------
-
+-- xE1F7 wireguard
 -- Define my workspaces (statically)
--- myWorkspaces = ["1: <fn=1>\xE745 </fn>","2: <fn=1>\xF120 </fn>", "3: <fn=1>\xF668 </fn>", "4: <fn=1>\xFB6E </fn>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
+myWorkspaces = ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
 
-myWorkspaces = clickable ["1: <fc=yellow><fn=1>\xF79F </fn></fc>", "2: <fc=#33ff00><fn=1>\xF120 </fn></fc>", "3: <fc=#ffff00><fn=1>\xF668 </fn></fc>", "4: <fc=#289ed9><fn=1>\xF2C6 </fn></fc>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
-  where
-    clickable l =
-      [ "<action=xdotool key super+" ++ show n ++ ">" ++ ws ++ "</action>"
-        | (i, ws) <- zip [1 .. 9] l,
-          let n = i
-      ]
+-- myWorkspaces = clickable ["1: <fc=yellow><fn=1>\xF79F </fn></fc>", "2: <fc=#33ff00><fn=1>\xF120 </fn></fc>", "3: <fc=#ffff00><fn=1>\xF668 </fn></fc>", "4: <fc=#289ed9><fn=1>\xF2C6 </fn></fc>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
+--   where
+--     clickable l =
+--       [ "<action=xdotool key super+" ++ show n ++ ">" ++ ws ++ "</action>"
+--         | (i, ws) <- zip [1 .. 9] l,
+--           let n = i
+--       ]
 
 -- Define the manageHook to use
 myManageHook =
@@ -208,60 +211,47 @@ myStartupHook = do
   -- Some appplication, as CLion, refuses to work with xmonad.
   -- Simply make them think this is not xmonad fixes everything!
   setWMName "LG3D"
+  spawn "/home/kalex/.xmonad/handle-polybar"
 
 --------------------------------------------------------------------------------
 -- XMOBAR
 --------------------------------------------------------------------------------
 
-mainPP =
+myLogHook dbus =
   def
-    { ppCurrent = wrap "<box type=Bottom width=2 color=red>" "</box>", -- color of selected workspace
-      ppLayout = const "", -- layout string to show
-      ppTitle = xmobarColor "#6093ac" "" . shorten 30, -- Title of the focused window
-      ppTitleSanitize = xmobarStrip,
+    { ppOutput = D.send dbus,
       ppSep = "    ", -- separator between things
-      ppVisible = wrap "<box type=Bottom width=2 color=#73dae6>" "</box>"
+      ppTitle = shorten 30, -- Title of the focused window
+      ppLayout = const "" -- layout string to show
+      -- ppCurrent = wrap "<box type=Bottom width=2 color=red>" "</box>", -- color of selected workspace
+      -- ppTitleSanitize = xmobarStrip,
+      -- ppVisible = wrap "<box type=Bottom width=2 color=#73dae6>" "</box>"
     }
-
-secondPP =
-  def
-    { ppCurrent = wrap "<box type=Bottom width=2 color=red>" "</box>", -- color of selected workspace
-      ppLayout = const "", -- layout string to show
-      ppTitle = xmobarColor "#6093ac" "" . shorten 70, -- Title of the focused window
-      ppTitleSanitize = xmobarStrip,
-      ppSep = "    ", -- separator between things
-      ppVisible = wrap "<box type=Bottom width=2 color=#73dae6>" "</box>"
-    }
-
-xmobarMain = statusBarPropTo "_XMONAD_LOG_1" "/home/kalex/.xmonad/xmobar-1" (pure mainPP)
-
-xmobarSecond = statusBarPropTo "_XMONAD_LOG_2" "/home/kalex/.xmonad/xmobar-2" (pure secondPP)
-
-barSpawner :: ScreenId -> IO StatusBarConfig
-barSpawner 0 = pure $ xmobarMain
-barSpawner 1 = pure $ xmobarSecond
-barSpawner _ = mempty -- nothing on the rest of the screens
 
 --------------------------------------------------------------------------------
 -- MAIN
 --------------------------------------------------------------------------------
 
+main :: IO ()
 main = do
+  -- Connect to DBus
+  dbus <- D.connect
+  -- Request access (needed when sending messages)
+  D.requestAccess dbus
+
   xmonad $
-    -- Start xmobars dynamically
-    dynamicSBs
-      barSpawner
-      ( kde4Config
-          { modMask = mod4Mask, -- use the Windows button as mod
-            manageHook = manageHook kde4Config <+> myManageHook, -- Start up applications as specified in myManageHook
-            workspaces = myWorkspaces,
-            borderWidth = myBorderWidth,
-            startupHook = myStartupHook,
-            layoutHook = myLayoutHook,
-            normalBorderColor = myNormalBorderColor,
-            focusedBorderColor = myFocusedBorderColor,
-            keys = myKeys,
-            focusFollowsMouse = myFocusFollowsMouse,
-            clickJustFocuses = myClickJustFocuses
-          }
-      )
+    ( kde4Config
+        { modMask = mod4Mask, -- use the Windows button as mod
+          manageHook = manageHook kde4Config <+> myManageHook, -- Start up applications as specified in myManageHook
+          workspaces = myWorkspaces,
+          borderWidth = myBorderWidth,
+          startupHook = myStartupHook,
+          layoutHook = myLayoutHook,
+          normalBorderColor = myNormalBorderColor,
+          focusedBorderColor = myFocusedBorderColor,
+          keys = myKeys,
+          logHook = dynamicLogWithPP (myLogHook dbus),
+          focusFollowsMouse = myFocusFollowsMouse,
+          clickJustFocuses = myClickJustFocuses
+        }
+    )

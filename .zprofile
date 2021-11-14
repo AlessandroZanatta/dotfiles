@@ -56,6 +56,8 @@ export PATH=$PATH:/opt/android-sdk/emulator:/opt/android-sdk/tools/bin/
 # Depot-tools (v8)
 export PATH=/opt/depot_tools:$PATH
 
+export PATH=/home/kalex/Documents/dotfiles/xmonad/.stack-work/install/x86_64-linux-tinfo6/6bbcb7a56e3e6f29c2bead7ad7acdb330c1812b053828478811d0fe5792b5279/8.10.7/bin/:$PATH
+
 # HackNotes requires an EDITOR variable to be set
 export EDITOR=nvim
 
@@ -240,4 +242,12 @@ set_tablet_screen(){
 
 rftoggle(){
     rfkill toggle 0 1 2 3
+}
+
+test_font(){
+    if [[ $# -eq 1 ]]; then
+        perl /usr/local/bin/test-fonts.pl "$1"
+    else
+        echo "Usage: $0 <font glyph>"
+    fi
 }
