@@ -75,7 +75,7 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
 -- Add myKeyBindings to the default keybindings and save into myKeys
 myKeys c = myKeyBindings c `M.union` keys kde4Config c
 
--- Define wheter the window focus should follow the mouse or not
+-- Define whether the window focus should follow the mouse or not
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
 
@@ -133,7 +133,7 @@ myLayoutHook =
 --------------------------------------------------------------------------------
 -- WORKSPACE
 --------------------------------------------------------------------------------
--- xE1F7 wireguard
+
 -- Define my workspaces (statically)
 myWorkspaces = ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
 
