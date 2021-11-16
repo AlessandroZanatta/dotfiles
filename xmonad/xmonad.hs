@@ -53,7 +53,7 @@ toggleMic = do spawn micToggleMuteCommand
 -- KEYBINDS
 --------------------------------------------------------------------------------
 
-myApplicationLauncher = "~/.config/polybar/grayblocks/scripts/launcher.sh"
+myApplicationLauncher = "~/.config/polybar/scripts/launcher.sh"
 
 xmonadDir = "$HOME/.xmonad"
 
@@ -135,15 +135,15 @@ myLayoutHook =
 --------------------------------------------------------------------------------
 
 -- Define my workspaces (statically)
-myWorkspaces = ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
+-- myWorkspaces = ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
 
--- myWorkspaces = clickable ["1: <fc=yellow><fn=1>\xF79F </fn></fc>", "2: <fc=#33ff00><fn=1>\xF120 </fn></fc>", "3: <fc=#ffff00><fn=1>\xF668 </fn></fc>", "4: <fc=#289ed9><fn=1>\xF2C6 </fn></fc>", "5: <fn=1>\xFB75 </fn>", "6", "7", "8", "9"]
---   where
---     clickable l =
---       [ "<action=xdotool key super+" ++ show n ++ ">" ++ ws ++ "</action>"
---         | (i, ws) <- zip [1 .. 9] l,
---           let n = i
---       ]
+myWorkspaces = clickable ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
+  where
+    clickable l =
+      [ "%{A1:xdotool key super+" ++ show n ++ ":}" ++ ws ++ "%{A}"
+        | (i, ws) <- zip [1 .. 9] l,
+          let n = i
+      ]
 
 -- Define the manageHook to use
 myManageHook =
@@ -222,10 +222,9 @@ myLogHook dbus =
     { ppOutput = D.send dbus,
       ppSep = "    ", -- separator between things
       ppTitle = shorten 30, -- Title of the focused window
-      ppLayout = const "" -- layout string to show
-      -- ppCurrent = wrap "<box type=Bottom width=2 color=red>" "</box>", -- color of selected workspace
-      -- ppTitleSanitize = xmobarStrip,
-      -- ppVisible = wrap "<box type=Bottom width=2 color=#73dae6>" "</box>"
+      ppCurrent = wrap "%{F#00acc1}" "%{F-}", -- color of selected workspace
+      ppLayout = const "", -- layout string to show
+      ppVisible = wrap "%{F#73dae6}" "%{F-}"
     }
 
 --------------------------------------------------------------------------------

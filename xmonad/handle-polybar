@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+# 
 if [ "$(pgrep -cx polybar)" -gt 0 ]; then
     echo "The panel is running. Stopping it"
     pkill -nx "polybar"
@@ -9,6 +10,11 @@ if [ "$(pgrep -cx polybar)" -gt 0 ]; then
     done
 fi
 
-export MONITOR="$(xrandr -q | rg "connected primary" | cut -d' ' -f1)"
-polybar --config=/home/kalex/.config/polybar/config.ini main &
+if type "xrandr"; then
+  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+    MONITOR=$m polybar --config=/home/kalex/.config/polybar/config.ini main &
+  done
+else
+  polybar --reload example &
+fi
 wait
