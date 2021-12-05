@@ -251,3 +251,30 @@ test_font(){
         echo "Usage: $0 <font glyph>"
     fi
 }
+
+mvimg(){
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: $0 <image name>"
+        return 1
+    fi
+    
+    if [[ -d "images" ]]; then
+        if [[ $(find "images" -iname "$1*") ]]; then
+            echo -ne '\e[48;5;202mWarning\e[0m - file already exists in the image folder.\nProceed? (y/n): '
+            read answer
+            if [[ -z "$answer" ]] || [[ "$answer" == "n" ]]; then
+                echo -e '\e[48;5;9mAborted\e[0m'
+                return 1
+            fi
+        fi
+
+        if [[ $(find "$HOME/Downloads" -iname "$1*") ]]; then
+            mv $HOME/Downloads/$1* "images"
+            echo -e '\e[48;5;22mDone!\e[0m'
+        else
+            echo -e '\e[48;5;9mAborted\e[0m - image not found in downloads!'
+        fi
+    else
+        echo -e '\e[48;5;9mAborted\e[0m - images directory not found!'
+    fi
+}

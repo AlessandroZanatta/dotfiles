@@ -221,7 +221,7 @@ myLogHook dbus =
   def
     { ppOutput = D.send dbus,
       ppSep = "    ", -- separator between things
-      ppTitle = shorten 30, -- Title of the focused window
+      ppTitle = shorten 40, -- Title of the focused window
       ppCurrent = wrap "%{F#00acc1}" "%{F-}", -- color of selected workspace
       ppLayout = const "", -- layout string to show
       ppVisible = wrap "%{F#73dae6}" "%{F-}"
