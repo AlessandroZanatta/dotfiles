@@ -6,7 +6,7 @@
 #    
 
 # Better clear screen
-alias cl='clear; pfetch'
+alias cl=clear
 
 # Never misstype again!
 alias l=ls

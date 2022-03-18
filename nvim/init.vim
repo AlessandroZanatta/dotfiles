@@ -89,9 +89,6 @@ autocmd FileType sh setlocal tabstop=4 noexpandtab softtabstop=0 shiftwidth=4
 " Changes plaintex to tex for empty files
 let g:tex_flavor='latex'
 
-" Inserts template in new files
-autocmd BufNewFile *.tex execute 'r ~/latex/template.tex' | 0 | delete
-
 """
 """ Plugins
 """

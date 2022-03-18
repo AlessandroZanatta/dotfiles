@@ -10,10 +10,6 @@
 # -------- MISC --------- # 
 # ----------------------- #
 
-# Better welcome screen with pfetch!!
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-pfetch
-
 # Do NOT kill child processes of the shell when the shell is killed
 setopt NO_HUP
 
@@ -51,12 +47,21 @@ export PATH=$PATH:/home/kalex/.local/bin
 export GOPATH=$HOME/Programs
 
 # Add Android Emulator to PATH
-export PATH=$PATH:/opt/android-sdk/emulator:/opt/android-sdk/tools/bin/
+export PATH=$PATH:/opt/android-sdk/emulator:/opt/android-sdk/tools/bin
 
 # Depot-tools (v8)
 export PATH=/opt/depot_tools:$PATH
 
-export PATH=/home/kalex/Documents/dotfiles/xmonad/.stack-work/install/x86_64-linux-tinfo6/6bbcb7a56e3e6f29c2bead7ad7acdb330c1812b053828478811d0fe5792b5279/8.10.7/bin/:$PATH
+export PATH=/home/kalex/Documents/dotfiles/xmonad/.stack-work/install/x86_64-linux-tinfo6/6bbcb7a56e3e6f29c2bead7ad7acdb330c1812b053828478811d0fe5792b5279/8.10.7/bin:$PATH
+
+# Add cargo installed programs to PATH
+export PATH=/home/kalex/.cargo/bin:$PATH
+
+# Add wine-lol to PATH
+export PATH=/opt/wine-lol/bin:$PATH
+
+# Solana
+export PATH=/home/kalex/.local/share/solana/install/active_release/bin:$PATH
 
 # HackNotes requires an EDITOR variable to be set
 export EDITOR=nvim
@@ -79,7 +84,7 @@ docker_connect(){
 }
 
 # okular should start in background...
-pdf(){ nohup okular "$1" > /dev/null & }
+pdf(){ for pdf in "$@"; do nohup okular "$pdf" > /dev/null &; done }
 
 
 # Pandoc shortcut for a md to pdf render
@@ -221,7 +226,7 @@ summary(){
 }
 
 pptx2pdf(){
-    soffice --headless --convert-to pdf "$1"
+    for pdf in "$@"; do soffice --headless --convert-to pdf "$pdf" > /dev/null &; done
 }
 
 xpp(){
@@ -278,3 +283,6 @@ mvimg(){
         echo -e '\e[48;5;9mAborted\e[0m - images directory not found!'
     fi
 }
+
+export QSYS_ROOTDIR="/home/kalex/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/21.1/quartus/sopc_builder/bin"
+export PATH="/home/kalex/.local/share/solana/install/active_release/bin:$PATH"

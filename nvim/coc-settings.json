@@ -16,8 +16,11 @@
     ],
     "rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
     // python config
+    "diagnostic.showUnused": false,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": "/usr/bin/black",
     "snippets.ultisnips.directories": [
         "UltiSnips",
         "~/.config/nvim/utils/snips"
@@ -59,6 +62,11 @@
                 "plaintex",
                 "context"
             ]
+        },
+        // Verilog
+        "svls": {
+            "command": "svls",
+            "filetypes": ["systemverilog"]
         }
     }
 }
