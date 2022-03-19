@@ -12,10 +12,11 @@
         "latex",
         "dockerfile",
         "tex",
-        "cpp"
+        "cpp",
+        "bash",
+        "json"
     ],
     "rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
-    // python config
     "diagnostic.showUnused": false,
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
@@ -26,47 +27,17 @@
         "~/.config/nvim/utils/snips"
     ],
     "languageserver": {
-        // haskell config
-        "haskell": {
-            "command": "haskell-language-server-wrapper",
+        "bash": {
+            "command": "bash-language-server",
             "args": [
-                "--lsp"
-            ],
-            "rootPatterns": [
-                "*.cabal",
-                "stack.yaml",
-                "cabal.project",
-                "package.yaml",
-                "hie.yaml"
+                "start"
             ],
             "filetypes": [
-                "haskell",
-                "lhaskell"
-            ]
-        },
-        // Dockerfile
-        "dockerfile": {
-            "command": "docker-langserver",
-            "filetypes": [
-                "dockerfile"
+                "sh"
             ],
-            "args": [
-                "--stdio"
+            "ignoredRootPaths": [
+                "~"
             ]
-        },
-        // Latex
-        "digestif": {
-            "command": "digestif",
-            "filetypes": [
-                "tex",
-                "plaintex",
-                "context"
-            ]
-        },
-        // Verilog
-        "svls": {
-            "command": "svls",
-            "filetypes": ["systemverilog"]
         }
     }
 }

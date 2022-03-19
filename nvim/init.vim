@@ -109,6 +109,9 @@ Plug 'lifepillar/vim-gruvbox8'
 " Stable version of coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Save files using sudo from within vim
+Plug 'lambdalisue/suda.vim'
+
 call plug#end()
 
 """

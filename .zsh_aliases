@@ -21,7 +21,7 @@ alias volatility=vol
 
 # Changing JAVA_HOME broke Clion (java version too old), it's better to use the alias
 # export JAVA_HOME=/opt/android-studio/jre # BAD!
-alias android='JAVA_HOME=/opt/android-studio/jre android-studio'
+# alias android='JAVA_HOME=/opt/android-studio/jre android-studio'
 
 # Colored grep
 alias grep='grep --color'
@@ -30,10 +30,8 @@ alias grep='grep --color'
 # alias teams='DRI_PRIME=1 nohup teams > /dev/null &'
 # alias discord='DRI_PRIME=1 nohup discord > /dev/null &' # This actually is pretty heavy on the GPU and makes it go over 70°C, should probably avoid!
 
-# Same for binaryninja
-alias binaryninja='binaryninja-demo'
-
 # NeoVim alias
+alias v=nvim
 alias vi=nvim
 alias vim=nvim
 
@@ -44,7 +42,7 @@ alias clion='nohup clion > /dev/null &'
 # alias burpsuite='nohup burpsuite > /dev/null &'
 
 # Colored radeontop
-alias radeontop='sudo radeontop -c'
+alias radeontop='radeontop -c'
 
-# Don't save env in R
-alias R='R --no-save'
+# doasedit doedit
+alias doasedit='doas nvim'

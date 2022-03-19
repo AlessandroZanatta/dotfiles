@@ -20,55 +20,22 @@ setopt NO_HUP
 # Aliases
 source $HOME/.zsh_aliases
 
-# Virtualenv
-source $HOME/.local/bin/virtualenvwrapper.sh
-
 # -------------------------- #
 # -------- EXPORTS --------- # 
 # -------------------------- #
 
 # XDG stuff
-export XDG_DESKTOP_DIR="$HOME/Desktop"
-export XDG_DOWNLOAD_DIR="$HOME/Downloads"
-export XDG_TEMPLATES_DIR="$HOME/Templates"
-export XDG_PUBLICSHARE_DIR="$HOME/Public"
-export XDG_DOCUMENTS_DIR="$HOME/Documents"
-export XDG_MUSIC_DIR="$HOME/Music"
-export XDG_PICTURES_DIR="$HOME/Pictures"
-export XDG_VIDEOS_DIR="$HOME/Videos"
-
-# Add Cabal binaries to PATH
-export PATH=$PATH:/home/kalex/.cabal/bin
-
-# Add .local to PATH
-export PATH=$PATH:/home/kalex/.local/bin
-
-# Add GOPATH to env
-export GOPATH=$HOME/Programs
-
-# Add Android Emulator to PATH
-export PATH=$PATH:/opt/android-sdk/emulator:/opt/android-sdk/tools/bin
-
-# Depot-tools (v8)
-export PATH=/opt/depot_tools:$PATH
-
-export PATH=/home/kalex/Documents/dotfiles/xmonad/.stack-work/install/x86_64-linux-tinfo6/6bbcb7a56e3e6f29c2bead7ad7acdb330c1812b053828478811d0fe5792b5279/8.10.7/bin:$PATH
-
-# Add cargo installed programs to PATH
-export PATH=/home/kalex/.cargo/bin:$PATH
-
-# Add wine-lol to PATH
-export PATH=/opt/wine-lol/bin:$PATH
-
-# Solana
-export PATH=/home/kalex/.local/share/solana/install/active_release/bin:$PATH
+# export XDG_DESKTOP_DIR="$HOME/Desktop"
+# export XDG_DOWNLOAD_DIR="$HOME/Downloads"
+# export XDG_TEMPLATES_DIR="$HOME/Templates"
+# export XDG_PUBLICSHARE_DIR="$HOME/Public"
+# export XDG_DOCUMENTS_DIR="$HOME/Documents"
+# export XDG_MUSIC_DIR="$HOME/Music"
+# export XDG_PICTURES_DIR="$HOME/Pictures"
+# export XDG_VIDEOS_DIR="$HOME/Videos"
 
 # HackNotes requires an EDITOR variable to be set
 export EDITOR=nvim
-
-# Virtualenv
-# export PROJECT_HOME=$HOME/Projects
-export WORKON_HOME=$HOME/.virtualenvs
 
 # -------------------------- #
 # ------- FUNCTIONS -------- # 
@@ -108,22 +75,15 @@ pwndocker(){
 }
 
 
-# Clean swap
-swap_clean(){
-        sudo swapoff /dev/sda4
-        sudo swapon /dev/sda4
-}
-
-
 # activate/deactivate >> workon/deactivate
-activate(){
-    if [[ $# -eq 1 ]]; then
-       workon "$1" 
-    else
-        echo "Usage: $0 py-env"
-        exit 1
-    fi;
-}
+# activate(){
+#     if [[ $# -eq 1 ]]; then
+#        workon "$1" 
+#     else
+#         echo "Usage: $0 py-env"
+#         exit 1
+#     fi;
+# }
 
 
 # Start background programs without output with ease
@@ -136,37 +96,23 @@ noout(){
     fi;
 }
 
-
-# Download youtube videos' audio
-youtube-download(){
-    if [[ $# -eq 1 ]]; then 
-        youtube-dl --no-overwrites --ignore-errors --yes-playlist -f bestaudio -o '/home/kalex/Music/%(title)s.%(ext)s' "$1"
-    elif [[ $# -eq 2 ]]; then
-        youtube-dl --no-overwrites --ignore-errors --yes-playlist -f bestaudio -o "$2/%(title)s.%(ext)s" "$1"
-    else
-        echo "Usage $0 youtube-url [directory]"
-        exit 1
-    fi;
-}
-
-
 # Convert symbol into unicode code
-from_symbol(){
-    if [[ $# -eq 1 ]]; then
-        if [ ${#1} -eq 1 ]; then
-            echo -n "$1" |              # -n ignore trailing newline
-            iconv -f utf8 -t utf32be |  # UTF-32 big-endian happens to be the code point
-            xxd -p |                    # -p just give me the plain hex
-            sed -r 's/^0+/0x/' |        # remove leading 0's, replace with 0x
-            xargs printf '\\x%04X\n'     # pretty print the code point
-        else
-            echo "Only single characters allowed!"
-        fi
-    else
-        echo "Usage: $0 single-character"
-        exit 1
-    fi
-}
+# from_symbol(){
+#     if [[ $# -eq 1 ]]; then
+#         if [ ${#1} -eq 1 ]; then
+#             echo -n "$1" |              # -n ignore trailing newline
+#             iconv -f utf8 -t utf32be |  # UTF-32 big-endian happens to be the code point
+#             xxd -p |                    # -p just give me the plain hex
+#             sed -r 's/^0+/0x/' |        # remove leading 0's, replace with 0x
+#             xargs printf '\\x%04X\n'     # pretty print the code point
+#         else
+#             echo "Only single characters allowed!"
+#         fi
+#     else
+#         echo "Usage: $0 single-character"
+#         exit 1
+#     fi
+# }
 
 
 # Activate/deactivate ASLR (very useful for pwn)
@@ -201,15 +147,6 @@ pv(){
 
     proverif -color -graph "$OUT_DIR" "$1"
 } 
-
-# Start GDB with given libc
-gdb-libc(){
-    if [[ $# -eq 2 ]]; then
-        gdb -iex "set exec-wrapper env LD_PRELOAD=$1" "$2"
-    else
-        echo "Usage: $0 libc-to-preload patched-binary"
-    fi
-}
 
 # Create a summary latex starting file from template
 summary(){
@@ -246,15 +183,7 @@ set_tablet_screen(){
 }
 
 rftoggle(){
-    rfkill toggle 0 1 2 3
-}
-
-test_font(){
-    if [[ $# -eq 1 ]]; then
-        perl /usr/local/bin/test-fonts.pl "$1"
-    else
-        echo "Usage: $0 <font glyph>"
-    fi
+    rfkill toggle all 
 }
 
 mvimg(){
@@ -283,6 +212,3 @@ mvimg(){
         echo -e '\e[48;5;9mAborted\e[0m - images directory not found!'
     fi
 }
-
-export QSYS_ROOTDIR="/home/kalex/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/21.1/quartus/sopc_builder/bin"
-export PATH="/home/kalex/.local/share/solana/install/active_release/bin:$PATH"
