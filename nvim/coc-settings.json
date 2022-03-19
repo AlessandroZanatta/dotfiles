@@ -14,7 +14,8 @@
         "tex",
         "cpp",
         "bash",
-        "json"
+        "json",
+        "lua"
     ],
     "rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
     "diagnostic.showUnused": false,
