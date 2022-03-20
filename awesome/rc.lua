@@ -75,7 +75,7 @@ end
 awful.spawn.single_instance("flameshot", awful.rules.rules)
 awful.spawn.single_instance("/home/kalex/.config/awesome/scripts/locker", awful.rules.rules)
 awful.spawn.single_instance("picom", awful.rules.rules)
-
+awful.spawn.single_instance("parcellite -n", awful.rules.rules)
 -- This function implements the XDG autostart specification
 --[[
 awful.spawn.with_shell(

@@ -20,6 +20,9 @@ setopt NO_HUP
 # Aliases
 source $HOME/.zsh_aliases
 
+# Virtualenvwrapper
+source virtualenvwrapper.sh
+
 # -------------------------- #
 # -------- EXPORTS --------- # 
 # -------------------------- #
@@ -76,14 +79,14 @@ pwndocker(){
 
 
 # activate/deactivate >> workon/deactivate
-# activate(){
-#     if [[ $# -eq 1 ]]; then
-#        workon "$1" 
-#     else
-#         echo "Usage: $0 py-env"
-#         exit 1
-#     fi;
-# }
+activate(){
+    if [[ $# -eq 1 ]]; then
+       workon "$1" 
+    else
+        echo "Usage: $0 py-env"
+        exit 1
+    fi;
+}
 
 
 # Start background programs without output with ease

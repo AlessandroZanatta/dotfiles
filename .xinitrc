@@ -1,1 +1,1 @@
-exec startkde
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
