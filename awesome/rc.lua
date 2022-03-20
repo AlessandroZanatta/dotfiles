@@ -5,6 +5,11 @@
 
 --]]
 
+-- {{{ Remove tmux keybinds
+package.loaded["awful.hotkeys_popup.keys.tmux"] = {}
+-- }}}
+
+
 -- {{{ Required libraries
 
 -- If LuaRocks is installed, make sure that packages installed through it are
@@ -28,6 +33,8 @@ local mytable       = awful.util.table or gears.table -- 4.{0,1} compatibility
 -- {{{ Local extensions
 local sharedtags    = require("sharedtags")
 -- }}}
+
+
 
 
 -- {{{ Error handling
@@ -117,9 +124,9 @@ awful.util.tagnames = { "1", "2", "3", "4", "5" }
 awful.layout.layouts = {
     -- awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
+    -- awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    -- awful.layout.suit.tile.top,
     --awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
     --awful.layout.suit.spiral,
@@ -503,7 +510,7 @@ globalkeys = mytable.join(
         {description = "show rofi", group = "launcher"}),
     --]]
     -- Prompt
-    awful.key({ modkey }, "r", function () awful.screen.focused().mypromptbox:run() end,
+    awful.key({ modkey }, "p", function () awful.spawn("/home/kalex/.config/rofi/launchers/text/launcher.sh") end,
               {description = "run prompt", group = "launcher"})
     --]]
 )
@@ -659,7 +666,8 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "xtightvncviewer"},
+          "xtightvncviewer",
+          "SpeedCrunch"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
         -- and the name shown there might not match defined rules here.
@@ -681,6 +689,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { screen = 1, tag = "2" } },
+    { rule = { class = "firefox" },
+    properties = { opacity = 1, maximized = false, floating = false } },
 }
 
 -- }}}
