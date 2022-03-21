@@ -83,6 +83,7 @@ awful.spawn.single_instance("flameshot", awful.rules.rules)
 awful.spawn.single_instance("/home/kalex/.config/awesome/scripts/locker", awful.rules.rules)
 awful.spawn.single_instance("picom", awful.rules.rules)
 awful.spawn.single_instance("parcellite -n", awful.rules.rules)
+awful.spawn.single_instance("nm-applet", awful.rules.rules)
 -- This function implements the XDG autostart specification
 --[[
 awful.spawn.with_shell(
@@ -110,7 +111,7 @@ local themes = {
     "vertex"           -- 10
 }
 
-local chosen_theme = themes[4]
+local chosen_theme = themes[5]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "alacritty"

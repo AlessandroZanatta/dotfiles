@@ -1,44 +1,5 @@
 {
-    "coc.preferences.formatOnSaveFiletypes": [
-        "css",
-        "markdown",
-        "javascript",
-        "graphql",
-        "html",
-        "haskell",
-        "yaml",
-        "python",
-        "rust",
-        "latex",
-        "dockerfile",
-        "tex",
-        "cpp",
-        "bash",
-        "json",
-        "lua"
-    ],
-    "rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
-    "diagnostic.showUnused": false,
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.formatting.provider": "black",
-    "python.formatting.blackPath": "/usr/bin/black",
-    "snippets.ultisnips.directories": [
-        "UltiSnips",
-        "~/.config/nvim/utils/snips"
-    ],
-    "languageserver": {
-        "bash": {
-            "command": "bash-language-server",
-            "args": [
-                "start"
-            ],
-            "filetypes": [
-                "sh"
-            ],
-            "ignoredRootPaths": [
-                "~"
-            ]
-        }
-    }
+  "coc.preferences.formatOnSaveFiletypes": ["python"],
+  "python.formatting.provider": "black"
 }
+
