@@ -8,10 +8,18 @@ end
 local override_req = require("core.utils").override_req
 
 local plugins = {
-   -- My plugins 
-   { "neoclide/coc.nvim " },
+   ----------------
+   -- My plugins --
+   ----------------
+   { "neoclide/coc.nvim",
+     branch = "release"},
+  
+   -- kitty syntax highlighting
+   { "fladson/vim-kitty" },
 
-   -- Default plugins
+   ---------------------
+   -- Default plugins --
+   ---------------------
    { "NvChad/extensions" },
    { "nvim-lua/plenary.nvim" },
    { "lewis6991/impatient.nvim" },
@@ -85,28 +93,6 @@ local plugins = {
       end,
    },
 
-   -- lsp stuff
-
-   {
-      "neovim/nvim-lspconfig",
-      module = "lspconfig",
-      opt = true,
-      setup = function()
-         require("core.utils").packer_lazy_load "nvim-lspconfig"
-         -- reload the current file so lsp actually starts for it
-         vim.defer_fn(function()
-            vim.cmd 'if &ft == "packer" | echo "" | else | silent! e %'
-         end, 0)
-      end,
-      config = override_req("lspconfig", "plugins.configs.lspconfig"),
-   },
-
-   {
-      "ray-x/lsp_signature.nvim",
-      disable = not plugin_settings.status.lspsignature,
-      after = "nvim-lspconfig",
-      config = override_req("signature", "plugins.configs.others", "signature"),
-   },
 
    {
       "andymass/vim-matchup",

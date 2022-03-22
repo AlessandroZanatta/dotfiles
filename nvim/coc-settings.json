@@ -1,5 +1,22 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["python"],
-  "python.formatting.provider": "black"
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "json",
+    "ocaml",
+    "lua"
+  ],
+  "python.formatting.provider": "black",
+  "languageserver": {
+    "ocaml": {
+      "command": "ocamllsp",
+      "rootPatterns": [
+        "dune-project"
+      ],
+      "filetypes": [
+        "ocaml"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    }
+  }
 }
-
