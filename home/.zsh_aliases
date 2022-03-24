@@ -31,9 +31,9 @@ alias grep='grep --color'
 # alias discord='DRI_PRIME=1 nohup discord > /dev/null &' # This actually is pretty heavy on the GPU and makes it go over 70°C, should probably avoid!
 
 # NeoVim alias
-alias v=nvim
-alias vi=nvim
-alias vim=nvim
+alias vi=/usr/local/bin/v
+alias vim=/usr/local/bin/v
+
 
 # Start Clion in background without output
 alias clion='nohup clion > /dev/null &'
@@ -45,4 +45,8 @@ alias clion='nohup clion > /dev/null &'
 alias radeontop='radeontop -c'
 
 # doasedit doedit
-alias doasedit='doas nvim'
+alias doasedit='doas v'
+
+# Colored (rip)grepping of file contents with less flags
+alias rg='rg --color always'
+alias less='less -r'
