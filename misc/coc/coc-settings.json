@@ -1,0 +1,46 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "python",
+    "json",
+    "ocaml",
+    "latex",
+    "tex"
+  ],
+  "python.formatting.provider": "black",
+  "ltex.checkFrequency": "edit",
+  "languageserver": {
+    "ocaml": {
+      "command": "ocamllsp",
+      "rootPatterns": [
+        "dune-project"
+      ],
+      "filetypes": [
+        "ocaml"
+      ],
+      "initializationOptions": {},
+      "settings": {}
+    },
+    "ccls": {
+      "command": "ccls",
+      "filetypes": [
+        "c",
+        "cc",
+        "cpp",
+        "c++",
+        "objc",
+        "objcpp"
+      ],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".git/",
+        ".hg/"
+      ],
+      "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    }
+  }
+}
