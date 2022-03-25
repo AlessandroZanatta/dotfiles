@@ -4,8 +4,11 @@
     "json",
     "ocaml",
     "latex",
-    "tex"
+    "tex",
+    "yaml",
+    "cmake"
   ],
+  "yaml.format.enable": true,
   "python.formatting.provider": "black",
   "ltex.checkFrequency": "edit",
   "languageserver": {

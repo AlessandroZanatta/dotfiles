@@ -71,6 +71,7 @@ awful.spawn.single_instance("picom", awful.rules.rules)
 awful.spawn.single_instance("parcellite -n", awful.rules.rules)
 awful.spawn.single_instance("nm-applet", awful.rules.rules)
 awful.spawn.single_instance("autorandr -c", awful.rules.rules)
+awful.spawn.single_instance("mailspring", awful.rules.rules)
 -- This function implements the XDG autostart specification
 --[[
 awful.spawn.with_shell(
@@ -110,10 +111,10 @@ local browser = "firefox"
 awful.util.terminal = terminal
 awful.util.tagnames = { "1", "2", "3", "4", "5" }
 awful.layout.layouts = {
-    -- awful.layout.suit.floating,
     awful.layout.suit.tile,
-    -- awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
+    -- awful.layout.suit.floating,
+    -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.top,
     --awful.layout.suit.fair,
     --awful.layout.suit.fair.horizontal,
