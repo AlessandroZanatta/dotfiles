@@ -29,10 +29,6 @@ require "awful.hotkeys_popup.keys"
 local mytable = awful.util.table or gears.table -- 4.{0,1} compatibility
 -- }}}
 
--- {{{ Local extensions
-local sharedtags = require "sharedtags"
--- }}}
-
 -- {{{ Error handling
 
 -- Check if awesome encountered an error during startup and fell back to
