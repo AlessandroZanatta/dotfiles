@@ -215,3 +215,5 @@ mvimg(){
         echo -e '\e[48;5;9mAborted\e[0m - images directory not found!'
     fi
 }
+
+export QSYS_ROOTDIR="/home/kalex/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/21.1/quartus/sopc_builder/bin"
