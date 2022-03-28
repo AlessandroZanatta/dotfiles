@@ -1,3 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
-xautolock -time 5 -locker "/usr/local/bin/lock" 
+xidlehook \
+  --not-when-fullscreen \
+  --not-when-audio \
+  --timer 60 \
+  '/usr/local/bin/lock' \
+  ''
+  

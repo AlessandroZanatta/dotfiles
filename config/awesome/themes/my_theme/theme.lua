@@ -15,29 +15,55 @@ local os = os
 local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local theme = {}
-theme.confdir = os.getenv "HOME" .. "/.config/awesome/themes/multicolor"
+theme.confdir = os.getenv "HOME" .. "/.config/awesome/themes/my_theme"
 theme.wallpaper = theme.confdir .. "/wall.png"
 theme.font = "JetBrainsMono Nerd Font Bold 9"
+theme.additional_fonts = {
+    "JetBrainsMono Nerd Font Bold 9",
+    "JetBrainsMono Nerd Font 14",
+    "Material Design Icons Bold 9",
+    "Unifont 9",
+}
+theme.colors = {
+    "#282c34",
+    "#e06c75",
+    "#98c379",
+    "#e5c07b",
+    "#61afef",
+    "#c678dd",
+    "#56b6c2",
+    "#abb2bf",
+    "#545862",
+    "#e06c75",
+    "#98c379",
+    "#e5c07b",
+    "#61afef",
+    "#c678dd",
+    "#56b6c2",
+    "#c8ccd4",
+}
+theme.taglist_colors = {
+    "#F9DE8F",
+    "#ff9b93",
+    "#95e1d3",
+    "#81A1C1",
+    "#A3BE8C",
+}
+
 theme.menu_bg_normal = "#000000"
 theme.menu_bg_focus = "#000000"
-theme.bg_normal = "#000000"
-theme.bg_focus = "#000000"
-theme.bg_urgent = "#000000"
-theme.fg_normal = "#aaaaaa"
-theme.fg_focus = "#ff8c00"
-theme.fg_urgent = "#af1d18"
+theme.bg_normal = "#1e222a"
+theme.bg_focus = theme.bg_normal
+theme.bg_urgent = theme.bg_normal
+theme.fg_normal = theme.colors[16]
+theme.fg_focus = theme.colors[16]
+theme.fg_urgent = theme.colors[16]
 theme.fg_minimize = "#ffffff"
-theme.border_width = dpi(1)
-theme.border_normal = "#1c2022"
-theme.border_focus = "#606060"
-theme.border_marked = "#3ca4d8"
-theme.menu_border_width = 0
-theme.menu_width = dpi(130)
-theme.menu_submenu_icon = theme.confdir .. "/icons/submenu.png"
-theme.menu_fg_normal = "#aaaaaa"
-theme.menu_fg_focus = "#ff8c00"
-theme.menu_bg_normal = "#050505dd"
-theme.menu_bg_focus = "#050505dd"
+theme.border_width = dpi(5)
+theme.border_normal = theme.bg_normal
+theme.border_focus = theme.bg_normal
+theme.border_marked = theme.bg_normal
+
 theme.widget_temp = theme.confdir .. "/icons/temp.png"
 theme.widget_uptime = theme.confdir .. "/icons/ac.png"
 theme.widget_cpu = theme.confdir .. "/icons/cpu.png"
@@ -111,6 +137,24 @@ theme.cal = lain.widget.cal {
     },
 }
 
+local round_left = wibox.widget.textbox(
+    "<span foreground='#2a2e36' font_desc='" .. theme.additional_fonts[4] .. "'></span>"
+)
+local round_right = wibox.widget.textbox(
+    "<span foreground='#2a2e36' font_desc='" .. theme.additional_fonts[4] .. "'></span>"
+)
+local empty_space = wibox.widget.textbox "  "
+
+-- Coretemp
+local tempicon = wibox.widget.textbox(
+    "<span foregroud='#a4ebf3' font_desc='" .. theme.additional_fonts[4] .. "'>󰜗</span>"
+)
+local temp = lain.widget.temp {
+    settings = function()
+        widget:set_markup(markup.fontfg(theme.font, "#f1af5f", coretemp_now .. "°C "))
+    end,
+}
+
 -- Weather
 --[[ to be set before use
 local weathericon = wibox.widget.imagebox(theme.widget_weather)
@@ -165,14 +209,6 @@ local cpuicon = wibox.widget.imagebox(theme.widget_cpu)
 local cpu = lain.widget.cpu {
     settings = function()
         widget:set_markup(markup.fontfg(theme.font, "#e33a6e", cpu_now.usage .. "% "))
-    end,
-}
-
--- Coretemp
-local tempicon = wibox.widget.imagebox(theme.widget_temp)
-local temp = lain.widget.temp {
-    settings = function()
-        widget:set_markup(markup.fontfg(theme.font, "#f1af5f", coretemp_now .. "°C "))
     end,
 }
 
@@ -265,14 +301,24 @@ function theme.at_screen_connect(s)
             awful.layout.inc(-1)
         end)
     ))
-
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen = s,
-        filter = function(t)
-            return t.selected or #t:clients() > 0
-        end,
+        filter = awful.widget.taglist.filter.all,
         buttons = awful.util.taglist_buttons,
+        widget_template = {
+            {
+                id = "text_role",
+                widget = wibox.widget.textbox,
+                create_callback = function(self, t, index, tagsList)
+                    self.markup = "<span foreground='"
+                        .. theme.taglist_colors[index]
+                        .. "'>"
+                        .. self.markup
+                        .. "</span>"
+                end,
+            },
+        },
     }
 
     -- Create a tasklist widget
@@ -282,7 +328,7 @@ function theme.at_screen_connect(s)
     s.mywibox = awful.wibar {
         position = "top",
         screen = s,
-        height = dpi(19),
+        height = dpi(18),
         bg = theme.bg_normal,
         fg = theme.fg_normal,
     }
@@ -293,10 +339,13 @@ function theme.at_screen_connect(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             --s.mylayoutbox,
+            round_left,
             s.mytaglist,
+            round_right,
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
+        --s.mytasklist, -- Middle widget
+        nil,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
@@ -322,6 +371,29 @@ function theme.at_screen_connect(s)
             bat.widget,
             clockicon,
             mytextclock,
+        },
+    }
+
+    -- Create the bottom wibox
+    s.mybottomwibox = awful.wibar {
+        position = "bottom",
+        screen = s,
+        border_width = 0,
+        height = dpi(20),
+        bg = theme.bg_normal,
+        fg = theme.fg_normal,
+    }
+
+    -- Add widgets to the bottom wibox
+    s.mybottomwibox:setup {
+        layout = wibox.layout.align.horizontal,
+        { -- Left widgets
+            layout = wibox.layout.fixed.horizontal,
+        },
+        s.mytasklist, -- Middle widget
+        { -- Right widgets
+            layout = wibox.layout.fixed.horizontal,
+            s.mylayoutbox,
         },
     }
 end
