@@ -9,9 +9,12 @@
     "cmake"
   ],
   "yaml.format.enable": true,
+  // Python formatter
   "python.formatting.provider": "black",
+  // When to check syntax/grammar errors when editing latex files
   "ltex.checkFrequency": "edit",
   "languageserver": {
+    // OCaml
     "ocaml": {
       "command": "ocamllsp",
       "rootPatterns": [
@@ -23,6 +26,14 @@
       "initializationOptions": {},
       "settings": {}
     },
+    // SystemVerilog
+    "svls": {
+      "command": "svls",
+      "filetypes": [
+        "systemverilog"
+      ]
+    },
+    // C/C++
     "ccls": {
       "command": "ccls",
       "filetypes": [
