@@ -23,6 +23,7 @@ source $HOME/.zsh_aliases
 # Virtualenvwrapper
 source virtualenvwrapper.sh
 
+
 # -------------------------- #
 # -------- EXPORTS --------- # 
 # -------------------------- #
@@ -39,6 +40,9 @@ source virtualenvwrapper.sh
 
 # HackNotes requires an EDITOR variable to be set
 export EDITOR=nvim
+
+# Add .local/bin to path, as pip3 --user installs in here
+export PATH="/home/kalex/.local/bin:$PATH"
 
 # -------------------------- #
 # ------- FUNCTIONS -------- # 

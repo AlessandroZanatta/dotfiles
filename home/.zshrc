@@ -29,33 +29,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# Spaceship-prompt customization
-# SPACESHIP_TIME_SHOW=true
-# SPACESHIP_EXIT_CODE_SHOW=true
-# 
-# SPACESHIP_PROMPT_ORDER=(
-#   user          # Username section
-#   dir           # Current directory section
-#   host          # Hostname section
-#   git           # Git section (git_branch + git_status)
-#   package       # Package version
-#   node          # Node.js section
-#   golang        # Go section
-#   php           # PHP section
-#   rust          # Rust section
-#   haskell       # Haskell Stack section
-#   docker        # Docker section
-#   line_sep      # Line break
-#   jobs          # Background jobs indicator
-#   char          # Prompt character
-# )
-# 
-# SPACESHIP_RPROMPT_ORDER=(
-#   exit_code     # Exit code section
-#   time          # Time stamps section
-#   exec_time     # Execution time
-# )
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
