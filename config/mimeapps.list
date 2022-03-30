@@ -18,6 +18,7 @@ text/x-csrc=nvim.desktop;
 text/x-java=nvim.desktop;
 text/x-makefile=nvim.desktop;
 text/x-python3=nvim.desktop;
+text/x-svsrc=nvim.desktop;
 text/x-tex=nvim.desktop;
 x-scheme-handler/about=firefox.desktop;
 x-scheme-handler/http=firefox.desktop;

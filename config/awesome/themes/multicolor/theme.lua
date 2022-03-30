@@ -269,9 +269,10 @@ function theme.at_screen_connect(s)
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen = s,
-        filter = function(t)
-            return t.selected or #t:clients() > 0
-        end,
+        filter = awful.widget.taglist.filter.all,
+        -- filter = function(t)
+        --     return t.selected or #t:clients() > 0
+        -- end,
         buttons = awful.util.taglist_buttons,
     }
 
