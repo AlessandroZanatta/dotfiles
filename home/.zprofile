@@ -39,7 +39,7 @@ export XDG_PICTURES_DIR="$HOME/Pictures"
 export XDG_VIDEOS_DIR="$HOME/Videos"
 
 # HackNotes requires an EDITOR variable to be set
-export EDITOR=nvim
+export EDITOR=/usr/local/bin/v
 
 # Add .local/bin to path, as pip3 --user installs in here
 export PATH="/home/kalex/.local/bin:$PATH"
