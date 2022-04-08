@@ -1,11 +1,7 @@
 local M = {}
 
-M.setup_lsp = function(attach, capabilities)
+M.setup_lsp = function(_, _)
    local lspconfig = require "lspconfig"
-
-   -- lspconfig.pyright.setup {}
-   -- lspconfig.ltex.setup {}
-   -- lspconfig.ocamllsp.setup {}
    lspconfig.sumneko_lua.setup {}
 end
 

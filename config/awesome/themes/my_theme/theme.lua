@@ -42,6 +42,7 @@ theme.colors = {
     "#56b6c2",
     "#c8ccd4",
 }
+theme.bg_lighter = "#2a2e36"
 theme.taglist_colors = {
     "#F9DE8F",
     "#ff9b93",
@@ -59,7 +60,7 @@ theme.fg_normal = theme.colors[16]
 theme.fg_focus = theme.colors[16]
 theme.fg_urgent = theme.colors[16]
 theme.fg_minimize = "#ffffff"
-theme.border_width = dpi(5)
+theme.border_width = dpi(0)
 theme.border_normal = theme.bg_normal
 theme.border_focus = theme.bg_normal
 theme.border_marked = theme.bg_normal
@@ -138,10 +139,10 @@ theme.cal = lain.widget.cal {
 }
 
 local round_left = wibox.widget.textbox(
-    "<span foreground='#2a2e36' font_desc='" .. theme.additional_fonts[4] .. "'></span>"
+    "<span foreground='" .. theme.bg_lighter .. "' font_desc='" .. theme.additional_fonts[4] .. "'></span>"
 )
 local round_right = wibox.widget.textbox(
-    "<span foreground='#2a2e36' font_desc='" .. theme.additional_fonts[4] .. "'></span>"
+    "<span foreground='" .. theme.bg_lighter .. "' font_desc='" .. theme.additional_fonts[4] .. "'></span>"
 )
 local empty_space = wibox.widget.textbox "  "
 
@@ -155,21 +156,6 @@ local temp = lain.widget.temp {
     end,
 }
 
--- Weather
---[[ to be set before use
-local weathericon = wibox.widget.imagebox(theme.widget_weather)
-theme.weather = lain.widget.weather({
-    city_id = 2643743, -- placeholder (London)
-    notification_preset = { font = "Terminus 10", fg = theme.fg_normal },
-    weather_na_markup = markup.fontfg(theme.font, "#eca4c4", "N/A "),
-    settings = function()
-        descr = weather_now["weather"][1]["description"]:lower()
-        units = math.floor(weather_now["main"]["temp"])
-        widget:set_markup(markup.fontfg(theme.font, "#eca4c4", descr .. " @ " .. units .. "°C "))
-    end
-})
---]]
-
 -- / fs
 --[[ commented because it needs Gio/Glib >= 2.54
 local fsicon = wibox.widget.imagebox(theme.widget_fs)
@@ -177,29 +163,6 @@ theme.fs = lain.widget.fs({
     notification_preset = { font = "Terminus 10", fg = theme.fg_normal },
     settings  = function()
         widget:set_markup(markup.fontfg(theme.font, "#80d9d8", string.format("%.1f", fs_now["/"].used) .. "% "))
-    end
-})
---]]
-
--- Mail IMAP check
---[[ to be set before use
-local mailicon = wibox.widget.imagebox()
-theme.mail = lain.widget.imap({
-    timeout  = 180,
-    server   = "server",
-    mail     = "mail",
-    password = "keyring get mail",
-    settings = function()
-        if mailcount > 0 then
-            mailicon:set_image(theme.widget_mail)
-            widget:set_markup(markup.fontfg(theme.font, "#cccccc", mailcount .. " "))
-        else
-            widget:set_text("")
-            --mailicon:set_image() -- not working in 4.0
-            mailicon._private.image = nil
-            mailicon:emit_signal("widget::redraw_needed")
-            mailicon:emit_signal("widget::layout_changed")
-        end
     end
 })
 --]]
@@ -307,19 +270,18 @@ function theme.at_screen_connect(s)
         filter = awful.widget.taglist.filter.all,
         buttons = awful.util.taglist_buttons,
         widget_template = {
-            {
-                id = "text_role",
-                widget = wibox.widget.textbox,
-                create_callback = function(self, t, index, tagsList)
-                    self.markup = "<span foreground='"
-                        .. theme.taglist_colors[index]
-                        .. "'>"
-                        .. self.markup
-                        .. "</span>"
-                end,
-            },
+
+            { id = "text_role", widget = wibox.widget.textbox },
+            id = "background",
+            widget = wibox.container.background,
+
+            create_callback = function(self, t, _, _)
+                self.fg = theme.taglist_colors[t.index]
+            end,
         },
     }
+    s.mytaglist = wibox.container.background(s.mytaglist, theme.bg_lighter, gears.shape.rectangle)
+    s.mytaglist = wibox.container.margin(s.mytaglist, 0, 0, 3, 2)
 
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
@@ -328,7 +290,7 @@ function theme.at_screen_connect(s)
     s.mywibox = awful.wibar {
         position = "top",
         screen = s,
-        height = dpi(18),
+        height = dpi(20),
         bg = theme.bg_normal,
         fg = theme.fg_normal,
     }
@@ -338,19 +300,17 @@ function theme.at_screen_connect(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
+            empty_space,
             --s.mylayoutbox,
             round_left,
             s.mytaglist,
             round_right,
             s.mypromptbox,
         },
-        --s.mytasklist, -- Middle widget
-        nil,
+        s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
-            --mailicon,
-            --theme.mail.widget,
             netdownicon,
             netdowninfo,
             netupicon,
@@ -361,39 +321,12 @@ function theme.at_screen_connect(s)
             memory.widget,
             cpuicon,
             cpu.widget,
-            --fsicon,
-            --theme.fs.widget,
-            --weathericon,
-            --theme.weather.widget,
             tempicon,
             temp.widget,
             baticon,
             bat.widget,
             clockicon,
             mytextclock,
-        },
-    }
-
-    -- Create the bottom wibox
-    s.mybottomwibox = awful.wibar {
-        position = "bottom",
-        screen = s,
-        border_width = 0,
-        height = dpi(20),
-        bg = theme.bg_normal,
-        fg = theme.fg_normal,
-    }
-
-    -- Add widgets to the bottom wibox
-    s.mybottomwibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-        },
-        s.mytasklist, -- Middle widget
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            s.mylayoutbox,
         },
     }
 end

@@ -3,16 +3,16 @@
     "python",
     "json",
     "ocaml",
-    "latex",
-    "tex",
     "yaml",
-    "cmake"
+    "cmake",
+    "verilog",
+    "systemverilog"
   ],
   "yaml.format.enable": true,
   // Python formatter
   "python.formatting.provider": "black",
-  // When to check syntax/grammar errors when editing latex files
   "ltex.checkFrequency": "edit",
+  "ltex.trace.server": "verbose",
   "languageserver": {
     // OCaml
     "ocaml": {
@@ -26,11 +26,11 @@
       "initializationOptions": {},
       "settings": {}
     },
-    // SystemVerilog
-    "svls": {
-      "command": "svls",
+    "veridian": {
+      "command": "veridian",
       "filetypes": [
-        "systemverilog"
+        "systemverilog",
+        "verilog"
       ]
     },
     // C/C++
