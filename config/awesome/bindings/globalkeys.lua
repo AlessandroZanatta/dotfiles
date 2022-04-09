@@ -26,7 +26,10 @@ function _M.get()
         -- Destroy all notifications
         awful.key({ "Control" }, "space", function()
             naughty.destroy_all_notifications()
-        end, { description = "destroy all notifications", group = "hotkeys" }),
+        end, {
+            description = "destroy all notifications",
+            group = "hotkeys",
+        }),
 
         -- Take a screenshot
         awful.key({ modkey, "Shift" }, "s", function()
@@ -52,7 +55,10 @@ function _M.get()
         end, { description = "focus next by index", group = "client" }),
         awful.key({ modkey }, "k", function()
             awful.client.focus.byidx(-1)
-        end, { description = "focus previous by index", group = "client" }),
+        end, {
+            description = "focus previous by index",
+            group = "client",
+        }),
 
         -- Layout manipulation
         awful.key({ modkey, "Shift" }, "j", function()
@@ -60,13 +66,22 @@ function _M.get()
         end, { description = "swap with next client by index", group = "client" }),
         awful.key({ modkey, "Shift" }, "k", function()
             awful.client.swap.byidx(-1)
-        end, { description = "swap with previous client by index", group = "client" }),
+        end, {
+            description = "swap with previous client by index",
+            group = "client",
+        }),
         awful.key({ modkey, "Control" }, "j", function()
             awful.screen.focus_relative(1)
-        end, { description = "focus the next screen", group = "screen" }),
+        end, {
+            description = "focus the next screen",
+            group = "screen",
+        }),
         awful.key({ modkey, "Control" }, "k", function()
             awful.screen.focus_relative(-1)
-        end, { description = "focus the previous screen", group = "screen" }),
+        end, {
+            description = "focus the previous screen",
+            group = "screen",
+        }),
 
         -- Jump to urgent client
         awful.key(
@@ -112,16 +127,28 @@ function _M.get()
 
         awful.key({ modkey }, "l", function()
             awful.tag.incmwfact(0.05)
-        end, { description = "increase master width factor", group = "layout" }),
+        end, {
+            description = "increase master width factor",
+            group = "layout",
+        }),
         awful.key({ modkey }, "h", function()
             awful.tag.incmwfact(-0.05)
-        end, { description = "decrease master width factor", group = "layout" }),
+        end, {
+            description = "decrease master width factor",
+            group = "layout",
+        }),
         awful.key({ modkey, "Control" }, "h", function()
             awful.tag.incnmaster(1, nil, true)
-        end, { description = "increase the number of master clients", group = "layout" }),
+        end, {
+            description = "increase the number of master clients",
+            group = "layout",
+        }),
         awful.key({ modkey, "Control" }, "l", function()
             awful.tag.incnmaster(-1, nil, true)
-        end, { description = "decrease the number of master clients", group = "layout" }),
+        end, {
+            description = "decrease the number of master clients",
+            group = "layout",
+        }),
         -- awful.key({ modkey, "Control" }, "h", function()
         --     awful.tag.incncol(1, nil, true)
         -- end, { description = "increase the number of columns", group = "layout" }),
@@ -144,55 +171,33 @@ function _M.get()
         end, { description = "-10%", group = "hotkeys" }),
 
         -- ALSA volume control
-        awful.key({ altkey }, "Up", function()
-            os.execute(string.format("amixer -q set %s 1%%+", beautiful.volume.channel))
+        awful.key({}, "XF86AudioRaiseVolume", function()
+            os.execute(string.format("amixer -q set %s 5%%+", beautiful.volume.channel))
             beautiful.volume.update()
         end, { description = "volume up", group = "hotkeys" }),
-        awful.key({ altkey }, "Down", function()
-            os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
+
+        awful.key({}, "XF86AudioLowerVolume", function()
+            os.execute(string.format("amixer -q set %s 5%%-", beautiful.volume.channel))
             beautiful.volume.update()
         end, { description = "volume down", group = "hotkeys" }),
-        awful.key({ altkey }, "m", function()
-            os.execute(
-                string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel)
-            )
-            beautiful.volume.update()
-        end, { description = "toggle mute", group = "hotkeys" }),
-        awful.key({ altkey, "Control" }, "m", function()
-            os.execute(string.format("amixer -q set %s 100%%", beautiful.volume.channel))
-            beautiful.volume.update()
-        end, { description = "volume 100%", group = "hotkeys" }),
-        awful.key({ altkey, "Control" }, "0", function()
-            os.execute(string.format("amixer -q set %s 0%%", beautiful.volume.channel))
-            beautiful.volume.update()
-        end, { description = "volume 0%", group = "hotkeys" }),
 
-        -- Default
-        --[[ Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"}),
-    --]]
-        --[[ dmenu
-    awful.key({ modkey }, "x", function ()
-            os.execute(string.format("dmenu_run -i -fn 'Monospace' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
-            beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
-        end,
-        {description = "show dmenu", group = "launcher"}),
-    --]]
-        -- alternatively use rofi, a dmenu-like application with more features
-        -- check https://github.com/DaveDavenport/rofi for more details
-        --[[ rofi
-    awful.key({ modkey }, "x", function ()
-            os.execute(string.format("rofi -show %s -theme %s",
-            'run', 'dmenu'))
-        end,
-        {description = "show rofi", group = "launcher"}),
-    --]]
-        -- Prompt
+        awful.key({}, "XF86AudioMute", function()
+            os.execute "amixer set Master toggle"
+            beautiful.volume.update()
+        end, {
+            description = "toggle speakers mute",
+            group = "hotkeys",
+        }),
+
+        awful.key({ modkey, "Shift" }, "m", function()
+            os.execute "amixer set Capture toggle"
+            beautiful.volume.update()
+        end, { description = "toggle mic mute", group = "hotkeys" }),
+
+        -- Launcher
         awful.key({ modkey }, "p", function()
             awful.spawn "/home/kalex/.config/rofi/launchers/text/launcher.sh"
-        end, { description = "run prompt", group = "launcher" })
-        --]]
+        end, { description = "run launcher", group = "launcher" })
     )
 
     return globalkeys
