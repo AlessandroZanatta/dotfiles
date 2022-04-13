@@ -10,7 +10,7 @@ function _M.get()
 
     awful.screen.connect_for_each_screen(function(s)
         -- Each screen has its own tag table.
-        tags[s] = awful.tag({ " ", " ", " ", " ", " " }, s, RC.layouts[1])
+        tags[s] = awful.tag({ " ", " ", " ", " ", " " }, s, awful.layout.layouts)
     end)
     return tags
 end

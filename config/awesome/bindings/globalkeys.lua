@@ -1,7 +1,6 @@
 -- Standard awesome library
 local gears = require "gears"
 local awful = require "awful"
-local beautiful = require "beautiful"
 local naughty = require "naughty"
 local lain = require "lain"
 
@@ -10,7 +9,6 @@ local hotkeys_popup = require "awful.hotkeys_popup"
 
 -- Resource Configuration
 local modkey = RC.vars.modkey
-local altkey = RC.vars.modkey
 local terminal = RC.vars.terminal
 
 local _M = {}
@@ -172,18 +170,18 @@ function _M.get()
 
         -- ALSA volume control
         awful.key({}, "XF86AudioRaiseVolume", function()
-            os.execute(string.format("amixer -q set %s 5%%+", beautiful.volume.channel))
-            beautiful.volume.update()
+            os.execute(string.format("amixer -q set %s 5%%+", beautiful.volume.widget.channel))
+            beautiful.volume.widget.update()
         end, { description = "volume up", group = "hotkeys" }),
 
         awful.key({}, "XF86AudioLowerVolume", function()
-            os.execute(string.format("amixer -q set %s 5%%-", beautiful.volume.channel))
-            beautiful.volume.update()
+            os.execute(string.format("amixer -q set %s 5%%-", beautiful.volume.widget.channel))
+            beautiful.volume.widget.update()
         end, { description = "volume down", group = "hotkeys" }),
 
         awful.key({}, "XF86AudioMute", function()
             os.execute "amixer set Master toggle"
-            beautiful.volume.update()
+            beautiful.volume.widget.update()
         end, {
             description = "toggle speakers mute",
             group = "hotkeys",
@@ -191,7 +189,7 @@ function _M.get()
 
         awful.key({ modkey, "Shift" }, "m", function()
             os.execute "amixer set Capture toggle"
-            beautiful.volume.update()
+            beautiful.volume.widget.update()
         end, { description = "toggle mic mute", group = "hotkeys" }),
 
         -- Launcher

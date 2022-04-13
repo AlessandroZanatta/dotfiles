@@ -12,6 +12,8 @@ local _M = {
 
     -- Default editor
     editor = os.getenv "EDITOR" or "nvim",
+
+    wallpaper = os.getenv "HOME" .. "/.config/awesome/theme/wallpaper.png",
 }
 
 return _M
