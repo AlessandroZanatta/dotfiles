@@ -51,6 +51,10 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar { position = "top", screen = s }
 
+    -- Systray
+    local systray = wibox.widget.systray()
+    systray:set_base_size(20)
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
@@ -67,7 +71,7 @@ awful.screen.connect_for_each_screen(function(s)
         -- Right widgets
         {
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.systray(),
+            systray,
             -- statusbar.widgets.netdownicon,
             -- statusbar.widgets.netdowninfo,
             -- statusbar.widgets.netupicon,
