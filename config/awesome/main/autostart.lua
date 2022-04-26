@@ -1,9 +1,20 @@
 local awful = require "awful"
 
-awful.spawn.single_instance("flameshot", awful.rules.rules)
-awful.spawn.single_instance("/home/kalex/dotfiles/scripts/locker", awful.rules.rules)
-awful.spawn.single_instance("picom", awful.rules.rules)
-awful.spawn.single_instance("parcellite -n", awful.rules.rules)
-awful.spawn.single_instance("nm-applet", awful.rules.rules)
-awful.spawn.single_instance("autorandr -c", awful.rules.rules)
-awful.spawn.single_instance("mailspring", awful.rules.rules)
+local function run_once(cmd_arr)
+    for _, cmd in ipairs(cmd_arr) do
+        findme = cmd
+        firstspace = cmd:find " "
+        if firstspace then
+            findme = cmd:sub(0, firstspace - 1)
+        end
+        awful.spawn.with_shell(string.format("pgrep -u $USER -x %s > /dev/null || (%s)", findme, cmd))
+    end
+end
+
+run_once "flameshot"
+run_once "/home/kalex/dotfiles/scripts/locker"
+run_once "picom"
+run_once "parcellite -n"
+run_once "nm-applet"
+run_once "autorandr -c"
+run_once "mailspring"
