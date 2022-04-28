@@ -5,4 +5,5 @@ return {
     temp = require "widgets.temp",
     cpu = require "widgets.cpu",
     memory = require "widgets.memory",
+    systray = require "widgets.systray",
 }
