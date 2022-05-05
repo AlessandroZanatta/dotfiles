@@ -39,10 +39,18 @@ export XDG_PICTURES_DIR="$HOME/Pictures"
 export XDG_VIDEOS_DIR="$HOME/Videos"
 
 # HackNotes requires an EDITOR variable to be set
-export EDITOR=/usr/local/bin/v
+export EDITOR="/usr/local/bin/v"
 
-# Add .local/bin to path, as pip3 --user installs in here
-export PATH="/home/kalex/.local/bin:$PATH"
+export GOPATH=""
+
+# Add .local/bin to path, as `pip3 --user` installs in here
+export PATH="$PATH:/home/kalex/.local/bin"
+
+# Add personal scripts to PATH
+export PATH="$PATH:/home/kalex/dotfiles/scripts"
+
+# Add GOPATH to PATH  
+export PATH="$PATH:/home/kalex/go/bin"
 
 # -------------------------- #
 # ------- FUNCTIONS -------- # 
@@ -135,13 +143,6 @@ aslr(){
     else
         echo "Usage: $0 [on/off]"
     fi
-}
-
-
-# Always run tamarin with this flag to avoid errors not showing up
-# Notice: the flag --quit-on-warning must come after everything, an alias would break everything
-tp(){
-    $HOME/.local/bin/tamarin-prover $@ --quit-on-warning
 }
 
 
