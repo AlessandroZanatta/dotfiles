@@ -6,7 +6,10 @@
     "yaml",
     "cmake",
     "verilog",
-    "systemverilog"
+    "systemverilog",
+    "rust",
+    "javascript",
+    "sql"
   ],
   "yaml.format.enable": true,
   // Python formatter
@@ -26,6 +29,7 @@
       "initializationOptions": {},
       "settings": {}
     },
+    // System verilog
     "veridian": {
       "command": "veridian",
       "filetypes": [

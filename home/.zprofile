@@ -44,13 +44,16 @@ export EDITOR="/usr/local/bin/v"
 export GOPATH=""
 
 # Add .local/bin to path, as `pip3 --user` installs in here
-export PATH="$PATH:/home/kalex/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # Add personal scripts to PATH
-export PATH="$PATH:/home/kalex/dotfiles/scripts"
+export PATH="$PATH:$HOME/dotfiles/scripts"
 
 # Add GOPATH to PATH  
-export PATH="$PATH:/home/kalex/go/bin"
+export PATH="$PATH:$HOME/go/bin"
+
+# Add cargo binaries to PATH
+export PATH="$PATH:$HOME/.cargo/bin"
 
 # -------------------------- #
 # ------- FUNCTIONS -------- # 
@@ -164,7 +167,7 @@ summary(){
     if [[ -d "$(pwd)/summary" ]]; then
        echo "${red}'Summary' directory already exists. Delete it to proceed.${reset}"
     else
-        cp -r "/home/kalex/Projects/latex_summary_template" "$(pwd)/summary"
+        cp -r "$HOME/Projects/latex_summary_template" "$(pwd)/summary"
         echo "${green}Created summary correctly!${reset}"
         cd summary
     fi
@@ -221,4 +224,4 @@ mvimg(){
     fi
 }
 
-export QSYS_ROOTDIR="/home/kalex/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/21.1/quartus/sopc_builder/bin"
+export QSYS_ROOTDIR="$HOME/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/21.1/quartus/sopc_builder/bin"

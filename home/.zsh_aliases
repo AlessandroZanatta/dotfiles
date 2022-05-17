@@ -36,7 +36,7 @@ alias vim=/usr/local/bin/v
 
 
 # Start Clion in background without output
-alias clion='nohup clion > /dev/null &'
+# alias clion='nohup clion > /dev/null &'
 
 # Start BurpSuite in background without output
 # alias burpsuite='nohup burpsuite > /dev/null &'
