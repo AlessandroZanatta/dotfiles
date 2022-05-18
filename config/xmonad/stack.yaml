@@ -1,0 +1,15 @@
+resolver:
+  url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/18/14.yaml
+
+# User packages to be built.
+packages:
+  - xmobar-git
+  - xmonad-git
+  - xmonad-contrib-git
+  - xmonad-dbus
+
+extra-deps:
+  - netlink-1.1.1.0
+flags:
+  xmobar:
+    all_extensions: true

@@ -1,0 +1,279 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+background = #1e222a
+;foreground = #676b73 
+foreground = #c8ccd4
+
+color0 = #282c34
+color1 = #e06c75
+color2 = #98c379
+color3 = #e5c07b
+color4 = #61afef
+color5 = #c678dd
+color6 = #56b6c2
+color7 = #abb2bf
+color8 = #545862
+color9 = #e06c75
+color10 = #98c379
+color11 = #e5c07b
+color12 = #61afef
+color13 = #c678dd
+color14 = #56b6c2
+color15 = #c8ccd4
+dark-light = #272A2B 
+active-light = #313435
+
+[bar/default]
+tray-position = right
+monitor = ${env:MONITOR:} 
+width =  100%
+height = 18
+padding-left = 1
+padding-right = 0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+bottom = false
+border-top-size = 5
+border-bottom-size = 5
+border-top-color = ${colors.background}
+border-bottom-color = ${colors.background}
+
+line-size = 1
+
+modules-left = round-left xmonad round-right 
+modules-center =  
+modules-right = alsa round-left cpu round-right updates wlan mem xbacklight round-left time  round-right  powermenu
+font-0 = JetBrainsMono Nerd Font:style=Bold:pixelsize=9;3
+font-1 = JetBrainsMono Nerd Font:size=14;4
+font-2 = Material Design Icons:style=Bold:size=9;3
+font-3 = unifont:fontformat=truetype:size=9;3
+
+; Tell the Window Manager not to configure the window.
+; Use this to detach the bar if your WM is locking its size/position.
+override-redirect = false
+
+
+[module/empty-space]
+type = custom/text
+format = "  "
+
+[module/round-left]
+type = custom/text
+format = %{T3}%{T-}
+format-foreground = #2a2e36
+
+[module/round-right]
+type = custom/text
+format = %{T3}%{T-}
+format-foreground = #2a2e36
+
+[module/roundd-left]
+type = custom/text
+format = %{T3}%{T-}
+format-foreground = #a3be8c 
+
+[module/roundd-right]
+type = custom/text
+format = %{T3}%{T-}
+format-foreground = #a3be8c
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 70
+
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+format-padding = 1
+label = %temperature%
+label-warn = %temperature%
+ramp-0 =  "󰜗" 
+ramp-font = 3
+ramp-foreground = #a4ebf3
+
+
+[module/xmonad]
+type = custom/script
+exec = stack exec xmonad-dbus
+tail = true
+interval = 1
+
+format-background = #2a2e36
+format-foreground = ${colors.foreground}
+format-padding = 2
+
+[module/alsa]
+type = internal/alsa
+format-volume = <label-volume> <bar-volume>
+label-volume = " "  
+label-volume-foreground = ${colors.foreground}
+format-muted-foreground = ${colors.foreground}
+label-muted = 󰚙
+
+format-muted-padding = 1
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #61afef
+bar-volume-foreground-1 = #61afef
+bar-volume-foreground-2 = #61afef
+bar-volume-foreground-3 = #61afef
+bar-volume-foreground-4 = #61afef
+bar-volume-foreground-5 = #61afef
+bar-volume-foreground-6 = #61afef
+bar-volume-gradient = false
+bar-volume-indicator = 
+bar-volume-indicator-foreground = #61afef
+bar-volume-indicator-font = 2
+bar-volume-fill = ━ 
+bar-volume-fill-foreground = #61afef
+bar-volume-fill-font = 2
+bar-volume-empty = ━
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = #565c64
+format-volume-padding = 2
+
+[module/time]
+type = internal/date
+interval = 60
+
+format = <label>
+format-background = #2a2e36
+format-foreground = #82868e
+
+date = 󰥔 %H:%M%{F-}
+time-alt = 󰃭 %a, %b %d%{F-}
+
+label = %date%%time%
+
+[module/mem]
+type = custom/script
+exec = free -m | sed -n 's/^Mem:\\s\\+[0-9]\\+\\s\\+\\([0-9]\\+\\)\\s.\\+/\\1/p'
+format = <label>
+format-prefix = "﬙ " 
+label = %output% MB
+label-padding = 1
+format-prefix-foreground = #d19a66
+
+[module/updates]
+type = custom/script
+exec = $HOME/.config/polybar/scripts/checkupdates 2> /dev/null | wc -l
+format = <label>
+interval = 4600 
+label =  %output%  
+label-padding = 2
+label-foreground = #BF616A
+
+[module/powermenu]
+type = custom/text 
+format =" " 
+format-padding = 2
+click-left = doas zzz &
+format-foreground = #f25287
+
+[module/wlan]
+type = internal/network
+interface = wlp3s0
+interval = 3.0
+format-connected =  <label-connected>
+label-connected = "󰤪  " 
+label-connected-foreground = #A3BE8C 
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = AC0
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+label-charging = %percentage%%
+format-charging-foreground = ${colors.color4}
+format-charging-background = ${colors.background}
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging = %percentage%%
+format-discharging-foreground = ${colors.foreground}
+format-discharging-background = ${colors.background}
+
+format-full-prefix = "  "
+format-full-prefix-foreground = #A0E8A2
+format-foreground = ${colors.color4}
+format-background = ${colors.background}
+
+label-discharging-foreground = ${colors.foreground}
+ramp-capacity-foreground =  #A0E8A2  
+label-charging-foreground = ${colors.foreground}
+
+label-padding = 1
+
+ramp-capacity-0 = "  " 
+ramp-capacity-1 = "  " 
+ramp-capacity-2 = "  " 
+ramp-capacity-3 = "  " 
+ramp-capacity-4 = "  "
+
+
+animation-charging-0 = "  " 
+animation-charging-1 = "  " 
+animation-charging-2 = "  " 
+animation-charging-3 = "  " 
+animation-charging-4 = "  "
+
+
+animation-charging-foreground = #DF8890
+animation-charging-framerate = 750
+
+format-charging-padding = 1
+format-discharging-padding = 1
+
+[module/volume]
+type = custom/script
+exec = amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'
+format = <label>
+internal = 5.0
+label = %output% 
+label-foreground = #BF616A
+label-padding = 1
+
+[module/xbacklight]
+type = internal/xbacklight
+format = <label>
+format-prefix = "  "
+label = %percentage%
+format-prefix-foreground = #61afef
+label-foreground =   #D8DEE9
+format-padding = 1
+
+[module/cpu]
+type = internal/cpu
+interval = 2.5
+
+format-prefix ="  " 
+format =  <label> 
+
+label = CPU %percentage%%
+format-background = #2a2e36
+format-foreground = #989cff
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...
+
+
