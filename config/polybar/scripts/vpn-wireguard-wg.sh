@@ -1,7 +1,7 @@
 #!/bin/sh
 
 config_name="HomeVPN"
-wireguard_logo=""
+wireguard_logo=" "
 
 connection_status() {
     vpn_status=$(ifconfig | grep "$config_name")

@@ -46,12 +46,13 @@ import XMonad.Util.SpawnOnce
 -- HOME AND OTHER DIRECTORIES
 --------------------------------------------------------------------------------
 
-homeDir, scriptsDir, configDir, xmonadDir, wallpapersDir :: [Char]
+homeDir, dotfilesDir, scriptsDir, configDir, xmonadDir, wallpapersDir :: [Char]
 homeDir = "/home/kalex/"
-scriptsDir = homeDir ++ "dotfiles/scripts/"
+dotfilesDir = homeDir ++ "dotfiles/"
+scriptsDir = dotfilesDir ++ "scripts/"
 configDir = homeDir ++ ".config/"
 xmonadDir = configDir ++ "xmonad/"
-wallpapersDir = configDir ++ "misc/wallpapers/"
+wallpapersDir = dotfilesDir ++ "misc/wallpapers/"
 
 --------------------------------------------------------------------------------
 -- DEFINED FUNCTIONS
@@ -64,23 +65,43 @@ toggleMic = do spawn micToggleMuteCommand
 -- KEYBINDS
 --------------------------------------------------------------------------------
 
-myApplicationLauncher, myScreenshotUtility, myTerminal :: [Char]
+myApplicationLauncher, myScreenshotUtility, myScreenlocker, myTerminal :: [Char]
 myApplicationLauncher = configDir ++ "rofi/launchers/text/launcher.sh"
 myScreenshotUtility = "flameshot gui"
+myScreenlocker = scriptsDir ++ "locker"
 myTerminal = "kitty"
 
 myKeyBindings conf@XConfig {XMonad.modMask = modm} =
   M.fromList
-    [ ((modm, xK_p), spawn myApplicationLauncher), -- Mod-p            --> Open application launcher
-      ((modm .|. shiftMask, xK_Return), spawn myTerminal), -- Mod+Shift+S      --> Take a screenshot
-      ((modm .|. shiftMask, xK_s), spawn myScreenshotUtility), -- Mod+Shift+S      --> Take a screenshot
-      ((modm, xK_f), sendMessage $ Toggle FULL), -- Mod-f            --> Switch to fullscreen layout
-      ((modm, xK_q), spawn $ "cd " ++ xmonadDir ++ " && make restart"), -- Mod-q            --> Re-build and restart xmonad and xmobar
-      ((modm .|. shiftMask, xK_m), liftIO toggleMic), -- Mod-Shift-M      --> Toggle mic mute
-      ((modm .|. shiftMask, xK_Up), spawn "systemctl suspend"), -- Mod-Shift-Up     --> Suspend to RAM
-      ((modm .|. shiftMask, xK_Down), spawn "systemctl hibernate"), -- Mod-Shift-Down   --> Hibernate to DISK
+    [ 
+      -- Spawn of many utilities
+      ((modm, xK_p), spawn myApplicationLauncher),                      -- Mod-p                --> Open application launcher
+      ((modm .|. shiftMask, xK_Return), spawn myTerminal),              -- Mod+Shift+S          --> Take a screenshot
+      ((modm .|. shiftMask, xK_s), spawn myScreenshotUtility),          -- Mod+Shift+S          --> Take a screenshot
+      ((modm .|. shiftMask, xK_l), spawn myScreenlocker),               -- Mod+Shift+L          --> Lock screen
+      ((modm .|. shiftMask, xK_m), liftIO toggleMic),                   -- Mod-Shift-M          --> Toggle mic mute
+      -- ((modm, xK_b), spawn )                                         -- Mod-B                --> Toggle polybar
+      
+      -- Screen brightness 
+      ((0, xF86XK_MonBrightnessUp), spawn "xbacklight -inc 5"),         -- XF86MonBrightnessUp  --> +5% brightness
+      ((0, xF86XK_MonBrightnessDown), spawn "xbacklight -dec 5"),       -- XF86MonBrightnessUp  --> -5% brightness
+
+      -- Volume management
+      ((0, xF86XK_AudioRaiseVolume), spawn "amixer -q set Master 5%+"), -- XF86AudioRaiseVolume --> +5% volume
+      ((0, xF86XK_AudioLowerVolume), spawn "amixer -q set Master 5%-"), -- XF86AudioRaiseVolume --> +5% volume
+      ((0, xF86XK_AudioMute), spawn "amixer -q set Master toggle"),     -- XF86AudioRaiseVolume --> +5% volume
+
+      -- Switch between workspaces with arrows
       ((modm, xK_Right), nextWS),
-      ((modm, xK_Left), prevWS)
+      ((modm, xK_Left), prevWS),
+
+      -- Layout management
+      ((modm, xK_f), sendMessage $ Toggle FULL),                        -- Mod-f                --> Switch to fullscreen layout
+      
+      -- Misc
+      ((modm, xK_q), spawn $ "cd " ++ xmonadDir ++ " && make restart"), -- Mod-q                --> Re-build and restart xmonad and xmobar
+      ((modm .|. shiftMask, xK_Up), spawn "systemctl suspend"),         -- Mod-Shift-Up         --> Suspend to RAM
+      ((modm .|. shiftMask, xK_Down), spawn "systemctl hibernate")      -- Mod-Shift-Down       --> Hibernate to DISK
     ]
 
 -- Add myKeyBindings to the default keybindings and save into myKeys
@@ -148,7 +169,7 @@ myLayoutHook =
 -- Define my workspaces (statically)
 -- myWorkspaces = ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
 
-myWorkspaces = clickable ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
+myWorkspaces = clickable ["1:%{T1}\xf269 %{T-}", "2:%{T1}\xe62b %{T-}", "3:%{T1}\xf668 %{T-}", "4:%{T1}\xfb6e %{T-}", "5:%{T1}\xf11b %{T-}", "6", "7", "8", "9"]
   where
     clickable l =
       [ "%{A1:xdotool key super+" ++ show n ++ ":}" ++ ws ++ "%{A}"
