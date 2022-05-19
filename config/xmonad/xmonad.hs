@@ -76,11 +76,11 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
     [ 
       -- Spawn of many utilities
       ((modm, xK_p), spawn myApplicationLauncher),                      -- Mod-p                --> Open application launcher
-      ((modm .|. shiftMask, xK_Return), spawn myTerminal),              -- Mod+Shift+S          --> Take a screenshot
+      ((modm, xK_Return), spawn myTerminal),                            -- Mod+Enter            --> Open new terminal 
       ((modm .|. shiftMask, xK_s), spawn myScreenshotUtility),          -- Mod+Shift+S          --> Take a screenshot
       ((modm .|. shiftMask, xK_l), spawn myScreenlocker),               -- Mod+Shift+L          --> Lock screen
       ((modm .|. shiftMask, xK_m), liftIO toggleMic),                   -- Mod-Shift-M          --> Toggle mic mute
-      -- ((modm, xK_b), spawn )                                         -- Mod-B                --> Toggle polybar
+      ((modm, xK_b), spawn "polybar-msg cmd toggle"),                   -- Mod-B                --> Toggle polybar
       
       -- Screen brightness 
       ((0, xF86XK_MonBrightnessUp), spawn "xbacklight -inc 5"),         -- XF86MonBrightnessUp  --> +5% brightness
