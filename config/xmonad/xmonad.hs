@@ -68,8 +68,10 @@ toggleMic = do spawn micToggleMuteCommand
 myApplicationLauncher, myScreenshotUtility, myScreenlocker, myTerminal :: [Char]
 myApplicationLauncher = configDir ++ "rofi/launchers/text/launcher.sh"
 myScreenshotUtility = "flameshot gui"
-myScreenlocker = scriptsDir ++ "locker"
+myScreenlocker = "lock" 
 myTerminal = "kitty"
+myChangeVolume = scriptsDir ++ "change_volume.sh "
+myChangeBrightness = scriptsDir ++ "change_brightness.sh "
 
 myKeyBindings conf@XConfig {XMonad.modMask = modm} =
   M.fromList
@@ -83,13 +85,13 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((modm, xK_b), spawn "polybar-msg cmd toggle"),                   -- Mod-B                --> Toggle polybar
       
       -- Screen brightness 
-      ((0, xF86XK_MonBrightnessUp), spawn "xbacklight -inc 5"),         -- XF86MonBrightnessUp  --> +5% brightness
-      ((0, xF86XK_MonBrightnessDown), spawn "xbacklight -dec 5"),       -- XF86MonBrightnessUp  --> -5% brightness
+      ((0, xF86XK_MonBrightnessUp), spawn $ myChangeBrightness ++ "-inc 5"),         -- XF86MonBrightnessUp  --> +5% brightness
+      ((0, xF86XK_MonBrightnessDown), spawn $ myChangeBrightness ++ "-dec 5"),       -- XF86MonBrightnessUp  --> -5% brightness
 
       -- Volume management
-      ((0, xF86XK_AudioRaiseVolume), spawn "amixer -q set Master 5%+"), -- XF86AudioRaiseVolume --> +5% volume
-      ((0, xF86XK_AudioLowerVolume), spawn "amixer -q set Master 5%-"), -- XF86AudioRaiseVolume --> +5% volume
-      ((0, xF86XK_AudioMute), spawn "amixer -q set Master toggle"),     -- XF86AudioRaiseVolume --> +5% volume
+      ((0, xF86XK_AudioRaiseVolume), spawn $ myChangeVolume ++ "5%+"), -- XF86AudioRaiseVolume --> +5% volume
+      ((0, xF86XK_AudioLowerVolume), spawn $ myChangeVolume ++ "5%-"), -- XF86AudioRaiseVolume --> +5% volume
+      ((0, xF86XK_AudioMute), spawn $ myChangeVolume ++ "toggle"),     -- XF86AudioRaiseVolume --> +5% volume
 
       -- Switch between workspaces with arrows
       ((modm, xK_Right), nextWS),
@@ -97,6 +99,8 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
 
       -- Layout management
       ((modm, xK_f), sendMessage $ Toggle FULL),                        -- Mod-f                --> Switch to fullscreen layout
+      ((modm .|. controlMask, xK_h), sendMessage $ IncMasterN 1),       -- Mod-Ctrl-h           --> Increase windows in the master pane
+      ((modm .|. controlMask, xK_l), sendMessage $ IncMasterN $ -1),    -- Mod-Ctrl-l           --> Decrease windows in the master pane
       
       -- Misc
       ((modm, xK_q), spawn $ "cd " ++ xmonadDir ++ " && make restart"), -- Mod-q                --> Re-build and restart xmonad and xmobar
@@ -122,13 +126,13 @@ myClickJustFocuses = False
 -- Gaps around and between windows
 -- Changes only seem to apply if I log out then in again
 -- Dimensions are given as (Border top-bottom-right-left)
-mySpacing =
-  spacingRaw
-    True -- Only for >1 window
-    (Border 0 5 5 5) -- Size of screen edge gaps
-    True -- Enable screen edge gaps
-    (Border 5 5 5 5) -- Size of window gaps
-    True -- Enable window gaps
+mySpacing = smartSpacingWithEdge 4
+  -- spacingRaw
+  --   True -- Only for >1 window
+  --   (Border 0 5 5 5) -- Size of screen edge gaps
+  --   True -- Enable screen edge gaps
+  --   (Border 5 5 5 5) -- Size of window gaps
+  --   True -- Enable window gaps
 
 -- Define the border width. 1 should be the default
 myBorderWidth :: Dimension
@@ -158,6 +162,7 @@ myLayout =
 myLayoutHook =
   avoidStruts $
     mySpacing $
+    smartBorders $
       mkToggle
         (NOBORDERS ?? FULL ?? EOT) -- switch to fullscreen layout
         myLayout
@@ -236,8 +241,8 @@ myStartupHook = do
   -- Some application, as CLion, refuses to work with xmonad.
   -- Simply make them think this is not xmonad fixes everything!
   -- setWMName "LG3D"
+  -- spawn "autorandr -c"
   spawn $ scriptsDir ++ "handle-polybar"
-  spawn "autorandr -c"
   spawnOnce "flameshot"
   spawnOnce $ scriptsDir ++ "locker"
   spawnOnce "picom"
