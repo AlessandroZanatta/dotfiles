@@ -249,6 +249,7 @@ myStartupHook = do
   -- spawnOnce "nm-applet"
   spawnOnce "dunst"
   spawn $ "feh --bg-fill " ++ wallpapersDir ++ "neon.png"
+  spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh"
 
 --------------------------------------------------------------------------------
 -- POLYBAR

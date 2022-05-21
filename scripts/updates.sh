@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
-NOTIFY_ICON=/usr/share/icons/Papirus/32x32/apps/system-software-update.svg
+NOTIFY_ICON=system-software-update
+OUTFILE=/tmp/checkupdates
 
-get_total_updates() { UPDATES=$(checkupdates 2>/dev/null | wc -l); }
+get_total_updates() { 
+    UPDATES_BASE=$(checkupdates 2>/dev/null | wc -l)
+    UPDATES_AUR=$(yay -Qum 2>/dev/null | wc -l)
+
+    UPDATES=$((UPDATES_BASE + UPDATES_AUR))
+}
 
 while true; do
     get_total_updates
@@ -21,19 +27,7 @@ while true; do
         fi
     fi
 
-    # when there are updates available
-    # every 10 seconds another check for updates is done
-    while (( UPDATES > 0 )); do
-        echo "$UPDATES"
-        sleep 10
-        get_total_updates
-    done
-
-    # when no updates are available, use a longer loop, this saves on CPU
-    # and network uptime, only checking once every 30 min for new updates
-    while (( UPDATES == 0 )); do
-        echo "0"
-        sleep 1800
-        get_total_updates
-    done
+    # Every 30 minutes check if there are more updates
+    echo "$UPDATES" >> $OUTFILE
+    sleep 1800
 done
