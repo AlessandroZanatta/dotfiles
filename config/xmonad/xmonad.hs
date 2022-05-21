@@ -55,13 +55,6 @@ xmonadDir = configDir ++ "xmonad/"
 wallpapersDir = dotfilesDir ++ "misc/wallpapers/"
 
 --------------------------------------------------------------------------------
--- DEFINED FUNCTIONS
---------------------------------------------------------------------------------
-
-toggleMic :: IO ()
-toggleMic = do spawn micToggleMuteCommand
-
---------------------------------------------------------------------------------
 -- KEYBINDS
 --------------------------------------------------------------------------------
 
@@ -70,42 +63,47 @@ myApplicationLauncher = configDir ++ "rofi/launchers/text/launcher.sh"
 myScreenshotUtility = "flameshot gui"
 myScreenlocker = "lock" 
 myTerminal = "kitty"
-myChangeVolume = scriptsDir ++ "change_volume.sh "
+myChangeOutputVolume = scriptsDir ++ "change_output_volume.sh "
+myChangeInputVolume = scriptsDir ++ "change_input_volume.sh "
 myChangeBrightness = scriptsDir ++ "change_brightness.sh "
 
 myKeyBindings conf@XConfig {XMonad.modMask = modm} =
   M.fromList
     [ 
       -- Spawn of many utilities
-      ((modm, xK_p), spawn myApplicationLauncher),                      -- Mod-p                --> Open application launcher
-      ((modm, xK_Return), spawn myTerminal),                            -- Mod+Enter            --> Open new terminal 
-      ((modm .|. shiftMask, xK_s), spawn myScreenshotUtility),          -- Mod+Shift+S          --> Take a screenshot
-      ((modm .|. shiftMask, xK_l), spawn myScreenlocker),               -- Mod+Shift+L          --> Lock screen
-      ((modm .|. shiftMask, xK_m), liftIO toggleMic),                   -- Mod-Shift-M          --> Toggle mic mute
-      ((modm, xK_b), spawn "polybar-msg cmd toggle"),                   -- Mod-B                --> Toggle polybar
+      ((modm, xK_p), spawn myApplicationLauncher),                                      -- Mod-p                        --> Open application launcher
+      ((modm, xK_Return), spawn myTerminal),                                            -- Mod+Enter                    --> Open new terminal 
+      ((modm .|. shiftMask, xK_s), spawn myScreenshotUtility),                          -- Mod+Shift+S                  --> Take a screenshot
+      ((modm .|. shiftMask, xK_l), spawn myScreenlocker),                               -- Mod+Shift+L                  --> Lock screen
+      ((modm, xK_b), spawn "polybar-msg cmd toggle"),                                   -- Mod-B                        --> Toggle polybar
       
       -- Screen brightness 
-      ((0, xF86XK_MonBrightnessUp), spawn $ myChangeBrightness ++ "-inc 5"),         -- XF86MonBrightnessUp  --> +5% brightness
-      ((0, xF86XK_MonBrightnessDown), spawn $ myChangeBrightness ++ "-dec 5"),       -- XF86MonBrightnessUp  --> -5% brightness
+      ((0, xF86XK_MonBrightnessUp), spawn $ myChangeBrightness ++ "-inc 5"),            -- XF86MonBrightnessUp          --> +5% brightness
+      ((0, xF86XK_MonBrightnessDown), spawn $ myChangeBrightness ++ "-dec 5"),          -- XF86MonBrightnessUp          --> -5% brightness
 
       -- Volume management
-      ((0, xF86XK_AudioRaiseVolume), spawn $ myChangeVolume ++ "5%+"), -- XF86AudioRaiseVolume --> +5% volume
-      ((0, xF86XK_AudioLowerVolume), spawn $ myChangeVolume ++ "5%-"), -- XF86AudioRaiseVolume --> +5% volume
-      ((0, xF86XK_AudioMute), spawn $ myChangeVolume ++ "toggle"),     -- XF86AudioRaiseVolume --> +5% volume
+      ((0, xF86XK_AudioRaiseVolume), spawn $ myChangeOutputVolume ++ "5%+"),            -- XF86AudioRaiseVolume         --> +5% volume
+      ((0, xF86XK_AudioLowerVolume), spawn $ myChangeOutputVolume ++ "5%-"),            -- XF86AudioLowerVolume         --> -5% volume
+      ((0, xF86XK_AudioMute), spawn $ myChangeOutputVolume ++ "toggle"),                -- XF86AudioMute                --> Toggle output volume 
+
+      ((shiftMask, xF86XK_AudioRaiseVolume), spawn $ myChangeInputVolume ++ "5%+"),     -- Shift+XF86AudioRaiseVolume   --> +5% microphone volume
+      ((shiftMask, xF86XK_AudioLowerVolume), spawn $ myChangeInputVolume ++ "5%-"),     -- Shift+XF86AudioLowerVolume   --> -5% microphone volume
+      ((modm .|. shiftMask, xK_m), spawn $ myChangeInputVolume ++ "toggle"),            -- Mod-Shift-M                  --> Toggle microphone volume 
+
 
       -- Switch between workspaces with arrows
       ((modm, xK_Right), nextWS),
       ((modm, xK_Left), prevWS),
 
       -- Layout management
-      ((modm, xK_f), sendMessage $ Toggle FULL),                        -- Mod-f                --> Switch to fullscreen layout
-      ((modm .|. controlMask, xK_h), sendMessage $ IncMasterN 1),       -- Mod-Ctrl-h           --> Increase windows in the master pane
-      ((modm .|. controlMask, xK_l), sendMessage $ IncMasterN $ -1),    -- Mod-Ctrl-l           --> Decrease windows in the master pane
+      ((modm, xK_f), sendMessage $ Toggle FULL),                                        -- Mod-f                --> Switch to fullscreen layout
+      ((modm .|. controlMask, xK_h), sendMessage $ IncMasterN 1),                       -- Mod-Ctrl-h           --> Increase windows in the master pane
+      ((modm .|. controlMask, xK_l), sendMessage $ IncMasterN $ -1),                    -- Mod-Ctrl-l           --> Decrease windows in the master pane
       
       -- Misc
-      ((modm, xK_q), spawn $ "cd " ++ xmonadDir ++ " && make restart"), -- Mod-q                --> Re-build and restart xmonad and xmobar
-      ((modm .|. shiftMask, xK_Up), spawn "systemctl suspend"),         -- Mod-Shift-Up         --> Suspend to RAM
-      ((modm .|. shiftMask, xK_Down), spawn "systemctl hibernate")      -- Mod-Shift-Down       --> Hibernate to DISK
+      ((modm, xK_q), spawn $ "cd " ++ xmonadDir ++ " && make restart"),                 -- Mod-q                --> Re-build and restart xmonad and xmobar
+      ((modm .|. shiftMask, xK_Up), spawn "systemctl suspend"),                         -- Mod-Shift-Up         --> Suspend to RAM
+      ((modm .|. shiftMask, xK_Down), spawn "systemctl hibernate")                      -- Mod-Shift-Down       --> Hibernate to DISK
     ]
 
 -- Add myKeyBindings to the default keybindings and save into myKeys
@@ -162,10 +160,10 @@ myLayout =
 myLayoutHook =
   avoidStruts $
     mySpacing $
-    smartBorders $
-      mkToggle
-        (NOBORDERS ?? FULL ?? EOT) -- switch to fullscreen layout
-        myLayout
+      smartBorders $
+        mkToggle
+          (NOBORDERS ?? FULL ?? EOT) -- switch to fullscreen layout
+          myLayout
 
 --------------------------------------------------------------------------------
 -- WORKSPACE
@@ -238,18 +236,18 @@ myManageHook =
 --------------------------------------------------------------------------------
 
 myStartupHook = do
-  -- Some application, as CLion, refuses to work with xmonad.
+  -- Some applications, such as CLion, refuse to work with xmonad.
   -- Simply make them think this is not xmonad fixes everything!
   -- setWMName "LG3D"
-  -- spawn "autorandr -c"
+  spawn "autorandr -c"
   spawn $ scriptsDir ++ "handle-polybar"
   spawnOnce "flameshot"
   spawnOnce $ scriptsDir ++ "locker"
   spawnOnce "picom"
   spawnOnce "mailspring"
   spawnOnce "parcellite -n"
-  spawnOnce "nm-applet"
-  spawn "dunst"
+  -- spawnOnce "nm-applet"
+  spawnOnce "dunst"
   spawn $ "feh --bg-fill " ++ wallpapersDir ++ "neon.png"
 
 --------------------------------------------------------------------------------
@@ -261,9 +259,9 @@ myLogHook dbus =
     { ppOutput = D.send dbus,
       ppSep = "    ", -- separator between things
       ppTitle = shorten 40, -- Title of the focused window
-      ppCurrent = wrap "%{F#00acc1}" "%{F-}", -- color of selected workspace
+      ppCurrent = wrap "%{F#61afef}" "%{F-}", -- color of selected workspace
       ppLayout = const "", -- layout string to show
-      ppVisible = wrap "%{F#73dae6}" "%{F-}"
+      ppVisible = wrap "%{F#A3BE8C}" "%{F-}"
     }
 
 --------------------------------------------------------------------------------
