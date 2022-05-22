@@ -3,6 +3,8 @@
 NOTIFY_ICON=system-software-update
 OUTFILE=/tmp/checkupdates
 
+rm -f "$OUTFILE"
+
 get_total_updates() { 
     UPDATES_BASE=$(checkupdates 2>/dev/null | wc -l)
     UPDATES_AUR=$(yay -Qum 2>/dev/null | wc -l)
