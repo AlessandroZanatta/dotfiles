@@ -1,9 +1,6 @@
 [submodule "config/kitty/kitty-themes"]
 	path = config/kitty/kitty-themes
 	url = https://github.com/dexpota/kitty-themes
-[submodule "config/awesome/awesome-sharedtags"]
-	path = config/awesome/awesome-sharedtags
-	url = https://github.com/Drauthius/awesome-sharedtags
 [submodule "config/xmonad/xmonad"]
 	path = config/xmonad/xmonad
 	url = https://github.com/xmonad/xmonad
