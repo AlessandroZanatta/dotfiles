@@ -1,2 +1,3 @@
 #!/bin/bash
-echo $(ls ~/ | awk '{print $1}' | head -n3 | tail -n1)
+folders=($(ls $HOME))
+echo "${folders[3]}"

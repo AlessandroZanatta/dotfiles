@@ -67,6 +67,7 @@ myTerminal = "kitty"
 myChangeOutputVolume = scriptsDir ++ "change_output_volume.sh "
 myChangeInputVolume = scriptsDir ++ "change_input_volume.sh "
 myChangeBrightness = scriptsDir ++ "change_brightness.sh "
+myDashboard = "eww open-many weather profile quote search_full vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full suspend_full updates --toggle"
 
 myKeyBindings conf@XConfig {XMonad.modMask = modm} =
   M.fromList
@@ -77,6 +78,7 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((modm .|. shiftMask, xK_s), spawn myScreenshotUtility),                          -- Mod+Shift+S                  --> Take a screenshot
       ((modm .|. shiftMask, xK_l), spawn myScreenlocker),                               -- Mod+Shift+L                  --> Lock screen
       ((modm, xK_b), spawn "polybar-msg cmd toggle"),                                   -- Mod-B                        --> Toggle polybar
+      ((modm, xK_d), spawn myDashboard),                                                -- Mod-D                        --> Spawn eww dashboard
       
       -- Screen brightness 
       ((0, xF86XK_MonBrightnessUp), spawn $ myChangeBrightness ++ "-inc 5"),            -- XF86MonBrightnessUp          --> +5% brightness
@@ -249,6 +251,7 @@ myStartupHook = do
   spawnOnce "parcellite -n"
   -- spawnOnce "nm-applet"
   spawnOnce "dunst"
+  spawnOnce "eww daemon"
   spawn $ "feh --bg-fill " ++ wallpapersDir ++ "neon.png"
   spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh"
 

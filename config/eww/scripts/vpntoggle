@@ -1,10 +1,11 @@
 #!/bin/bash
-status=$(protonvpn status | head -n1 | awk '{print $2}')
+vpn_name="HomeVPN"
+state=$(ifconfig | grep $vpn_name)
 
-if [ "$status" == "Connected" ]; then 
-	alacritty -e sudo protonvpn d
-	echo "#90c861" > /tmp/xmonad/vpnstat-hex
-else 
-	alacritty -e sudo protonvpn c
-	echo "#D35D6E" > /tmp/xmonad/vpnstat-hex
+if [ -n "$state" ]; then
+  kitty sudo myVPN off
+  echo "#D35D6E" > /tmp/xmonad/vpnstat-hex
+else
+  nmcli con up HomeVPN
+  echo "#61afef" > /tmp/xmonad/vpnstat-hex
 fi

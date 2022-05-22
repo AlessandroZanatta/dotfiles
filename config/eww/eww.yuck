@@ -17,7 +17,7 @@
         (box :class "month" {month})))
     (defwidget weather_side [] 
       (box :orientation "h" :space-evenly "false" 
-        (box :class "weather-icon-side" :style "color: ${weather-hex}" {weather-icon})
+        (box :class "weather-icon-side" :style "color: #123456" {weather-icon})
         (box :class "weather-info-side" :orientation "v" :space-evenly "false" 
           (box :class "temperature-side" "${temperature}  ")
           (box :class "weather-stat-side" {weather-stat-side}))))
@@ -67,19 +67,19 @@
     )))
     (defwidget search_full [] 
       (box :orientation "h" :space-evenly "true" 
-        (button :class "search-full" :onclick "~/bin/launcher.sh" "")))
+        (button :class "search-full" :onclick "~/.config/rofi/launchers/text/launcher.sh" "")))
     (defwidget power_full [] 
       (box :orientation "h" :space-evenly "true" 
-        (button :class "power-full" :onclick "~/.config/eww/scripts/shutdown.sh" :timeout "60s" "")))
+        (button :class "power-full" :onclick "~/.config/eww/scripts/shutdown.sh" :timeout "60s" "⏻")))
     (defwidget reboot_full [] 
       (box :orientation "h" :space-evenly "true" 
         (button :class "reboot-full" :onclick "~/.config/eww/scripts/reboot.sh" :timeout "60s" "")))
     (defwidget lock_full [] 
       (box :orientation "h" :space-evenly "true" 
-        (button :class "lock-full" :onclick "~/.config/eww/scripts/lockscreen.sh" :timeout "60s" "")))
+        (button :class "lock-full" :onclick "~/.config/eww/scripts/lockscreen.sh" :timeout "60s" "")))
     (defwidget suspend_full [] 
       (box :orientation "h" :space-evenly "true" 
-        (button :class "suspend-full" :onclick "~/.config/eww/scripts/suspend.sh" :timeout "60s" "")))
+        (button :class "suspend-full" :onclick "~/.config/eww/scripts/suspend.sh" :timeout "60s" "")))
     (defwidget logout_full [] 
       (box :orientation "h" :space-evenly "true" 
         (button :class "logout-full" :onclick "~/.config/eww/scripts/logout.sh" :timeout "60s" "")))
@@ -92,7 +92,7 @@
           (box :class "pfp"))
         (box :orientation "v" :space-evenly "false"  
           (box :class "pfptxt" :valign "center" {whoami})
-          (box :class "subpfptxt" :halign "center" "Configs go brr"))))
+          (box :class "subpfptxt" :halign "center" "pwn >> crypto"))))
     (defwidget weather [] 
       (box :orientation "v" :space-evenly "false" 
         (box :orientation "h" :space-evenly "false" 
@@ -104,12 +104,12 @@
           (box :class "weather-quote-tail" {weather-quote2}))))
      (defwidget home_dir [] 
       (box :orientation "v" :space-evenly "true" :class "home-dir" 
-        (button :class "l1" :onclick "(thunar ~/${l1})" {l1-processed})
-        (button :class "l2" :onclick "(thunar ~/${l2})" {l2-processed})
-        (button :class "l3" :onclick "(thunar ~/${l3})" {l3-processed})
-        (button :class "l4" :onclick "(thunar ~/${l4})" {l4-processed})
-        (button :class "l5" :onclick "(thunar ~/${l5})" {l5-processed})
-        (button :class "l6" :onclick "(thunar ~/${l6})" {l6-processed})))
+        (button :class "l1" :onclick "(nemo ~/${l1})" {l1})
+        (button :class "l2" :onclick "(nemo ~/${l2})" {l2})
+        (button :class "l3" :onclick "(nemo ~/${l3})" {l3})
+        (button :class "l4" :onclick "(nemo ~/${l4})" {l4})
+        (button :class "l5" :onclick "(nemo ~/${l5})" {l5})
+        (button :class "l6" :onclick "(nemo ~/${l6})" {l6})))
     (defwidget quote [] 
       (box :orientation "v" :space-evenly "false" :class "quote-box" 
         (label :class "quote-main" :halign "start" :text "${quote}${quote-gen}" :wrap "true" :width 25)
@@ -117,15 +117,15 @@
         (label :class "quote-author" :text "- ${author-quote}" :halign "end")))
     (defwidget screenshot [] 
       (box :orientation "v" :space-evenly "true" 
-        (button :class "screenshot-icon" :onclick "msclip -c" :timeout 600 "")))
+        (button :class "screenshot-icon" :onclick "flameshot gui &" "")))
     (defwidget vpn [] 
       (box :orientation "v" :space-evenly "true" 
-              (button :class "vpn-icon" :onclick "~/.config/eww/scripts/vpntoggle" :style "color: ${vpn-hex}" "嬨${getvpnstat}")))
-    (defwidget donotdisturb [] 
+              (button :class "vpn-icon" :onclick "~/.config/eww/scripts/vpntoggle" :style "color: ${vpn-hex}" " ${getvpnstat}")))
+    (defwidget updates [] 
       (box :orientation "v" :space-evenly "true" :halign "center" 
-        (button :class "disturb-icon" :onclick "~/bin/do_not_disturb.sh" :style "color: ${disturb-hex}" "⏾")))
+        (button :class "updates-icon" " ${getupdates}")))
     (defwidget blur_full [] 
-      (box :orientation "v" :space-evenly "true"))
+      (box :class "blur-full" :orientation "v" :space-evenly "true"))
 ;; (defwidget powermenu [] 
 ;; (box :orientation "h" :halign "center" :class "sysbtn" :space-evenly "true" 
 ;; (button :class "shutdown-side" :onclick "~/.config/eww/scripts/shutdown.sh" :timeout 600 "")
@@ -170,8 +170,6 @@
     (defpoll weather-stat :interval "20m"  "cat /tmp/xmonad/weather/weather-stat")
     (defpoll weather-stat-side :interval "20m"  "~/.config/eww/scripts/weather-trimmer")
 
-    ;; Do not disturb var
-    (defpoll disturb-hex :interval "1s"  "cat /tmp/xmonad/donotdisturb/color")
     ;; Your Name (not the anime movie, sadly)
     (defpoll whoami :interval "50h" "whoami")
 
@@ -183,12 +181,6 @@
     (defpoll bat-icon :interval "5s"  "~/.config/tint2/scripts/battery.sh")
 
     ;; Home-dir stuff
-    (defpoll l1-processed :interval "20h"  "~/.config/eww/scripts/home-dir/l1-processed")
-    (defpoll l2-processed :interval "20h"  "~/.config/eww/scripts/home-dir/l2-processed")
-    (defpoll l3-processed :interval "20h"  "~/.config/eww/scripts/home-dir/l3-processed")
-    (defpoll l4-processed :interval "20h"  "~/.config/eww/scripts/home-dir/l4-processed")
-    (defpoll l5-processed :interval "20h"  "~/.config/eww/scripts/home-dir/l5-processed")
-    (defpoll l6-processed :interval "20h"  "~/.config/eww/scripts/home-dir/l6-processed")
     (defpoll l1 :interval "20h"  "~/.config/eww/scripts/home-dir/l1")
     (defpoll l2 :interval "20h"  "~/.config/eww/scripts/home-dir/l2")
     (defpoll l3 :interval "20h"  "~/.config/eww/scripts/home-dir/l3")
@@ -207,7 +199,8 @@
     (defpoll getvpnstat :interval "10s"  "~/.config/eww/scripts/getvpnstat")
     (defpoll vpn-hex :interval "1s"  "cat /tmp/xmonad/vpnstat-hex")
 
-  
+    ;; Updates vars
+    (defpoll getupdates :interval "10s" "~/.config/eww/scripts/getupdates")
 
   
     ;; Sidebar stuff
@@ -282,20 +275,9 @@
     (defwindow vpn-icon 
 			    :geometry (geometry :x "478px" :y "429px" :width "200px" :height "100px")
 			     				(vpn))
-    (defwindow disturb-icon 
+    (defwindow updates 
 			    :geometry (geometry :x "683px" :y "429px" :width "200px" :height "100px")
-			     				(donotdisturb))
+			     				(updates))
     (defwindow blur_full 
 			    :geometry (geometry :x "0px" :y "0px" :width "100%" :height "100%")
-      							(blur_full))
-
-
-;; (defwindow powermenu :focusable "true" 
-;;		    :geometry (geometry :x "35%" :y "20%" :width "30%" :height "40%")
-;;			     
-;; 
-;; 
-;; (powermenu)
-;; 
-;;)
-
+                            (blur_full))
