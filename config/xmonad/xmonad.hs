@@ -102,7 +102,7 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((modm .|. controlMask, xK_l), sendMessage $ IncMasterN $ -1),                    -- Mod-Ctrl-l           --> Decrease windows in the master pane
       
       -- Misc
-      ((modm, xK_q), spawn $ "cd " ++ xmonadDir ++ " && make restart"),                 -- Mod-q                --> Re-build and restart xmonad and xmobar
+      ((modm, xK_q), spawn "xmonad --restart"),                 -- Mod-q                --> Re-build and restart xmonad and xmobar
       ((modm .|. shiftMask, xK_Up), spawn "systemctl suspend"),                         -- Mod-Shift-Up         --> Suspend to RAM
       ((modm .|. shiftMask, xK_Down), spawn "systemctl hibernate")                      -- Mod-Shift-Down       --> Hibernate to DISK
     ]
