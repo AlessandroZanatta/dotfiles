@@ -375,10 +375,8 @@ button {
   margin: 10px;
 }
 .l1:hover,
-.l2:hover,
 .l3:hover,
 .l4:hover,
-.l5:hover,
 .l6:hover {
   color: #d35d6e;
 }
@@ -394,7 +392,8 @@ button {
 .l4 {
   color: #c47eb7;
 }
- {
+.l5:hover,
+.l2:hover {
   color: #d35d6e;
 }
 

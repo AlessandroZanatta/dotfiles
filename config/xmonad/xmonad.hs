@@ -67,7 +67,7 @@ myTerminal = "kitty"
 myChangeOutputVolume = scriptsDir ++ "change_output_volume.sh "
 myChangeInputVolume = scriptsDir ++ "change_input_volume.sh "
 myChangeBrightness = scriptsDir ++ "change_brightness.sh "
-myDashboard = "eww open-many weather profile quote search_full vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full suspend_full updates --toggle"
+myDashboard = "eww open-many blur_full weather profile quote search_full vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full suspend_full updates --toggle"
 
 myKeyBindings conf@XConfig {XMonad.modMask = modm} =
   M.fromList
