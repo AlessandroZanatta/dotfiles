@@ -1,5 +1,5 @@
 {-# LANGUAGE FlexibleContexts #-}
-
+ 
 ---------------------------------------------
 --  __   ____  __                       _  --
 --  \ \ / /  \/  |                     | | --
@@ -15,7 +15,6 @@ import Data.List
 import qualified Data.Map as M
 import Data.Ratio
 import Graphics.X11.ExtraTypes.XF86
-import Microphone
 import System.IO
 import Text.Printf
 import XMonad
@@ -41,10 +40,12 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.NamedWindows (getName)
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+import System.Environment
 
 --------------------------------------------------------------------------------
 -- HOME AND OTHER DIRECTORIES
 --------------------------------------------------------------------------------
+
 
 homeDir, dotfilesDir, scriptsDir, configDir, xmonadDir, wallpapersDir :: [Char]
 homeDir = "/home/kalex/"
