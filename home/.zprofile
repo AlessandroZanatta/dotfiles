@@ -13,6 +13,8 @@
 # Do NOT kill child processes of the shell when the shell is killed
 setopt NO_HUP
 
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
 # -------------------------- #
 # -------- SOURCES --------- # 
 # -------------------------- #

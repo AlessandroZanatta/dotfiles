@@ -1,2 +1,2 @@
 #!/bin/bash
-killall xmonad
+kill "$(pgrep -f xmonad-x86_64-linux)"
