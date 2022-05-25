@@ -249,6 +249,7 @@ myStartupHook = do
   spawnOnce "picom"
   spawnOnce "mailspring"
   spawnOnce "parcellite -n"
+  spawnOnce "kitty --title 'Bitwarden ssh keys unlock' env SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent.socket\" /usr/local/bin/bw-ssh-add.py"
   -- spawnOnce "nm-applet"
   spawnOnce "dunst"
   spawnOnce "eww daemon"
