@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LOGO_ON=" "
+LOGO_ON=""
 LOGO_OFF=""
 
 DEFAULT_SOURCE="Capture"

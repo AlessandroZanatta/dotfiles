@@ -89,8 +89,8 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((0, xF86XK_AudioLowerVolume), spawn $ myChangeOutputVolume ++ "5%-"),            -- XF86AudioLowerVolume         --> -5% volume
       ((0, xF86XK_AudioMute), spawn $ myChangeOutputVolume ++ "toggle"),                -- XF86AudioMute                --> Toggle output volume 
 
-      ((shiftMask, xF86XK_AudioRaiseVolume), spawn $ myChangeInputVolume ++ "5%+"),     -- Shift+XF86AudioRaiseVolume   --> +5% microphone volume
-      ((shiftMask, xF86XK_AudioLowerVolume), spawn $ myChangeInputVolume ++ "5%-"),     -- Shift+XF86AudioLowerVolume   --> -5% microphone volume
+      ((shiftMask, xF86XK_AudioRaiseVolume), spawn $ myChangeInputVolume ++ "1%+"),     -- Shift+XF86AudioRaiseVolume   --> +1% microphone volume
+      ((shiftMask, xF86XK_AudioLowerVolume), spawn $ myChangeInputVolume ++ "1%-"),     -- Shift+XF86AudioLowerVolume   --> -1% microphone volume
       ((modm .|. shiftMask, xK_m), spawn $ myChangeInputVolume ++ "toggle"),            -- Mod-Shift-M                  --> Toggle microphone volume 
 
 
@@ -141,8 +141,8 @@ myBorderWidth = 1
 
 -- Border colors
 myNormalBorderColor, myFocusedBorderColor :: [Char]
-myNormalBorderColor = "#1c2022"
-myFocusedBorderColor = "#606060"
+myNormalBorderColor = "#606060"
+myFocusedBorderColor = "#c0c0c0"
 
 myLayout =
   tiling
