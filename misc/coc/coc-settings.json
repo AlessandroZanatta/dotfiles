@@ -15,11 +15,14 @@
     "css",
     "scss",
     "c",
-    "cpp"
+    "cpp",
+    "lua"
   ],
   "yaml.format.enable": true,
   // Python formatter
   "python.formatting.provider": "black",
+  "stylua.styluaPath": "/usr/bin/stylua",
+  "stylua.configPath": "/home/kalex/.config/nvim/.stylua.toml",
   "languageserver": {
     // OCaml
     "ocaml": {

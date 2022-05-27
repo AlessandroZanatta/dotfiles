@@ -8,6 +8,7 @@ return {
 	-- },
 	["gauteh/vim-cppman"] = {},
 	["vim-pandoc/vim-pandoc"] = {},
+        ["vim-pandoc/vim-pandoc-syntax"] = {},
 	["goolord/alpha-nvim"] = {
 		disable = false,
 	},
