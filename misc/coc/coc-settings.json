@@ -13,13 +13,13 @@
     "bash",
     "sh",
     "css",
-    "scss"
+    "scss",
+    "c",
+    "cpp"
   ],
   "yaml.format.enable": true,
   // Python formatter
   "python.formatting.provider": "black",
-  "ltex.checkFrequency": "edit",
-  "ltex.trace.server": "verbose",
   "languageserver": {
     // OCaml
     "ocaml": {
@@ -42,6 +42,9 @@
       "initializationOptions": {
         "cache": {
           "directory": "/tmp/ccls"
+        },
+        "client": {
+          "snippetSupport": true
         }
       }
     }
