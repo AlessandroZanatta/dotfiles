@@ -2,17 +2,22 @@
 
 ## Screenshots
 Hope you like it!
-![image](https://user-images.githubusercontent.com/41871589/169797868-f8c4c0ef-6d61-4b42-bd2b-69c5186bd057.png)
-![image](https://user-images.githubusercontent.com/41871589/169685831-d8bcdd11-70df-4d9e-b0f0-08d54d6f1861.png)
-![image](https://user-images.githubusercontent.com/41871589/169686036-f47d412c-4511-4a95-a26a-26eaecb43ec0.png)
+![image](https://user-images.githubusercontent.com/41871589/170653122-48f35b49-e4df-4f11-80cf-b74526cace83.png)
+![image](https://user-images.githubusercontent.com/41871589/170653379-ad51b72b-ffce-47da-81a1-ca14606c500a.png)
+
+
+On a bigger monitor:
+![image](https://user-images.githubusercontent.com/41871589/170653467-2bda581b-1fd4-46e3-b530-a310e7b16ed4.png)
+
+
 
 ## My setup
 
 I'm currently running:
 - WM: [XMonad](https://xmonad.org/)
-- Bar: [polybar](https://github.com/polybar/polybar)
+- Bar: [polybar](https://github.com/polybar/polybar) inspired on [siduck's one](https://github.com/siduck/dotfiles)
 - Notifications: [dunst](https://github.com/dunst-project/dunst)
-- IDE: nvim with [NvChad](https://nvchad.github.io/) and [CoC](https://github.com/neoclide/coc.nvim) or VS Code
+- IDE: nvim with [NvChad](https://nvchad.github.io/) by siduck and [CoC](https://github.com/neoclide/coc.nvim) or VS Code
 - Dashboard: eww with a fixed and modified version of the one created by [Axarva](https://github.com/Axarva/dotfiles-2.0)
 
 ## Structure
