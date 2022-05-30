@@ -70,26 +70,24 @@
           "snippetSupport": true
         }
       }
+    },
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": [
+        "--lsp"
+      ],
+      "rootPatterns": [
+        "*.cabal",
+        "stack.yaml",
+        "cabal.project",
+        "package.yaml",
+        "hie.yaml"
+      ],
+      "filetypes": [
+        "haskell",
+        "lhaskell"
+      ]
     }
-    // Haskell LS
-    // "haskell": {
-    //   "command": "haskell-language-server-wrapper",
-    //   "args": [
-    //     "--lsp"
-    //   ],
-    //   "rootPatterns": [
-    //     ".stack.yaml",
-    //     ".hie-bios",
-    //     "BUILD.bazel",
-    //     "cabal.config",
-    //     "package.yaml"
-    //   ],
-    //   "filetypes": [
-    //     "hs",
-    //     "lhs",
-    //     "haskell"
-    //   ]
-    // }
   },
   "diagnostic-languageserver.filetypes": {
     // lint `sh` (includes `bash`) files
