@@ -239,13 +239,13 @@ myManageHook =
 --------------------------------------------------------------------------------
 
 myStartupHook = do
-  -- Some applications, such as CLion, refuse to work with xmonad.
-  -- Simply make them think this is not xmonad fixes everything!
-  -- setWMName "LG3D"
+  -- `wmctrl -m` gives me some errors, which causes some Java applications to
+  -- misbehave. Manually setting the wm name seems to solve these issues 
+  setWMName "LG3D"
   spawn "autorandr -c"
-  spawn $ scriptsDir ++ "handle-polybar"
+  spawn $ scriptsDir ++ "handle-polybar.sh"
   spawnOnce "flameshot"
-  spawnOnce $ scriptsDir ++ "locker"
+  spawnOnce $ scriptsDir ++ "locker.sh"
   spawnOnce "picom"
   spawnOnce "mailspring"
   spawnOnce "parcellite -n"
