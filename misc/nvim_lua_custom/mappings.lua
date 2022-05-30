@@ -37,15 +37,15 @@ M.coc_silent = {
    },
 }
 
-M.coc_silent_expr = {
-   mode_opts = { silent = true, expr = true },
-   i = {
-      ["<TAB>"] = {
-         'pumvisible() ? "\\<C-n>" : CheckBackspace() ? "\\<TAB>" : coc#refresh()',
-         "Coc: trigger autocompletion and navigate",
-      },
-      ["<c-space>"] = { "coc#refresh()", "Coc: trigger completion" },
-   },
-}
+-- M.coc_silent_expr = {
+--    mode_opts = { silent = true, expr = true },
+--    i = {
+--       ["<TAB>"] = {
+--          'pumvisible() ? "\\<C-n>" : CheckBackspace() ? "\\<TAB>" : coc#refresh()',
+--          "Coc: trigger autocompletion and navigate",
+--       },
+--       ["<c-space>"] = { "coc#refresh()", "Coc: trigger completion" },
+--    },
+-- }
 
 return M

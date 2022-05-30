@@ -16,7 +16,8 @@
     "scss",
     "c",
     "cpp",
-    "lua"
+    "lua",
+    "markdown"
   ],
   "yaml.format.enable": true,
   // Python formatter
@@ -27,21 +28,40 @@
     // OCaml
     "ocaml": {
       "command": "ocamllsp",
-      "rootPatterns": ["dune-project"],
-      "filetypes": ["ocaml"],
+      "rootPatterns": [
+        "dune-project"
+      ],
+      "filetypes": [
+        "ocaml"
+      ],
       "initializationOptions": {},
       "settings": {}
     },
     // System verilog
     "veridian": {
       "command": "veridian",
-      "filetypes": ["systemverilog", "verilog"]
+      "filetypes": [
+        "systemverilog",
+        "verilog"
+      ]
     },
     // C/C++
     "ccls": {
       "command": "ccls",
-      "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+      "filetypes": [
+        "c",
+        "cc",
+        "cpp",
+        "c++",
+        "objc",
+        "objcpp"
+      ],
+      "rootPatterns": [
+        ".ccls",
+        "compile_commands.json",
+        ".git/",
+        ".hg/"
+      ],
       "initializationOptions": {
         "cache": {
           "directory": "/tmp/ccls"
@@ -88,7 +108,13 @@
       // primarily listed here to call out that flags which take an
       // argument (such as `-i <num-spaces>` for specifying indentation)
       // should be split into two strings, the flag and then the value
-      "args": ["-i", "2", "-bn", "-ci", "-sr"]
+      "args": [
+        "-i",
+        "2",
+        "-bn",
+        "-ci",
+        "-sr"
+      ]
     }
   }
 }
