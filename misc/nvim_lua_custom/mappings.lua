@@ -21,12 +21,6 @@ M.coc = {
       ["<leader>a"] = { "<Plug>(coc-codeaction-selected)", "Coc: apply code action on region" },
       ["<leader>ac"] = { "<Plug>(coc-codeaction)", "Coc: apply code action on buffer" },
       ["<leader>f"] = { "<Plug>(coc-fix-current)", "Coc: apply auto fix" },
-   },
-}
-
-M.coc_silent = {
-   mode_opts = { silent = true },
-   n = {
       ["[g"] = { "<Plug>(coc-diagnostic-prev)", "Coc: goto previous diagnostic" },
       ["]g"] = { "<Plug>(coc-diagnostic-next)", "Coc: goto next diagnostic" },
       ["gd"] = { "<Plug>(coc-definition)", "Coc: goto definition" },

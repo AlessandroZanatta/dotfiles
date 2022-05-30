@@ -23,12 +23,6 @@ M.plugins = {
       "neovim/nvim-lspconfig",
       "williamboman/nvim-lsp-installer",
    },
-
-   options = {
-      lspconfig = {
-         setup_lspconf = "custom.plugins.lspconfig",
-      },
-   },
 }
 
 M.mappings = require "custom.mappings"
