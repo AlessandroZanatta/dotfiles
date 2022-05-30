@@ -77,9 +77,9 @@
     (defwidget lock_full [] 
       (box :orientation "h" :space-evenly "true" 
         (button :class "lock-full" :onclick "~/.config/eww/scripts/lockscreen.sh" :timeout "60s" "")))
-    (defwidget suspend_full [] 
+    (defwidget hibernate_full [] 
       (box :orientation "h" :space-evenly "true" 
-        (button :class "suspend-full" :onclick "~/.config/eww/scripts/suspend.sh" :timeout "60s" "")))
+        (button :class "hibernate-full" :onclick "~/.config/eww/scripts/hibernate.sh" :timeout "60s" "")))
     (defwidget logout_full [] 
       (box :orientation "h" :space-evenly "true" 
         (button :class "logout-full" :onclick "~/.config/eww/scripts/logout.sh" :timeout "60s" "")))
@@ -245,9 +245,9 @@
      (defwindow lock_full 
 			    :geometry (geometry :x "1093px" :y "334px" :width "100px" :height "100px")
 			     				(lock_full))
-     (defwindow suspend_full 
+     (defwindow hibernate_full 
 			    :geometry (geometry :x "1093px" :y "439px" :width "100px" :height "100px")
-			     				(suspend_full))
+			     				(hibernate_full))
      (defwindow logout_full 
 			    :geometry (geometry :x "1093px" :y "544px" :width "100px" :height "100px")
 			     				(logout_full))

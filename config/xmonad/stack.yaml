@@ -1,6 +1,8 @@
 resolver:
   url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/19/7.yaml
 
+system-ghc: false
+
 # User packages to be built.
 packages:
   # - xmobar-git
@@ -10,6 +12,7 @@ packages:
 
 extra-deps:
   - netlink-1.1.1.0
-# flags:
-#   xmobar:
-#     all_extensions: true
+
+flags:
+  # xmobar:
+  #   all_extensions: true

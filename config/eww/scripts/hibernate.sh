@@ -15,9 +15,6 @@ if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
   # Close dashboard
   xdotool key --repeat 1 super+d
   systemctl hibernate
-
-  # Make sure after hibernation the screen gets instantly locked
-  lock
 elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
   exit 0
 else

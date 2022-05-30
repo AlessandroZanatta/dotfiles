@@ -46,7 +46,6 @@ import System.Environment
 -- HOME AND OTHER DIRECTORIES
 --------------------------------------------------------------------------------
 
-
 homeDir, dotfilesDir, scriptsDir, configDir, xmonadDir, wallpapersDir :: [Char]
 homeDir = "/home/kalex/"
 dotfilesDir = homeDir ++ "dotfiles/"
@@ -67,7 +66,7 @@ myTerminal = "kitty"
 myChangeOutputVolume = scriptsDir ++ "change_output_volume.sh "
 myChangeInputVolume = scriptsDir ++ "change_input_volume.sh "
 myChangeBrightness = scriptsDir ++ "change_brightness.sh "
-myDashboard = "eww open-many blur_full weather profile quote search_full vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full suspend_full updates --toggle"
+myDashboard = "eww open-many blur_full weather profile quote search_full vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full hibernate_full updates --toggle"
 
 myKeyBindings conf@XConfig {XMonad.modMask = modm} =
   M.fromList
@@ -104,7 +103,7 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((modm .|. controlMask, xK_l), sendMessage $ IncMasterN $ -1),                    -- Mod-Ctrl-l           --> Decrease windows in the master pane
       
       -- Misc
-      ((modm, xK_q), spawn "xmonad --restart"),                 -- Mod-q                --> Re-build and restart xmonad and xmobar
+      ((modm, xK_q), spawn "xmonad --restart"),                                         -- Mod-q                --> Re-build and restart xmonad and xmobar
       ((modm .|. shiftMask, xK_Up), spawn "systemctl suspend"),                         -- Mod-Shift-Up         --> Suspend to RAM
       ((modm .|. shiftMask, xK_Down), spawn "systemctl hibernate")                      -- Mod-Shift-Down       --> Hibernate to DISK
     ]
@@ -155,10 +154,10 @@ myLayout =
     nmaster = 1
 
     -- Default proportion of screen occupied by master pane
-    ratio = 3 / 5
+    ratio = 1 / 2
 
     -- Percent of screen to increment by when resizing panes
-    delta = 3 / 100
+    delta = 5 / 100
 
 myLayoutHook =
   avoidStruts $
@@ -192,17 +191,17 @@ myManageHook =
 
       -- Shift to
       -- By classname
-      [fmap (c `isInfixOf`) className --> viewShift (myWorkspaces !! 0) | c <- myWs0Class],
-      [fmap (c `isInfixOf`) className --> viewShift (myWorkspaces !! 1) | c <- myWs1Class],
-      [fmap (c `isInfixOf`) className --> viewShift (myWorkspaces !! 2) | c <- myWs2Class],
-      [fmap (c `isInfixOf`) className --> viewShift (myWorkspaces !! 3) | c <- myWs3Class],
-      [fmap (c `isInfixOf`) className --> viewShift (myWorkspaces !! 4) | c <- myWs4Class],
+      [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 0) | c <- myWs0Class],
+      [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 1) | c <- myWs1Class],
+      [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 2) | c <- myWs2Class],
+      [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 3) | c <- myWs3Class],
+      [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 4) | c <- myWs4Class],
       -- By title
-      [fmap (t `isInfixOf`) title --> viewShift (myWorkspaces !! 0) | t <- myWs0Title],
-      [fmap (t `isInfixOf`) title --> viewShift (myWorkspaces !! 1) | t <- myWs1Title],
-      [fmap (t `isInfixOf`) title --> viewShift (myWorkspaces !! 2) | t <- myWs2Title],
-      [fmap (t `isInfixOf`) title --> viewShift (myWorkspaces !! 3) | t <- myWs3Title],
-      [fmap (t `isInfixOf`) title --> viewShift (myWorkspaces !! 4) | t <- myWs4Title],
+      [fmap (t `isInfixOf`) title --> doShift (myWorkspaces !! 0) | t <- myWs0Title],
+      [fmap (t `isInfixOf`) title --> doShift (myWorkspaces !! 1) | t <- myWs1Title],
+      [fmap (t `isInfixOf`) title --> doShift (myWorkspaces !! 2) | t <- myWs2Title],
+      [fmap (t `isInfixOf`) title --> doShift (myWorkspaces !! 3) | t <- myWs3Title],
+      [fmap (t `isInfixOf`) title --> doShift (myWorkspaces !! 4) | t <- myWs4Title],
       -- Ignored
       [fmap (c `isInfixOf`) className --> doIgnore | c <- myIgnoreClass],
       [fmap (t `isInfixOf`) title --> doIgnore | t <- myIgnoreTitle],
@@ -213,26 +212,25 @@ myManageHook =
       [fmap (t `isInfixOf`) title --> doCenterFloat | t <- myCenterFloatsTitle]
     ]
   where
-    viewShift = doF . liftM2 (.) W.greedyView W.shift
     myWs0Class = ["firefox"]
-    myWs1Class = ["code-oss", "pycharm", "clion", "webstorm", "phpstorm"]
+    myWs1Class = ["code-oss"]
     myWs2Class = ["okular"]
     myWs3Class = []
-    myWs4Class = ["Chromium"]
+    myWs4Class = []
 
     myWs0Title = []
     myWs1Title = []
     myWs2Title = ["Ghidra"]
     myWs3Title = ["Discord", "Teams", "Telegram"]
-    myWs4Title = ["Teeworlds"]
+    myWs4Title = ["DDNet"]
 
     myFloatsClass = []
     myFloatsTitle = []
 
     myIgnoreClass = []
-    myIgnoreTitle = ["win0"] -- jetbrains ide opens this when starting
+    myIgnoreTitle = []
     myCenterFloatsClass = []
-    myCenterFloatsTitle = ["KCalc"]
+    myCenterFloatsTitle = []
 
 --------------------------------------------------------------------------------
 -- STARTUP
@@ -240,21 +238,23 @@ myManageHook =
 
 myStartupHook = do
   -- `wmctrl -m` gives me some errors, which causes some Java applications to
-  -- misbehave. Manually setting the wm name seems to solve these issues 
+  -- misbehave. Manually setting the wm name to LG3D seems to solve these issues
   setWMName "LG3D"
-  spawn "autorandr -c"
-  spawn $ scriptsDir ++ "handle-polybar.sh"
-  spawnOnce "flameshot"
-  spawnOnce $ scriptsDir ++ "locker.sh"
-  spawnOnce "picom"
-  spawnOnce "mailspring"
-  spawnOnce "parcellite -n"
-  spawnOnce "kitty --title 'Bitwarden ssh keys unlock' env SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent.socket\" /usr/local/bin/bw-ssh-add.py"
+
+  spawnOnce "flameshot" -- screenshot utility daemon
+  spawnOnce $ scriptsDir ++ "locker.sh" -- start automatic locking after a certain period of inactivity
+  spawnOnce "picom" -- start compositor
+  spawnOnce "mailspring" -- start mail client 
+  spawnOnce "parcellite -n" -- start clipboard manager
+  spawnOnce "kitty --title 'Bitwarden ssh keys unlock' env SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent.socket\" /usr/local/bin/bw-ssh-add.py" -- unlock of ssh keys with password saved on bitwarden
   -- spawnOnce "nm-applet"
-  spawnOnce "dunst"
-  spawnOnce "eww daemon"
-  spawn $ "feh --bg-fill " ++ wallpapersDir ++ "neon.png"
-  spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh"
+  spawnOnce "dunst" -- start dunst notification daemon
+  spawnOnce "eww daemon" -- start eww daemon 
+  spawn "autorandr -c" -- launch autorandr to make sure monitor(s) geometry is updated
+  spawn $ scriptsDir ++ "handle-polybar.sh" -- launch polybar (or more if multiple monitors are detected)
+  spawn $ "feh --bg-fill " ++ wallpapersDir ++ "neon.png" -- set wallpaper
+  spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh" -- 
+  spawnOnce $ "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating
 
 --------------------------------------------------------------------------------
 -- POLYBAR
@@ -264,10 +264,10 @@ myLogHook dbus =
   def
     { ppOutput = D.send dbus,
       ppSep = "    ", -- separator between things
-      ppTitle = shorten 50, -- Title of the focused window
+      ppTitle = shorten 50, -- Title of the focused window, shortened to fit my (smallest) screen
       ppCurrent = wrap "%{F#61afef}" "%{F-}", -- color of selected workspace
       ppLayout = const "", -- layout string to show
-      ppVisible = wrap "%{F#A3BE8C}" "%{F-}"
+      ppVisible = wrap "%{F#A3BE8C}" "%{F-}" -- color of the workspace selected on other monitors (if any)
     }
 
 --------------------------------------------------------------------------------
