@@ -19,6 +19,7 @@ import System.IO
 import Text.Printf
 import XMonad
 import XMonad.Actions.CycleWS
+import XMonad.Hooks.UrgencyHook
 import XMonad.Actions.DynamicWorkspaces
 import XMonad.Actions.WindowMenu
 import qualified XMonad.DBus as D
@@ -237,10 +238,6 @@ myManageHook =
 --------------------------------------------------------------------------------
 
 myStartupHook = do
-  -- `wmctrl -m` gives me some errors, which causes some Java applications to
-  -- misbehave. Manually setting the wm name to LG3D seems to solve these issues
-  setWMName "LG3D"
-
   spawnOnce "flameshot" -- screenshot utility daemon
   spawnOnce $ scriptsDir ++ "locker.sh" -- start automatic locking after a certain period of inactivity
   spawnOnce "picom" -- start compositor
@@ -250,11 +247,11 @@ myStartupHook = do
   -- spawnOnce "nm-applet"
   spawnOnce "dunst" -- start dunst notification daemon
   spawnOnce "eww daemon" -- start eww daemon 
+  spawnOnce $ "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating
   spawn "autorandr -c" -- launch autorandr to make sure monitor(s) geometry is updated
   spawn $ scriptsDir ++ "handle-polybar.sh" -- launch polybar (or more if multiple monitors are detected)
   spawn $ "feh --bg-fill " ++ wallpapersDir ++ "neon.png" -- set wallpaper
   spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh" -- 
-  spawnOnce $ "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating
 
 --------------------------------------------------------------------------------
 -- POLYBAR
@@ -267,7 +264,8 @@ myLogHook dbus =
       ppTitle = shorten 50, -- Title of the focused window, shortened to fit my (smallest) screen
       ppCurrent = wrap "%{F#61afef}" "%{F-}", -- color of selected workspace
       ppLayout = const "", -- layout string to show
-      ppVisible = wrap "%{F#A3BE8C}" "%{F-}" -- color of the workspace selected on other monitors (if any)
+      ppVisible = wrap "%{F#A3BE8C}" "%{F-}", -- color of the workspace selected on other monitors (if any)
+      ppUrgent = wrap "%{F#BF616A}" "%{F-}"
     }
 
 --------------------------------------------------------------------------------
@@ -282,18 +280,19 @@ main = do
   D.requestAccess dbus
 
   xmonad $
-    docks $
-      def
-        { modMask = mod4Mask,
-          manageHook = myManageHook <+> manageHook def,
-          workspaces = myWorkspaces,
-          borderWidth = myBorderWidth,
-          startupHook = myStartupHook <+> startupHook def,
-          layoutHook = myLayoutHook,
-          normalBorderColor = myNormalBorderColor,
-          focusedBorderColor = myFocusedBorderColor,
-          keys = myKeys,
-          logHook = dynamicLogWithPP (myLogHook dbus),
-          focusFollowsMouse = myFocusFollowsMouse,
-          clickJustFocuses = myClickJustFocuses
-        }
+    withUrgencyHook NoUrgencyHook $
+      docks $
+        ewmh def
+          { modMask = mod4Mask,
+            manageHook = myManageHook <+> manageHook def,
+            workspaces = myWorkspaces,
+            borderWidth = myBorderWidth,
+            startupHook = myStartupHook <+> startupHook def,
+            layoutHook = myLayoutHook,
+            normalBorderColor = myNormalBorderColor,
+            focusedBorderColor = myFocusedBorderColor,
+            keys = myKeys,
+            logHook = dynamicLogWithPP (myLogHook dbus),
+            focusFollowsMouse = myFocusFollowsMouse,
+            clickJustFocuses = myClickJustFocuses
+          }
