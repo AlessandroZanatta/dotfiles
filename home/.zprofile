@@ -25,6 +25,8 @@ source $HOME/.zsh_aliases
 # Virtualenvwrapper
 source virtualenvwrapper.sh
 
+# debuginfod (needed by valgrind)
+source /etc/profile.d/debuginfod.sh
 
 # -------------------------- #
 # -------- EXPORTS --------- # 

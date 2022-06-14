@@ -2,7 +2,7 @@
 
 # Arbitrary, but need to be unique
 MSGTAG="my_battery_notification"
-FULL_AT=98
+FULL_AT=95
 
 DEBUG=false
 
@@ -18,7 +18,7 @@ PLUGGED=$(cat /sys/class/power_supply/BAT0/status)
 # condition in or is to check for that. Battery events pass in as first argument
 # "battery_event"
 if [[ $# -gt 0 ]] \
-  && ([[ "$1" == "cron" ]] && [ "$PLUGGED" != "Discharging" ] && ((POWER > 20)) \
+  && ([[ "$1" == "cron" ]] && ((POWER > 20)) \
     || ([[ "$1" == "battery_event" ]] && ((POWER > FULL_AT)))); then
   exit 0
 fi

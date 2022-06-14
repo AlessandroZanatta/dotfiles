@@ -36,6 +36,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.Spacing
+import XMonad.Layout.Grid
 import XMonad.Operations
 import qualified XMonad.StackSet as W
 import XMonad.Util.NamedWindows (getName)
@@ -100,8 +101,10 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
 
       -- Layout management
       ((modm, xK_f), sendMessage $ Toggle FULL),                                        -- Mod-f                --> Switch to fullscreen layout
-      ((modm .|. controlMask, xK_h), sendMessage $ IncMasterN 1),                       -- Mod-Ctrl-h           --> Increase windows in the master pane
-      ((modm .|. controlMask, xK_l), sendMessage $ IncMasterN $ -1),                    -- Mod-Ctrl-l           --> Decrease windows in the master pane
+
+      -- These two are quite "buggy", as they make it difficult to understand when a workspace is tiling vs Mirror tiling (check myLayout definition)
+      -- ((modm .|. controlMask, xK_h), sendMessage $ IncMasterN 1),                       -- Mod-Ctrl-h           --> Increase windows in the master pane
+      -- ((modm .|. controlMask, xK_l), sendMessage $ IncMasterN $ -1),                    -- Mod-Ctrl-l           --> Decrease windows in the master pane
       
       -- Misc
       ((modm, xK_q), spawn "xmonad --restart"),                                         -- Mod-q                --> Re-build and restart xmonad and xmobar
@@ -147,6 +150,7 @@ myFocusedBorderColor = "#c0c0c0"
 myLayout =
   tiling
     ||| Mirror tiling
+    ||| Grid
   where
     -- default tiling algorithm partitions the screen into two panes
     tiling = Tall nmaster delta ratio
