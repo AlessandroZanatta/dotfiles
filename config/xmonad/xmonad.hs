@@ -68,6 +68,7 @@ myTerminal = "kitty"
 myChangeOutputVolume = scriptsDir ++ "change_output_volume.sh "
 myChangeInputVolume = scriptsDir ++ "change_input_volume.sh "
 myChangeBrightness = scriptsDir ++ "change_brightness.sh "
+myChangeMusicVolume = scriptsDir ++ "change_music_volume.sh "
 myDashboard = "eww open-many blur_full weather profile quote search_full vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full hibernate_full updates --toggle"
 
 myKeyBindings conf@XConfig {XMonad.modMask = modm} =
@@ -93,7 +94,14 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((shiftMask, xF86XK_AudioRaiseVolume), spawn $ myChangeInputVolume ++ "1%+"),     -- Shift+XF86AudioRaiseVolume   --> +1% microphone volume
       ((shiftMask, xF86XK_AudioLowerVolume), spawn $ myChangeInputVolume ++ "1%-"),     -- Shift+XF86AudioLowerVolume   --> -1% microphone volume
       ((modm .|. shiftMask, xK_m), spawn $ myChangeInputVolume ++ "toggle"),            -- Mod-Shift-M                  --> Toggle microphone volume 
-
+      
+      -- Music controls
+      ((0, xF86XK_AudioPlay), spawn "playerctl play-pause"),                            -- XF86AudioPlay                --> Toggle music
+      ((0, xF86XK_AudioPrev), spawn "playerctl previous"),                              -- XF86AudioPrev                --> Previous song
+      ((0, xF86XK_AudioNext), spawn "playerctl next"),                                  -- XF86AudioNext                --> Next song
+      ((controlMask, xF86XK_AudioRaiseVolume), spawn $ myChangeMusicVolume ++ "+0.05"), -- Ctrl+XF86AudioRaiseVolume    --> Raise music volume
+      ((controlMask, xF86XK_AudioLowerVolume), spawn $ myChangeMusicVolume ++ "-0.05"), -- Ctrl+XF86AudioLowerVolume    --> Lower music volume
+      
 
       -- Switch between workspaces with arrows
       ((modm, xK_Right), nextWS),

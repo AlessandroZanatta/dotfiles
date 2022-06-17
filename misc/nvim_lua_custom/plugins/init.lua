@@ -13,4 +13,5 @@ return {
       disable = false,
    },
    ["fladson/vim-kitty"] = {},
+   ["lambdalisue/suda.vim"] = {},
 }
