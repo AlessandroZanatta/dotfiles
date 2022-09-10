@@ -1,9 +1,10 @@
 [Added Associations]
+application/x-shellscript=code-oss.desktop;
 x-scheme-handler/tg=userapp-Telegram Desktop-JGF4I1.desktop;
 
 [Default Applications]
 application/pdf=org.kde.okular.desktop;
-application/x-shellscript=nvim.desktop;
+application/x-shellscript=code-oss.desktop;
 image/bmp=org.xfce.ristretto.desktop;
 image/jpeg=org.xfce.ristretto.desktop;
 image/png=org.xfce.ristretto.desktop;

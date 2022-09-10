@@ -14,4 +14,5 @@ return {
    },
    ["fladson/vim-kitty"] = {},
    ["lambdalisue/suda.vim"] = {},
+   ["lervag/vimtex"] = {},
 }

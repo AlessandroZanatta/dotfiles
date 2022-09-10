@@ -44,9 +44,6 @@ alias vim=/usr/local/bin/v
 # Colored radeontop
 alias radeontop='radeontop -c'
 
-# doasedit doedit
-alias doasedit='doas v'
-
 # Colored (rip)grepping of file contents with less flags
 alias rg='rg --color always'
 alias less='less -r'
