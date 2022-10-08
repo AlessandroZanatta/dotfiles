@@ -263,7 +263,9 @@ myStartupHook = do
   spawn "autorandr -c" -- launch autorandr to make sure monitor(s) geometry is updated
   spawn $ scriptsDir ++ "handle-polybar.sh" -- launch polybar (or more if multiple monitors are detected)
   spawn $ "feh --bg-fill " ++ wallpapersDir ++ "neon.png" -- set wallpaper
-  spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh" -- 
+  spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh" -- dashboard data refresh
+  spawnOnce "solaar -w hide"
+  spawnOnce "slimbookbattery --minimize"
 
 --------------------------------------------------------------------------------
 -- POLYBAR
