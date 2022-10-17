@@ -7,6 +7,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 vim.g.coc_config_home = "/home/kalex/dotfiles/misc/coc/"
 vim.g.coc_filetype_map = { tex = "latex" }
 vim.g.coc_snippet_next = "<tab>"
+vim.g.vimtex_format_enabled = true
 
 -- COMMANDS
 vim.cmd "highlight CocHighlightText guifg=#2b2922 guibg=#d19a66"

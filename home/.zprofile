@@ -137,6 +137,11 @@ noout(){
 # }
 
 
+# Activate/deactivate ASLR only for a new shell (and its children)
+local_aslr(){
+  setarch `uname -m` -R $SHELL
+}
+
 # Activate/deactivate ASLR (very useful for pwn)
 aslr(){
     if [[ $# -eq 1 ]]; then
@@ -189,7 +194,7 @@ set_tablet_screen(){
     if [[ $# -eq 1 ]]; then
         MONITOR=${1}
         PAD_NAME='HUION Huion Tablet Pad'
-        ID_STYLUS=`xinput | egrep "Pen|stylus" | cut -f 2 | cut -c 4-5`
+        ID_STYLUS=`xinput | grep -E "Pen|stylus" | cut -f 2 | cut -c 4-5`
 
         xinput map-to-output $ID_STYLUS $MONITOR
     else
@@ -226,6 +231,15 @@ mvimg(){
     else
         echo -e '\e[48;5;9mAborted\e[0m - images directory not found!'
     fi
+}
+
+yt_download() {
+  if [[ $# -lt 1 ]]; then
+      echo "Usage: $0 youtube_url [other flags]"
+      return 1
+  fi
+
+  yt-dlp -x --audio-format mp3 --add-metadata --embed-thumbnail --audio-quality 0 ${@:2} "$1" 
 }
 
 export QSYS_ROOTDIR="$HOME/.cache/yay/quartus-free/pkg/quartus-free-quartus/opt/intelFPGA/21.1/quartus/sopc_builder/bin"

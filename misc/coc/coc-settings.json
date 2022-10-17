@@ -17,7 +17,9 @@
     "c",
     "cpp",
     "lua",
-    "markdown"
+    "markdown",
+    "tex",
+    "latex"
   ],
   "yaml.format.enable": true,
   // Python formatter
