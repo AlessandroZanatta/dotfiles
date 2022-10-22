@@ -61,7 +61,7 @@ wallpapersDir = dotfilesDir ++ "misc/wallpapers/"
 --------------------------------------------------------------------------------
 
 myApplicationLauncher, myScreenshotUtility, myScreenlocker, myTerminal :: [Char]
-myApplicationLauncher = configDir ++ "rofi/launchers/text/launcher.sh"
+myApplicationLauncher = configDir ++ "rofi/launchers/colorful/launcher.sh"
 myScreenshotUtility = "flameshot gui"
 myScreenlocker = "lock" 
 myTerminal = "kitty"
