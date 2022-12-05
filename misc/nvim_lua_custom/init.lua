@@ -8,6 +8,7 @@ vim.g.coc_config_home = "/home/kalex/dotfiles/misc/coc/"
 vim.g.coc_filetype_map = { tex = "latex" }
 vim.g.coc_snippet_next = "<tab>"
 vim.g.vimtex_format_enabled = true
+vim.g.coqtail_noimap = true
 
 -- COMMANDS
 vim.cmd "highlight CocHighlightText guifg=#2b2922 guibg=#d19a66"
@@ -38,3 +39,16 @@ inoremap <silent><expr> <TAB>
       \ CheckBackSpace() ? "\<TAB>" :
       \ coc#refresh()
 ]]
+
+-- local coqtailGrp = vim.api.nvim_create_augroup("CoqtailHighlights", { clear = true })
+-- vim.api.nvim_create_autocmd("ColorScheme", {
+--   pattern = "*",
+--   callback = function()
+--     vim.api.nvim_set_hl(0, "CoqtailChecked", { ctermbg = 10, bg = DarkGreen })
+--     vim.api.nvim_set_hl(0, "CoqtailSent", { ctermbg = 10, bg = DarkGreen })
+--   end,
+--   group = coqtailGrp,
+-- })
+--
+-- vim.api.nvim_set_hl(0, "CoqtailChecked", { ctermbg = 10, bg = DarkGreen })
+-- vim.api.nvim_set_hl(0, "CoqtailSent", { ctermbg = 0, bg = DarkBlue })

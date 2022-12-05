@@ -77,6 +77,7 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       -- Spawn of many utilities
       ((modm, xK_p), spawn myApplicationLauncher),                                      -- Mod-p                        --> Open application launcher
       ((modm, xK_Return), spawn myTerminal),                                            -- Mod+Enter                    --> Open new terminal 
+      ((modm .|. shiftMask, xK_Return), spawn myTerminal),                              -- Mod+Shift+Enter              --> Open new terminal 
       ((modm .|. shiftMask, xK_s), spawn myScreenshotUtility),                          -- Mod+Shift+S                  --> Take a screenshot
       ((modm .|. shiftMask, xK_l), spawn myScreenlocker),                               -- Mod+Shift+L                  --> Lock screen
       ((modm, xK_b), spawn "polybar-msg cmd toggle"),                                   -- Mod-B                        --> Toggle polybar
@@ -226,7 +227,7 @@ myManageHook =
     ]
   where
     myWs0Class = ["firefox"]
-    myWs1Class = ["code-oss"]
+    myWs1Class = []
     myWs2Class = ["okular"]
     myWs3Class = []
     myWs4Class = []

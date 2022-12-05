@@ -17,6 +17,8 @@ return {
   ["lervag/vimtex"] = {},
   -- ["SirVer/ultisnips"] = {}, -- Doesn't look like coc-snippets requires the actual provider
   ["honza/vim-snippets"] = {},
+  ["whonore/Coqtail"] = {},
+  ["martinda/Jenkinsfile-vim-syntax"] = {},
 
   ---------------------------------------------------
   ---------------- Modified plugins -----------------
