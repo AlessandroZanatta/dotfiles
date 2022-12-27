@@ -50,5 +50,4 @@ alias less='less -r'
 
 
 # Kitty specific aliases
-alias diff='kitty +kitten diff'
 alias icat='kitty +kitten icat'

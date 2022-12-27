@@ -19,6 +19,7 @@ return {
   ["honza/vim-snippets"] = {},
   ["whonore/Coqtail"] = {},
   ["martinda/Jenkinsfile-vim-syntax"] = {},
+  ["ruudjelinssen/proverif-pi-vim"] = {},
 
   ---------------------------------------------------
   ---------------- Modified plugins -----------------

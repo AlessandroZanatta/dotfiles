@@ -3,6 +3,10 @@ vim.api.nvim_create_autocmd("CursorHold", {
   command = "silent call CocActionAsync('highlight')",
 })
 
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = "*.pv",
+  command = "set filetype=proverifpi",
+})
 -- GLOBALS
 vim.g.coc_config_home = "/home/kalex/dotfiles/misc/coc/"
 vim.g.coc_filetype_map = { tex = "latex" }
