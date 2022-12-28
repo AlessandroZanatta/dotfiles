@@ -88,7 +88,7 @@ md2pdf() {
     pandoc -f markdown -t latex "$1" -o "${1%.md}.tex" -s --number-sections -V colorlinks=true -V linkcolor=blue -V urlcolor=red ${@:2} && pdflatex "${1%.md}.tex" && rm "${1%.md}.tex" "${1%.md}.aux" "${1%.md}.log"
   else
     echo 'Usage: md2tex input.md [additional flags]'
-    # exit 2
+    exit 1
   fi
 }
 
@@ -97,7 +97,8 @@ pwndocker() {
   if [[ $# -eq 1 ]]; then
     docker run -d --rm -h $1 --name $1 -v "$(pwd)/$1":/ctf/work -p 23946:23946 --cap-add=SYS_PTRACE skysider/pwndocker
   else
-    echo "Usage: pwndocker container_name"
+    echo "Usage: pwndocker <container_name>"
+    exit 1
   fi
 }
 
@@ -106,7 +107,7 @@ activate() {
   if [[ $# -eq 1 ]]; then
     workon "$1"
   else
-    echo "Usage: $0 py-env"
+    echo "Usage: $0 <py-env>"
     exit 1
   fi
 }
@@ -116,7 +117,7 @@ noout() {
   if [[ $# -ne 0 ]]; then
     nohup $@ > /dev/null &
   else
-    echo "Usage: $0 program"
+    echo "Usage: $0 <program>"
     exit 1
   fi
 }
@@ -192,21 +193,23 @@ xpp() {
 }
 
 set_tablet_screen() {
-  TABLET_NAME='Huion H430P'
-  if [[ $# -eq 1 ]]; then
-    MONITOR="$1"
-
-    # These setting assume my double monitor setup,
-    # with the exact xrandr settings i'm using
-    if [[ "$MONITOR" == "HDMI1" ]]; then
-      otd setdisplayarea "$TABLET_NAME" 1920 1080 2326 540
-    elif [[ "$MONITOR" == "eDP1" ]]; then
-      otd setdisplayarea "$TABLET_NAME" 1366 768 683 540
-    else
-      echo "Monitor not found!"
-    fi
-  else
+  if [[ $# -ne 1 ]]; then
     echo "Usage: $0 <screen name>"
+    exit 1
+  fi
+  
+  TABLET_NAME='Huion H430P'
+  MONITOR="$1"
+
+  # These setting assume my double monitor setup,
+  # with the exact xrandr settings i'm using
+  if [[ "$MONITOR" == "HDMI1" ]]; then
+    otd setdisplayarea "$TABLET_NAME" 1920 1080 2326 540
+  elif [[ "$MONITOR" == "eDP1" ]]; then
+    otd setdisplayarea "$TABLET_NAME" 1366 768 683 540
+  else
+    echo "Monitor not found!"
+    exit 1
   fi
 }
 
@@ -217,34 +220,40 @@ rftoggle() {
 mvimg() {
   if [[ $# -ne 1 ]]; then
     echo "Usage: $0 <image name>"
-    return 1
+     exit 1
   fi
+
+  red=$(tput setaf 1)
+  green=$(tput setaf 2)
+  ylw=$(tput setaf 3)
+  rst=$(tput sgr0)
+
 
   if [[ -d "images" ]]; then
     if [[ $(find "images" -iname "$1*") ]]; then
-      echo -ne '\e[48;5;202mWarning\e[0m - file already exists in the image folder.\nProceed? (y/n): '
+      echo -ne "$(ylw)Warning$(rst) - file already exists in the image folder.\nProceed? (y/n): "
       read answer
       if [[ -z "$answer" ]] || [[ "$answer" == "n" ]]; then
-        echo -e '\e[48;5;9mAborted\e[0m'
-        return 1
+        echo -e "$(red)Aborted$(rst)"
+        exit 1
       fi
     fi
 
     if [[ $(find "$HOME/Downloads" -iname "$1*") ]]; then
       mv $HOME/Downloads/$1* "images"
-      echo -e '\e[48;5;22mDone!\e[0m'
+      echo -e "$(green)Done!$(rst)"
     else
-      echo -e '\e[48;5;9mAborted\e[0m - image not found in downloads!'
+      echo -e "$(red)Aborted$(rst) - image not found in downloads!"
     fi
   else
-    echo -e '\e[48;5;9mAborted\e[0m - images directory not found!'
+    echo -e "$(red)Aborted$(rst) - images directory not found!"
   fi
 }
 
 yt_download() {
   if [[ $# -lt 1 ]]; then
-    echo "Usage: $0 youtube_url [other flags]"
-    return 1
+    echo "Usage: $0 <youtube_url> [other flags]"
+    exit 1
   fi
 
   yt-dlp -x --audio-format mp3 --add-metadata --write-thumbnail ${@:2} "$1"
