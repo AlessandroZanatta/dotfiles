@@ -231,22 +231,22 @@ mvimg() {
 
   if [[ -d "images" ]]; then
     if [[ $(find "images" -iname "$1*") ]]; then
-      echo -ne "$(ylw)Warning$(rst) - file already exists in the image folder.\nProceed? (y/n): "
+      echo -ne "${ylw}Warning${rst} - file already exists in the image folder.\nProceed? (y/n): "
       read answer
       if [[ -z "$answer" ]] || [[ "$answer" == "n" ]]; then
-        echo -e "$(red)Aborted$(rst)"
+        echo -e "${red}Aborted${rst}"
         exit 1
       fi
     fi
 
     if [[ $(find "$HOME/Downloads" -iname "$1*") ]]; then
       mv $HOME/Downloads/$1* "images"
-      echo -e "$(green)Done!$(rst)"
+      echo -e "${green}Done!${rst}"
     else
-      echo -e "$(red)Aborted$(rst) - image not found in downloads!"
+      echo -e "${red}Aborted$}rst} - image not found in downloads!"
     fi
   else
-    echo -e "$(red)Aborted$(rst) - images directory not found!"
+    echo -e "${red}Aborted${rst} - images directory not found!"
   fi
 }
 
