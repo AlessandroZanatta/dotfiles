@@ -1,8 +1,8 @@
 -- AUTOCMDS
 
 vim.api.nvim_create_autocmd("BufRead", {
-  pattern = "*.pv",
-  command = "set filetype=proverifpi",
+	pattern = "*.pv",
+	command = "set filetype=proverifpi",
 })
 -- GLOBALS
 -- vim.g.vimtex_format_enabled = true
