@@ -2,4 +2,21 @@ modifyLineBreaks:
   textWrapOptions:
     columns: 80
     blocksBeginWith:
-      other: '\\Cref|\\emph'
+      other: '\\Cref|\\emph|\\caption|\\item'
+    blocksFollow:
+      other: |-
+        \\begin\{definition\}\[.*\]
+        |
+        \\end\{figure\}
+        |
+        \\end\{definition\}
+        |
+        \\end\{itemize\}
+        |
+        \\item
+        |
+        \\end\{enumerate\}
+        |
+        \\end\{table\}
+        |
+        \\end\{description\}

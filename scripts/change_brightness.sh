@@ -11,7 +11,7 @@ xbacklight "$@"
 BRIGHTNESS=$(xbacklight -get | cut -d . -f1 | awk '{print int($1 / 5 + 0.5) * 5}')
 
 # Show the brightness nofitication
-dunstify -a "changeVolume" -t 2000 \
-  -u low -i display-brightness \
-  -h string:x-dunst-stack-tag:$MSGTAG \
-  -h int:value:"$BRIGHTNESS" "Brightness: ${BRIGHTNESS}%"
+dunstify -a "changeBrightness" -t 2000 \
+	-u low -i display-brightness \
+	-h string:x-dunst-stack-tag:"$MSGTAG" \
+	-h int:value:"$BRIGHTNESS" "Brightness: ${BRIGHTNESS}%"

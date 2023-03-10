@@ -59,6 +59,9 @@ local plugins = {
 
 				-- Rust
 				"rust-analyzer",
+
+				-- Bash scripts
+				"bash-language-server",
 			},
 		},
 	},

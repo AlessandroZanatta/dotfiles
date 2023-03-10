@@ -2,7 +2,7 @@ local M = {}
 
 M.ui = {
 	theme = "kanagawa",
-	-- hl_add = require "custom.highlights",
+	hl_add = require("custom.highlights"),
 }
 
 M.plugins = require("custom.plugins")

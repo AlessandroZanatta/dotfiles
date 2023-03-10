@@ -6,12 +6,12 @@ LOGO=" "
 connection_status() { STATUS=$(ifconfig | grep "$CONFIG_NAME"); }
 
 while true; do
-  connection_status
+	connection_status
 
-  if [ -n "$STATUS" ]; then
-    echo "%{F#61afef}$LOGO%{F-} "
-  else
-    echo "%{F#BF616A}$LOGO%{F-} "
-  fi
-  sleep 1800
+	if [ "$STATUS" != "" ]; then
+		echo "%{F#61afef}$LOGO%{F-} "
+	else
+		echo "%{F#BF616A}$LOGO%{F-} "
+	fi
+	sleep 1800
 done

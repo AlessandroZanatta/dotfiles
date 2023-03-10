@@ -10,12 +10,12 @@ vim.g.coqtail_noimap = true
 
 -- MISC
 -- Enable needed providers back (NVChad disables all of them by default)
--- local enable_providers = {
---   "python3_provider",
---   "node_provider",
--- }
---
--- for _, plugin in pairs(enable_providers) do
---   vim.g["loaded_" .. plugin] = nil
---   vim.cmd("runtime " .. plugin)
--- end
+local enable_providers = {
+	"python3_provider",
+	"node_provider",
+}
+
+for _, plugin in pairs(enable_providers) do
+	vim.g["loaded_" .. plugin] = nil
+	vim.cmd("runtime " .. plugin)
+end

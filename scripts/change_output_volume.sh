@@ -12,17 +12,17 @@ VOLUME=$(amixer get Master | awk '/Front Left:/ {print $5}' | sed 's/[^0-9]*//g'
 # Get mute status
 MUTE=$(amixer get Master | awk '/Front Left:/ {print $6}' | sed 's/[^a-z]*//g')
 if [[ $VOLUME == 0 || $MUTE == "off" ]]; then
-  # Show the mute icon
-  dunstify -a "change_volume" -t 2000 \
-    -u low -i audio-volume-muted \
-    -h string:x-dunst-stack-tag:$MSGTAG \
-    -h int:value:"0" "Volume muted"
+	# Show the mute icon
+	dunstify -a "change_volume" -t 2000 \
+		-u low -i audio-volume-muted \
+		-h string:x-dunst-stack-tag:"$MSGTAG" \
+		-h int:value:"0" "Volume muted"
 else
-  # Show the volume nofitication
-  dunstify -a "change_volume" -t 2000 \
-    -u low -i audio-volume-high \
-    -h string:x-dunst-stack-tag:$MSGTAG \
-    -h int:value:"$VOLUME" "Volume: ${VOLUME}%"
+	# Show the volume nofitication
+	dunstify -a "change_volume" -t 2000 \
+		-u low -i audio-volume-high \
+		-h string:x-dunst-stack-tag:"$MSGTAG" \
+		-h int:value:"$VOLUME" "Volume: ${VOLUME}%"
 fi
 
 # Play the volume changed sound
