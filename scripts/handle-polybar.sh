@@ -9,7 +9,7 @@ if [ "$(pgrep -cx polybar)" -gt 0 ]; then
 	done
 fi
 
-for m in "$(xrandr --query | grep " connected" | cut -d" " -f1)"; do
+for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
 	MONITOR=$m polybar --config="$HOME/.config/polybar/config.ini" >>/tmp/polybar.log 2>&1 &
 done
 
