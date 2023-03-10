@@ -188,7 +188,7 @@ myLayoutHook =
 -- Define my workspaces (statically)
 -- myWorkspaces = ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
 
-myWorkspaces = clickable ["1:%{T1}\xf269 %{T-}", "2:%{T1}\xe62b %{T-}", "3:%{T1}\xf668 %{T-}", "4:%{T1}\xfb6e %{T-}", "5:%{T1}\xf11b %{T-}", "6", "7", "8", "9"]
+myWorkspaces = clickable ["1 %{T1}\xf269 %{T-}", "2 %{T1}\xe62b %{T-}", "3 %{T1}\xf668 %{T-}", "4 %{T1}\xfb6e %{T-}", "5 %{T1}\xf11b %{T-}", "6", "7", "8 %{T1}\xf0388%{T-}", "9"]
   where
     clickable l =
       [ "%{A1:xdotool key super+" ++ show n ++ ":}" ++ ws ++ "%{A}"
@@ -210,6 +210,7 @@ myManageHook =
       [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 2) | c <- myWs2Class],
       [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 3) | c <- myWs3Class],
       [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 4) | c <- myWs4Class],
+      [fmap (c `isInfixOf`) className --> doShift (myWorkspaces !! 7) | c <- myWs7Class],
       -- By title
       [fmap (t `isInfixOf`) title --> doShift (myWorkspaces !! 0) | t <- myWs0Title],
       [fmap (t `isInfixOf`) title --> doShift (myWorkspaces !! 1) | t <- myWs1Title],
@@ -231,6 +232,7 @@ myManageHook =
     myWs2Class = ["okular"]
     myWs3Class = []
     myWs4Class = []
+    myWs7Class = ["Sonixd"]
 
     myWs0Title = []
     myWs1Title = []
