@@ -19,3 +19,15 @@ for _, plugin in pairs(enable_providers) do
 	vim.g["loaded_" .. plugin] = nil
 	vim.cmd("runtime " .. plugin)
 end
+
+-- Disable annoying warnings that may not get fixed soon
+local notify = vim.notify
+vim.notify = function(msg, ...)
+	if
+		msg:match("warning: multiple different client offset_encodings detected for buffer, this is not supported yet")
+	then
+		return
+	end
+
+	notify(msg, ...)
+end

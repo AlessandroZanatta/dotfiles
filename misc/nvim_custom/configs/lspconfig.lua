@@ -14,8 +14,8 @@ end
 
 -- We need to add settings to ltex
 lspconfig.ltex.setup({
-	on_init = require("custom.plugins.ltex").on_init,
-	handlers = require("custom.plugins.ltex").handlers,
+	on_init = require("custom.configs.ltex").on_init,
+	handlers = require("custom.configs.ltex").handlers,
 	-- on_attach = on_attach,
 	-- capabilities = capabilities,
 })
