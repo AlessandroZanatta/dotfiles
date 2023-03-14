@@ -188,7 +188,7 @@ myLayoutHook =
 -- Define my workspaces (statically)
 -- myWorkspaces = ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
 
-myWorkspaces = clickable ["1 %{T1}\xf269 %{T-}", "2 %{T1}\xe62b %{T-}", "3 %{T1}\xf668 %{T-}", "4 %{T1}\xfb6e %{T-}", "5 %{T1}\xf11b %{T-}", "6", "7", "8 %{T1}\xf0388%{T-}", "9"]
+myWorkspaces = clickable ["1 \xf269 ", "2 \xe62b ", "3 \xf668 ", "4 \xfb6e ", "5 \xf11b ", "6", "7", "8 \xf0388 ", "9"]
   where
     clickable l =
       [ "%{A1:xdotool key super+" ++ show n ++ ":}" ++ ws ++ "%{A}"

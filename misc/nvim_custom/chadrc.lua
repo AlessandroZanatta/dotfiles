@@ -4,9 +4,9 @@ local highlights = require("custom.highlights")
 
 M.ui = {
 	theme = "kanagawa",
-	hl_override = highlights.override,
+	-- hl_override = highlights.override,
 	hl_add = highlights.add,
-	statusline = { theme = "default", separator_style = "round" },
+	statusline = { theme = "minimal", separator_style = "round" },
 }
 
 M.plugins = "custom.plugins"
