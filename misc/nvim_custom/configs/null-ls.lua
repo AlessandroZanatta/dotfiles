@@ -1,9 +1,4 @@
-local present, null_ls = pcall(require, "null-ls")
-
-if not present then
-	return
-end
-
+local null_ls = require("null-ls")
 local b = null_ls.builtins
 
 local sources = {
@@ -11,8 +6,8 @@ local sources = {
 	-- HTML, JS, TS, CSS, HTML, JSON, and Markdown
 	b.formatting.prettier,
 
-	-- Markdown
-	b.diagnostics.mdl,
+	-- Markdown (prettier already provides this)
+	-- b.diagnostics.mdl,
 
 	-- Lua
 	b.formatting.stylua,

@@ -8,11 +8,11 @@ local plugins = {
 	{ "gauteh/vim-cppman" },
 	{ "vim-pandoc/vim-pandoc" },
 	{ "vim-pandoc/vim-pandoc-syntax" },
-	{ "fladson/vim-kitty" },
-	{ "lambdalisue/suda.vim" },
-	{ "lervag/vimtex" },
-	{ "whonore/Coqtail" },
-	{ "ruudjelinssen/proverif-pi-vim" },
+	{ "fladson/vim-kitty", lazy = false },
+	{ "lambdalisue/suda.vim", lazy = false },
+	{ "lervag/vimtex", lazy = false },
+	{ "whonore/Coqtail", lazy = false },
+	{ "ruudjelinssen/proverif-pi-vim", lazy = false },
 
 	{
 		"neovim/nvim-lspconfig",
@@ -22,6 +22,7 @@ local plugins = {
 				require("custom.configs.null-ls")
 			end,
 		},
+
 		config = function()
 			require("plugins.configs.lspconfig")
 			require("custom.configs.lspconfig")
@@ -29,7 +30,8 @@ local plugins = {
 	},
 
 	-- Formatting, linting and diagnostics
-	-- {"jose-elias-alvarez/null-ls.nvim",
+	-- {
+	-- 	"jose-elias-alvarez/null-ls.nvim",
 	-- 	after = "nvim-lspconfig",
 	-- 	config = function()
 	-- 		require("custom.configs.null-ls")
