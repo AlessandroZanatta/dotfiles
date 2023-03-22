@@ -6,7 +6,7 @@ local plugins = {
 		enabled = true,
 	},
 	{ "gauteh/vim-cppman" },
-	{ "vim-pandoc/vim-pandoc" },
+	-- { "vim-pandoc/vim-pandoc" },
 	{ "vim-pandoc/vim-pandoc-syntax" },
 	{ "fladson/vim-kitty", lazy = false },
 	{ "lambdalisue/suda.vim", lazy = false },
@@ -73,6 +73,12 @@ local plugins = {
 
 				-- Bash scripts
 				"bash-language-server",
+
+				-- Solidity (language server)
+				"solidity-ls",
+
+				-- Solidity (linting)
+				-- "solhint",
 			},
 		},
 	},

@@ -3,8 +3,10 @@ local b = null_ls.builtins
 
 local sources = {
 
-	-- HTML, JS, TS, CSS, HTML, JSON, and Markdown
-	b.formatting.prettier,
+	-- HTML, JS, TS, CSS, HTML, JSON, Markdown, and Solitidy
+	b.formatting.prettier.with({
+		extra_filetypes = { "solidity" },
+	}),
 
 	-- Markdown (prettier already provides this)
 	-- b.diagnostics.mdl,
@@ -43,6 +45,9 @@ local sources = {
 	b.formatting.shfmt,
 	b.diagnostics.shellcheck.with({ diagnostics_format = "#{m} [#{c}]" }),
 	b.formatting.shellharden,
+
+	-- Solidity
+	-- b.diagnostics.solhint,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})

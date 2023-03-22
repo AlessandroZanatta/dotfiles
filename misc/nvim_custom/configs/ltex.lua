@@ -5,7 +5,7 @@
 local util = require("lspconfig.util")
 local handlers = require("vim.lsp.handlers")
 
-local filename = vim.fn.stdpath("config") .. "/lua/custom/plugins/ltex_config.json"
+local filename = vim.fn.stdpath("config") .. "/lua/custom/configs/ltex_config.json"
 
 local function load_config()
 	local file = io.open(filename, "r")

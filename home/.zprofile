@@ -66,6 +66,9 @@ export PATH="$PATH:$ANDROID_SDK_ROOT/emulator"
 # Chromium depot tools
 export PATH="$PATH:$HOME/Documents/pwn/chromium/depot_tools"
 
+# Add in front to prevent shadowing
+export PATH="/opt/pvs:$PATH"
+
 # -------------------------- #
 # ------- FUNCTIONS -------- #
 # -------------------------- #

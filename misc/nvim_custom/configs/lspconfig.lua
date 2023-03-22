@@ -20,6 +20,18 @@ lspconfig.ltex.setup({
 	-- capabilities = capabilities,
 })
 
+-- Solidity language server
+local configs = require("lspconfig.configs")
+configs.nmsolidity = {
+	default_config = {
+		cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+		filetypes = { "solidity" },
+		root_dir = lspconfig.util.find_git_ancestor,
+		single_file_support = true,
+	},
+}
+lspconfig.nmsolidity.setup({ on_attach = on_attach, capabilities = capabilities })
+
 -- Rather convoluted way to disable the 'Code is unreachable' hints sent by Pyright
 -- https://github.com/neovim/nvim-lspconfig/issues/726#issuecomment-1075539112
 local function filter(arr, func)
