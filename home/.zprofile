@@ -70,6 +70,12 @@ export PATH="$PATH:$HOME/Documents/pwn/chromium/depot_tools"
 export PATH="/opt/pvs:$PATH"
 
 # -------------------------- #
+# ---------- MISC ---------- #
+# -------------------------- #
+
+eval $(thefuck --alias)
+
+# -------------------------- #
 # ------- FUNCTIONS -------- #
 # -------------------------- #
 

@@ -79,6 +79,9 @@ local plugins = {
 
 				-- Solidity (linting)
 				-- "solhint",
+
+				-- Go
+				"gopls",
 			},
 		},
 	},
