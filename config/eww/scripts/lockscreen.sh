@@ -1,6 +1,10 @@
 #!/bin/bash
 
-# Close dashboard
-xdotool key --repeat 1 super+d
+# Mute
+amixer set Master mute
 
+# Close dashboard
+eww close-all
+
+# Lock screen
 lock

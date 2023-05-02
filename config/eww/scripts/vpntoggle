@@ -1,11 +1,11 @@
 #!/bin/bash
 vpn_name="HomeVPN"
-state=$(ifconfig | grep $vpn_name)
+state=$(ifconfig | grep "$vpn_name")
 
-if [ -n "$state" ]; then
-  kitty sudo myVPN off
-  echo "#D35D6E" > /tmp/xmonad/vpnstat-hex
+if [ "$state" != "" ]; then
+	nmcli con down HomeVPN
+	echo "#D35D6E" >/tmp/xmonad/vpnstat-hex
 else
-  nmcli con up HomeVPN
-  echo "#61afef" > /tmp/xmonad/vpnstat-hex
+	nmcli con up HomeVPN
+	echo "#61afef" >/tmp/xmonad/vpnstat-hex
 fi

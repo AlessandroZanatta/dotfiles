@@ -1,22 +1,10 @@
 #!/bin/bash
-dir="$HOME/.config/rofi/powermenu"
-confirm_exit() {
-  rofi -dmenu -i -no-fixed-num-lines -p "Are You Sure? : " \
-    -theme "$dir/confirm.rasi"
-}
 
-# Message
-msg() {
-  rofi -theme "$dir/message.rasi" -e "Available Options  -  yes / y / no / n"
-}
+# Mute output
+amixer set Master mute
 
-ans=$(confirm_exit &)
-if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
-  # Close dashboard
-  xdotool key --repeat 1 super+d
-  systemctl hibernate
-elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
-  exit 0
-else
-  msg
-fi
+# Close dashboard
+eww close-all
+
+# Hibernate
+systemctl hibernate

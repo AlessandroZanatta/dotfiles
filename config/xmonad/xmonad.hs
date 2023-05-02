@@ -265,7 +265,7 @@ myStartupHook = do
   spawnOnce $ "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating
   spawn "autorandr -c" -- launch autorandr to make sure monitor(s) geometry is updated
   spawn $ scriptsDir ++ "handle-polybar.sh" -- launch polybar (or more if multiple monitors are detected)
-  spawn $ "feh --bg-fill " ++ wallpapersDir ++ "kid-in-space.jpg" -- set wallpaper
+  spawn $ "feh --bg-fill " ++ wallpapersDir ++ "dawn.png" -- set wallpaper
   spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh" -- dashboard data refresh
   setWMName "LG3D"
 
