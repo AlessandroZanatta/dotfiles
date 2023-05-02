@@ -21,11 +21,11 @@ NEW_VOLUME_PERCENTAGE=$(awk "BEGIN{ print $NEW_VOLUME * 100 }")
 # Set volume
 playerctl volume "$NEW_VOLUME"
 
-# Show the volume nofitication
+# Play the volume changed sound
+canberra-gtk-play -i audio-volume-change -d "changeVolume" &
+
+# Show the volume notification
 dunstify -a "change_music_volume" -t 2000 \
 	-u low -i emblem-music-symbolic \
 	-h string:x-dunst-stack-tag:"$MSGTAG" \
 	-h int:value:"$NEW_VOLUME_PERCENTAGE" "Volume: $NEW_VOLUME_PERCENTAGE%"
-
-# Play the volume changed sound
-canberra-gtk-play -i audio-volume-change -d "changeVolume"

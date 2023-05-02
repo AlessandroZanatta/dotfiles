@@ -61,7 +61,7 @@ wallpapersDir = dotfilesDir ++ "misc/wallpapers/"
 --------------------------------------------------------------------------------
 
 myApplicationLauncher, myScreenshotUtility, myScreenlocker, myTerminal :: [Char]
-myApplicationLauncher = configDir ++ "rofi/launchers/colorful/launcher.sh"
+myApplicationLauncher = configDir ++ "rofi/launchers/type-3/launcher.sh"
 myScreenshotUtility = "flameshot gui"
 myScreenlocker = "lock" 
 myTerminal = "kitty"
@@ -188,7 +188,7 @@ myLayoutHook =
 -- Define my workspaces (statically)
 -- myWorkspaces = ["1: %{T1}\xE1B4%{T-}", "2: %{T1}\xE1EF%{T-}", "3: %{T1}\xE0AA%{T-}", "4: %{T1}\xE1E9%{T-}", "5: %{T1}\xE0AA%{T-}", "6", "7", "8", "9"]
 
-myWorkspaces = clickable ["1 \xf269 ", "2 \xe62b ", "3 \xf668 ", "4 \xfb6e ", "5 \xf11b ", "6", "7", "8 \xf0388 ", "9"]
+myWorkspaces = clickable ["1 \xf269 ", "2 \xe62b ", "3 \xf0169 ", "4 \xf066f ", "5 \xf11b ", "6", "7", "8 \xf0388 ", "9"]
   where
     clickable l =
       [ "%{A1:xdotool key super+" ++ show n ++ ":}" ++ ws ++ "%{A}"

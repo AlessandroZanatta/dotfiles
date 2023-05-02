@@ -1,9 +1,11 @@
 #!/bin/bash
 
-CONF_FILE="/home/kalex/dotfiles/config/redshift/redshift.conf"
-LOCKING_CONF_FILE="/home/kalex/dotfiles/config/redshift/redshift-locker.conf"
-NORMAL_CONF_FILE="/home/kalex/dotfiles/config/redshift/redshift-normal.conf"
+CONF_FILE="$HOME/dotfiles/config/redshift/redshift.conf"
+LOCKING_CONF_FILE="$HOME/dotfiles/config/redshift/redshift-locker.conf"
+NORMAL_CONF_FILE="$HOME/dotfiles/config/redshift/redshift-normal.conf"
 
+# Dirty trick to show the screen dimming: use redshift with decreased brightness
+# by symlinking a lower brightness conf file into the conf file and restart redshift via systemctl
 xidlehook \
 	--not-when-fullscreen \
 	--not-when-audio \

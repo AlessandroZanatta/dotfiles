@@ -9,6 +9,9 @@ amixer -q set Master "$@"
 # Get current volume
 VOLUME=$(amixer get Master | awk '/Front Left:/ {print $5}' | sed 's/[^0-9]*//g')
 
+# Play the volume changed sound
+canberra-gtk-play -i audio-volume-change -d "changeVolume" &
+
 # Get mute status
 MUTE=$(amixer get Master | awk '/Front Left:/ {print $6}' | sed 's/[^a-z]*//g')
 if [[ $VOLUME == 0 || $MUTE == "off" ]]; then
@@ -24,6 +27,3 @@ else
 		-h string:x-dunst-stack-tag:"$MSGTAG" \
 		-h int:value:"$VOLUME" "Volume: ${VOLUME}%"
 fi
-
-# Play the volume changed sound
-canberra-gtk-play -i audio-volume-change -d "changeVolume"

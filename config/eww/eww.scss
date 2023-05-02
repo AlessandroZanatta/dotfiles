@@ -5,7 +5,7 @@
 window {
   background-color: #1e222a;
   color: #ffd5cd;
-  font-family: JetBrainsMono Nerd Font;
+  font-family: JetBrains Mono;
 }
 
 button {
@@ -276,8 +276,7 @@ button {
   color: #d35d6e;
 }
 .power-full {
-  margin-right: 10px;
-  font-size: 45px;
+  font-size: 50px;
   color: #d35d6e;
 }
 .power-full:hover {
@@ -298,7 +297,6 @@ button {
   color: #d35d6e;
 }
 .hibernate-full {
-  margin-right: 10px;
   font-size: 45px;
   color: #c47eb7;
 }
@@ -428,7 +426,7 @@ button {
 
 .vpn-icon {
   font-size: 45px;
-  margin-left: 10px;
+  margin-left: 5px;
 }
 .vpn-icon:hover {
   color: #ffd5cd;

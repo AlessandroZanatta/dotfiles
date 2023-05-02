@@ -41,5 +41,3 @@ source "$HOME/.zprofile"
 
 autoload -U compinit && compinit -u
 
-# opam configuration
-[[ ! -r /home/kalex/.opam/opam-init/init.zsh ]] || source /home/kalex/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null

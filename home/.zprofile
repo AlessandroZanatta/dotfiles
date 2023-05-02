@@ -12,7 +12,14 @@
 # Do NOT kill child processes of the shell when the shell is killed
 setopt NO_HUP
 
+# SSH agent socket
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# thefuck setup
+eval $(thefuck --alias)
+
+# opam configuration
+[[ ! -r /home/kalex/.opam/opam-init/init.zsh ]] || source /home/kalex/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
 
 # -------------------------- #
 # -------- SOURCES --------- #
@@ -69,22 +76,19 @@ export PATH="$PATH:$HOME/Documents/pwn/chromium/depot_tools"
 # Add in front to prevent shadowing
 export PATH="/opt/pvs:$PATH"
 
-# -------------------------- #
-# ---------- MISC ---------- #
-# -------------------------- #
-
-eval $(thefuck --alias)
+# Solana
+export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
 # -------------------------- #
 # ------- FUNCTIONS -------- #
 # -------------------------- #
 
-# Docker utility for fast connection
+# Docker utility
 docker_connect() {
   if [[ $# -eq 1 ]]; then
     docker exec -it $(docker ps | grep $1 | cut -d ' ' -f 1) /bin/bash
   else
-    echo "Usage: $0"
+    echo "Usage: $0 container-name"
   fi
 }
 
@@ -154,20 +158,20 @@ local_aslr() {
   setarch $(uname -m) -R $SHELL
 }
 
-# Activate/deactivate ASLR (very useful for pwn)
-aslr() {
-  if [[ $# -eq 1 ]]; then
-    if [[ "$1" == "on" ]]; then
-      echo "2" | sudo tee /proc/sys/kernel/randomize_va_space
-    elif [[ "$1" == "off" ]]; then
-      echo "0" | sudo tee /proc/sys/kernel/randomize_va_space
-    else
-      echo "Usage: $0 [on/off]"
-    fi
-  else
-    echo "Usage: $0 [on/off]"
-  fi
-}
+# Activate/deactivate ASLR
+# aslr() {
+#   if [[ $# -eq 1 ]]; then
+#     if [[ "$1" == "on" ]]; then
+#       echo "2" | sudo tee /proc/sys/kernel/randomize_va_space
+#     elif [[ "$1" == "off" ]]; then
+#       echo "0" | sudo tee /proc/sys/kernel/randomize_va_space
+#     else
+#       echo "Usage: $0 [on/off]"
+#     fi
+#   else
+#     echo "Usage: $0 [on/off]"
+#   fi
+# }
 
 # Proverif command
 pv() {
@@ -211,7 +215,7 @@ set_tablet_screen() {
   MONITOR="$1"
 
   # These setting assume my double monitor setup,
-  # with the exact xrandr settings i'm using
+  # with the exact xrandr settings I'm using
   if [[ "$MONITOR" == "HDMI1" ]]; then
     otd setdisplayarea "$TABLET_NAME" 1920 1080 2326 540
   elif [[ "$MONITOR" == "eDP1" ]]; then
@@ -222,42 +226,38 @@ set_tablet_screen() {
   fi
 }
 
-rftoggle() {
-  rfkill toggle all
-}
-
-mvimg() {
-  if [[ $# -ne 1 ]]; then
-    echo "Usage: $0 <image name>"
-     exit 1
-  fi
-
-  red=$(tput setaf 1)
-  green=$(tput setaf 2)
-  ylw=$(tput setaf 3)
-  rst=$(tput sgr0)
-
-
-  if [[ -d "images" ]]; then
-    if [[ $(find "images" -iname "$1*") ]]; then
-      echo -ne "${ylw}Warning${rst} - file already exists in the image folder.\nProceed? (y/n): "
-      read answer
-      if [[ -z "$answer" ]] || [[ "$answer" == "n" ]]; then
-        echo -e "${red}Aborted${rst}"
-        exit 1
-      fi
-    fi
-
-    if [[ $(find "$HOME/Downloads" -iname "$1*") ]]; then
-      mv $HOME/Downloads/$1* "images"
-      echo -e "${green}Done!${rst}"
-    else
-      echo -e "${red}Aborted$}rst} - image not found in downloads!"
-    fi
-  else
-    echo -e "${red}Aborted${rst} - images directory not found!"
-  fi
-}
+# mvimg() {
+#   if [[ $# -ne 1 ]]; then
+#     echo "Usage: $0 <image name>"
+#      exit 1
+#   fi
+#
+#   red=$(tput setaf 1)
+#   green=$(tput setaf 2)
+#   ylw=$(tput setaf 3)
+#   rst=$(tput sgr0)
+#
+#
+#   if [[ -d "images" ]]; then
+#     if [[ $(find "images" -iname "$1*") ]]; then
+#       echo -ne "${ylw}Warning${rst} - file already exists in the image folder.\nProceed? (y/n): "
+#       read answer
+#       if [[ -z "$answer" ]] || [[ "$answer" == "n" ]]; then
+#         echo -e "${red}Aborted${rst}"
+#         exit 1
+#       fi
+#     fi
+#
+#     if [[ $(find "$HOME/Downloads" -iname "$1*") ]]; then
+#       mv $HOME/Downloads/$1* "images"
+#       echo -e "${green}Done!${rst}"
+#     else
+#       echo -e "${red}Aborted$}rst} - image not found in downloads!"
+#     fi
+#   else
+#     echo -e "${red}Aborted${rst} - images directory not found!"
+#   fi
+# }
 
 yt_download() {
   if [[ $# -lt 1 ]]; then
@@ -267,3 +267,8 @@ yt_download() {
 
   yt-dlp -x --audio-format mp3 --add-metadata --write-thumbnail ${@:2} "$1"
 }
+
+dup_screen() {
+  xrandr --output eDP1 --mode 1366x768 --output HDMI1 --primary --scale-from 1366x768 --same-as eDP1
+}
+
