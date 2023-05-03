@@ -30,6 +30,10 @@
 (defpoll mic_vol :interval "1h"
   "scripts/audio micvol")
 
+; music
+(defpoll play_stop :interval "1s"
+  "scripts/audio music")
+
 ; backlight 
 (defpoll brightness :interval "1s"
   "scripts/system backlight")

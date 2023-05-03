@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 musicvol() {
 	current=$(playerctl volume)
@@ -11,6 +11,16 @@ mastervol() {
 
 micvol() {
 	amixer get Capture | grep 'Left:' | cut -d' ' -f7 | tr -d '[%]'
+}
+
+music() {
+	status=$(playerctl status)
+
+	if [[ "$status" == "Playing" ]]; then
+		echo ""
+	elif [[ "$status" == "Paused" ]]; then
+		echo ""
+	fi
 }
 
 "$@"

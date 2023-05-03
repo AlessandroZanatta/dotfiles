@@ -11,23 +11,18 @@
   (box :orientation "h"
        :class 'footerBtns'
  
-  (btn :name ""
-  :command "rofi -show drun &"
-    :class "restart"
-  )
+    (btn :name "󰒮"
+    :command "playerctl previous"
+      :class "previous"
+    )
 
-(btn :name ""
-  :command "/usr/local/bin/lock"
-  :class "lock"
- )
+    (btn :name "${play_stop}"
+    :command "playerctl play-pause"
+    :class "playPause"
+    )
 
- (btn :name wifi 
-   :command "iwgtk"
-   :class "wifi"
-  )
-
- (btn :name "" 
-    :command "doas zzz"
-    :class "sleep"
-  )
+    (btn :name "󰒭" 
+      :command "playerctl next"
+      :class "next"
+    )
 ))

@@ -1,13 +1,12 @@
 #!/bin/sh
 #
 pkgUpdates() {
-	# updates=$(xbps-install -S -un | cut -d' ' -f2 | sort | uniq -c | xargs)
-	updates=$(tail /tmp/checkupdates -n1) # arch
+	updates=$(tail /tmp/checkupdates -n1)
 
 	if [ "$updates" = "" ]; then
-		echo "Updated"
+		echo "Up to date!"
 	else
-		echo "󱍸  $updates"" updates"
+		echo "󱍸  $updates updates"
 	fi
 }
 
@@ -22,7 +21,7 @@ cpu() {
 }
 
 disk() {
-	df --output=pcent . | tail -n 1 | tr -d '[:space:]|%'
+	df --output=pcent /home | tail -n 1 | tr -d '[:space:]|%'
 }
 
 ram() {

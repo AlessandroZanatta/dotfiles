@@ -19,7 +19,8 @@
   (box :orientation 'v' :class 'hdd'
    (progressBar
       :value disk 
-      :text 'HDD'
+      :text ' '
+      ;; :text 'HDD'
       :class 'DISK'
       )
   )

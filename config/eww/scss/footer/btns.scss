@@ -1,7 +1,7 @@
 .btn {
   font-family: "JetbrainsMono Nerd Font Mono";
   font-size: 2rem;
-  padding: 0 1.3rem;
+  padding: 0 1.4rem;
   box-shadow: none;
   background-color: $grey;
   border-radius: 50%;
@@ -11,33 +11,31 @@
   color: $red;
 }
 
-.sleep {
-  color: $red;
-}
-
-.restart {
-  color: $green;
-}
-
-.lock {
-  color: $blue;
-  padding: 0 1.4rem;
-}
-
-.lock:hover , .restart:hover, .wifi:hover, .sleep:hover{
-  background-color: $green;
+.playPause {
+  background-color: $blue;
   color: $black;
 }
 
-.wifi {
-  background-color: $red;
-  color: $black;
-  padding: 0 1.1rem;
-  font-size: 1.7rem;
+.next,
+.previous {
+  color: $white;
 }
 
-.lock, .restart, .close, .wifi{
-  transition: ease-out .2s;
+.playPause:hover {
+  background-color: $white;
+}
+
+.next:hover,
+.previous:hover {
+  background-color: $white;
+  color: $black;
+}
+
+.next,
+.previous,
+.playPause,
+.close {
+  transition: ease-out 0.2s;
 }
 
 .btnMargin {
