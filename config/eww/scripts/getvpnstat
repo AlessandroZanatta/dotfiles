@@ -1,8 +1,0 @@
-#!/bin/bash
-status=$(ifconfig | grep HomeVPN)
-
-if [ -n "$status" ]; then
-  echo "#61afef" > /tmp/xmonad/vpnstat-hex
-else
-  echo "#BF616A" > /tmp/xmonad/vpnstat-hex
-fi

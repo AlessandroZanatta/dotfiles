@@ -48,12 +48,11 @@ import System.Environment
 -- HOME AND OTHER DIRECTORIES
 --------------------------------------------------------------------------------
 
-homeDir, dotfilesDir, scriptsDir, configDir, xmonadDir, wallpapersDir :: [Char]
+homeDir, dotfilesDir, scriptsDir, configDir, wallpapersDir :: [Char]
 homeDir = "/home/kalex/"
 dotfilesDir = homeDir ++ "dotfiles/"
 scriptsDir = dotfilesDir ++ "scripts/"
 configDir = homeDir ++ ".config/"
-xmonadDir = configDir ++ "xmonad/"
 wallpapersDir = dotfilesDir ++ "misc/wallpapers/"
 
 --------------------------------------------------------------------------------
@@ -62,19 +61,21 @@ wallpapersDir = dotfilesDir ++ "misc/wallpapers/"
 
 myApplicationLauncher, myScreenshotUtility, myScreenlocker, myTerminal :: [Char]
 myApplicationLauncher = configDir ++ "rofi/launchers/type-3/launcher.sh"
+myPowerMenu = configDir ++ "rofi/powermenu/type-2/powermenu.sh"
 myScreenshotUtility = "flameshot gui"
-myScreenlocker = "lock" 
-myTerminal = "kitty"
+myScreenlocker = "/usr/local/bin/lock" 
+myTerminal = "/usr/bin/kitty"
 myChangeOutputVolume = scriptsDir ++ "change_output_volume.sh "
 myChangeInputVolume = scriptsDir ++ "change_input_volume.sh "
 myChangeBrightness = scriptsDir ++ "change_brightness.sh "
 myChangeMusicVolume = scriptsDir ++ "change_music_volume.sh "
-myDashboard = "eww open-many blur_full weather profile quote search_full vpn-icon home_dir screenshot power_full reboot_full lock_full logout_full hibernate_full updates --toggle"
+myDashboard = "eww open eww --toggle"
 
 myKeyBindings conf@XConfig {XMonad.modMask = modm} =
   M.fromList
     [ 
       -- Spawn of many utilities
+      ((modm .|. shiftMask, xK_q), spawn myPowerMenu),                                  -- Mod+Shift+Q                  --> Open powermenu
       ((modm, xK_p), spawn myApplicationLauncher),                                      -- Mod-p                        --> Open application launcher
       ((modm, xK_Return), spawn myTerminal),                                            -- Mod+Enter                    --> Open new terminal 
       ((modm .|. shiftMask, xK_Return), spawn myTerminal),                              -- Mod+Shift+Enter              --> Open new terminal 

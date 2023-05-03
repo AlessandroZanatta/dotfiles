@@ -1,3 +1,0 @@
-#!/bin/bash
-folders=($(ls $HOME))
-echo "${folders[2]}"

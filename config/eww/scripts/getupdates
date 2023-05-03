@@ -1,2 +1,0 @@
-#!/bin/bash
-tail -n1 < /tmp/checkupdates

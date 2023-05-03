@@ -1,0 +1,16 @@
+#!/bin/sh
+
+musicvol() {
+	current=$(playerctl volume)
+	awk "BEGIN {print ($current*100)}"
+}
+
+mastervol() {
+	amixer get Master | grep 'Left:' | cut -d' ' -f7 | tr -d '[%]'
+}
+
+micvol() {
+	amixer get Capture | grep 'Left:' | cut -d' ' -f7 | tr -d '[%]'
+}
+
+"$@"

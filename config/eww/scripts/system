@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+pkgUpdates() {
+	# updates=$(xbps-install -S -un | cut -d' ' -f2 | sort | uniq -c | xargs)
+	updates=$(tail /tmp/checkupdates -n1) # arch
+
+	if [ "$updates" = "" ]; then
+		echo "Updated"
+	else
+		echo "󱍸  $updates"" updates"
+	fi
+}
+
+battery() {
+	cat /sys/class/power_supply/BAT1/capacity
+}
+
+cpu() {
+	load=$(grep -o "^[^ ]*" /proc/loadavg)
+	procs=$(nproc)
+	awk "BEGIN {print ($load/$procs * 100/5)}"
+}
+
+disk() {
+	df --output=pcent . | tail -n 1 | tr -d '[:space:]|%'
+}
+
+ram() {
+	printf "%.0f\n" "$(free -m | grep Mem | awk '{print ($3/$2)*100}')"
+}
+
+backlight() {
+	printf "%.0f\n" "$(xbacklight -get)"
+}
+
+wifi() {
+	case "$(cat /sys/class/net/wl*/operstate 2>/dev/null)" in
+	up) printf "󰤨" ;;
+	down) printf "󰤭" ;;
+	esac
+}
+
+"$@"
