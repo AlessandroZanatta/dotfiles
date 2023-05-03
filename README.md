@@ -1,6 +1,6 @@
 # dotfiles
 
-## Screenshots
+## Screenshots (outdated, will update)
 
 Hope you like it!
 ![image](https://user-images.githubusercontent.com/41871589/170653122-48f35b49-e4df-4f11-80cf-b74526cace83.png)
@@ -17,7 +17,7 @@ I'm currently running:
 - Bar: [polybar](https://github.com/polybar/polybar) inspired on [siduck's one](https://github.com/siduck/dotfiles)
 - Notifications: [dunst](https://github.com/dunst-project/dunst)
 - IDE: NeoVim with [NvChad](https://nvchad.github.io/) by siduck with NeoVim native LSP support
-- Dashboard: eww with a fixed and modified version of the one created by [Axarva](https://github.com/Axarva/dotfiles-2.0)
+- Dashboard: modified version of the one created by [siduck](https://github.com/siduck/chadwm)
 
 ## Structure
 
