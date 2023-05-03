@@ -4,8 +4,8 @@ local M = {}
 M.override = {}
 
 M.add = {
-	CoqtailSent = { bg = "nord_blue" },
-	CoqtailChecked = { bg = "#223249" },
+  CoqtailSent = { bg = "nord_blue" },
+  CoqtailChecked = { bg = "#223249" },
 }
 
 return M
