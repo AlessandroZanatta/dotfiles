@@ -1,22 +1,22 @@
 ; defined ones
-(include '/home/kalex/dotfiles/config/eww/var.yuck')
-(include '/home/kalex/dotfiles/config/eww/src/widgets.yuck')
+(include './var.yuck')
+(include './src/widgets.yuck')
 
 ; header
-(include '/home/kalex/dotfiles/config/eww/src/header/fetch.yuck')
-(include '/home/kalex/dotfiles/config/eww/src/header/init.yuck')
+(include './src/header/fetch.yuck')
+(include './src/header/init.yuck')
 
 ; focal
-(include '/home/kalex/dotfiles/config/eww/src/focal/widgets.yuck')
-(include '/home/kalex/dotfiles/config/eww/src/focal/audioSliders.yuck')
-(include '/home/kalex/dotfiles/config/eww/src/focal/init.yuck')
+(include './src/focal/widgets.yuck')
+(include './src/focal/audioSliders.yuck')
+(include './src/focal/init.yuck')
 
 ; footer
-(include '/home/kalex/dotfiles/config/eww/src/footer/btns.yuck')
-(include '/home/kalex/dotfiles/config/eww/src/footer/init.yuck')
+(include './src/footer/btns.yuck')
+(include './src/footer/init.yuck')
 
 ; dashboard 
-(include '/home/kalex/dotfiles/config/eww/src/dashboard.yuck')
+(include './src/dashboard.yuck')
 
 ; whole eww window
 (defwindow eww

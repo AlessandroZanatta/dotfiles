@@ -254,21 +254,22 @@ myManageHook =
 --------------------------------------------------------------------------------
 
 myStartupHook = do
+  setWMName "LG3D" -- Fixes some Java applications
   spawnOnce "flameshot" -- screenshot utility daemon
   spawnOnce $ scriptsDir ++ "locker.sh" -- start automatic locking after a certain period of inactivity
   spawnOnce "picom" -- start compositor
   spawnOnce "mailspring" -- start mail client 
   spawnOnce "parcellite -n" -- start clipboard manager
   spawnOnce "kitty --title 'Bitwarden ssh keys unlock' env SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent.socket\" /usr/local/bin/bw-ssh-add.py" -- unlock of ssh keys with password saved on bitwarden
-  -- spawnOnce "nm-applet"
   spawnOnce "dunst" -- start dunst notification daemon
   spawnOnce "eww daemon" -- start eww daemon 
-  spawnOnce $ "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating
+  spawnOnce "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating
+  spawnOnce "sonixd"
+  spawnOnce "Firefox"
   spawn "autorandr -c" -- launch autorandr to make sure monitor(s) geometry is updated
   spawn $ scriptsDir ++ "handle-polybar.sh" -- launch polybar (or more if multiple monitors are detected)
   spawn $ "feh --bg-fill " ++ wallpapersDir ++ "dawn.png" -- set wallpaper
   spawn $ "kill $(ps aux | grep '[b]ash .*/scripts/updates.sh' | awk '{print $2}'); " ++ scriptsDir ++ "updates.sh" -- dashboard data refresh
-  setWMName "LG3D"
 
 --------------------------------------------------------------------------------
 -- POLYBAR
