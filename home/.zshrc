@@ -29,15 +29,11 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# powerleve10k chosen theme
-# source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
-
 source "$HOME/.zprofile"
 
 [[ -s /home/kalex/.autojump/etc/profile.d/autojump.sh ]] && source /home/kalex/.autojump/etc/profile.d/autojump.sh
 
 autoload -U compinit && compinit -u
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
