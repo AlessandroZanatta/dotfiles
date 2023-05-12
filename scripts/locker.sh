@@ -12,6 +12,6 @@ xidlehook \
 	--timer 110 \
 	"ln -sf $LOCKING_CONF_FILE $CONF_FILE; systemctl --user restart redshift" \
 	"ln -sf $NORMAL_CONF_FILE $CONF_FILE; systemctl --user restart redshift" \
-	--timer 20 \
+	--timer 10 \
 	"ln -sf $NORMAL_CONF_FILE $CONF_FILE; systemctl --user restart redshift; /usr/local/bin/lock" \
 	""

@@ -85,8 +85,8 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((modm, xK_d), spawn myDashboard),                                                -- Mod-D                        --> Spawn eww dashboard
       
       -- Screen brightness 
-      ((0, xF86XK_MonBrightnessUp), spawn $ myChangeBrightness ++ "-inc 5"),            -- XF86MonBrightnessUp          --> +5% brightness
-      ((0, xF86XK_MonBrightnessDown), spawn $ myChangeBrightness ++ "-dec 5"),          -- XF86MonBrightnessUp          --> -5% brightness
+      ((0, xF86XK_MonBrightnessUp), spawn $ myChangeBrightness ++ "set +5%"),            -- XF86MonBrightnessUp          --> +5% brightness
+      ((0, xF86XK_MonBrightnessDown), spawn $ myChangeBrightness ++ "set 5%-"),          -- XF86MonBrightnessUp          --> -5% brightness
 
       -- Volume management
       ((0, xF86XK_AudioRaiseVolume), spawn $ myChangeOutputVolume ++ "5%+"),            -- XF86AudioRaiseVolume         --> +5% volume
@@ -260,7 +260,7 @@ myStartupHook = do
   spawnOnce "picom" -- start compositor
   spawnOnce "mailspring" -- start mail client 
   spawnOnce "parcellite -n" -- start clipboard manager
-  spawnOnce "kitty --title 'Bitwarden ssh keys unlock' env SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent.socket\" /usr/local/bin/bw-ssh-add.py" -- unlock of ssh keys with password saved on bitwarden
+  spawnOnce "kitty --title 'Bitwarden ssh keys unlock' env SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent.socket\" /usr/local/bin/bw-ssh-add" -- unlock of ssh keys with password saved on bitwarden
   spawnOnce "dunst" -- start dunst notification daemon
   spawnOnce "eww daemon" -- start eww daemon 
   spawnOnce "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating

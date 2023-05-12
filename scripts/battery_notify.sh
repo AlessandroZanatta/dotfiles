@@ -2,7 +2,7 @@
 
 # Arbitrary, but need to be unique
 MSGTAG="my_battery_notification"
-FULL_AT=95
+FULL_AT=99
 
 DEBUG=false
 
