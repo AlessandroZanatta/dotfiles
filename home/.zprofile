@@ -269,6 +269,13 @@ yt_download() {
 }
 
 dup_screen() {
-  xrandr --output eDP1 --mode 1366x768 --output HDMI1 --primary --scale-from 1366x768 --same-as eDP1
+  xrandr --output eDP-1 --mode 2560x1600 --output HDMI-1-1 --primary --scale-from 2560x1600 --same-as eDP-1
 }
 
+cs() {
+  if [[ $# -lt 1 ]]; then
+    echo "Usage: $0 path"
+    return 
+  fi
+  checksec --file=$1 
+}

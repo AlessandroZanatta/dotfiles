@@ -2,7 +2,7 @@
     (metric
              :class 'brightness'
              :value brightness
-             :onchange "xbacklight -set {}%"
+             :onchange "brightnessctl set {}%"
              :orientation 'h'
              :flipped false
              )

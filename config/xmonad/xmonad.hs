@@ -241,8 +241,8 @@ myManageHook =
     myWs3Title = ["Discord", "Teams", "Telegram"]
     myWs4Title = ["DDNet"]
 
-    myFloatsClass = ["org-eclipse-equinox-launcher-Main"]
-    myFloatsTitle = []
+    myFloatsClass = ["org-eclipse-equinox-launcher-Main", "Emulator"]
+    myFloatsTitle = ["Emulator"]
 
     myIgnoreClass = []
     myIgnoreTitle = []
@@ -266,6 +266,7 @@ myStartupHook = do
   spawnOnce "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating
   spawnOnce "sonixd"
   spawnOnce "Firefox"
+  spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" -- Start GUI polkit agent
   spawn "autorandr -c" -- launch autorandr to make sure monitor(s) geometry is updated
   spawn $ scriptsDir ++ "handle-polybar.sh" -- launch polybar (or more if multiple monitors are detected)
   spawn $ "feh --bg-fill " ++ wallpapersDir ++ "dawn.png" -- set wallpaper
@@ -279,7 +280,7 @@ myLogHook dbus =
   def
     { ppOutput = D.send dbus,
       ppSep = "    ", -- separator between things
-      ppTitle = shorten 50, -- Title of the focused window, shortened to fit my (smallest) screen
+      ppTitle = shorten 100, -- Title of the focused window, shortened to fit my (smallest) screen
       ppCurrent = wrap "%{F#61afef}" "%{F-}", -- color of selected workspace
       ppLayout = const "", -- layout string to show
       ppVisible = wrap "%{F#A3BE8C}" "%{F-}", -- color of the workspace selected on other monitors (if any)

@@ -67,20 +67,13 @@ run_cmd() {
 		elif [[ $1 == '--reboot' ]]; then
 			systemctl reboot
 		elif [[ $1 == '--hibernate' ]]; then
+			/usr/local/bin/lock
 			amixer set Master mute
 			systemctl hibernate
 		elif [[ $1 == '--logout' ]]; then
-			if [[ "$DESKTOP_SESSION" == "xmonad" ]]; then
-				kill "$(pgrep -f xmonad-x86_64-linux)"
-			elif [[ "$DESKTOP_SESSION" == 'openbox' ]]; then
-				openbox --exit
-			elif [[ "$DESKTOP_SESSION" == 'bspwm' ]]; then
-				bspc quit
-			elif [[ "$DESKTOP_SESSION" == 'i3' ]]; then
-				i3-msg exit
-			elif [[ "$DESKTOP_SESSION" == 'plasma' ]]; then
-				qdbus org.kde.ksmserver /KSMServer logout 0 0 0
-			fi
+			kill "$(pgrep -f xmonad-x86_64-linux)"
+		elif [[ $1 == "--lock" ]]; then
+			/usr/local/bin/lock
 		fi
 	else
 		exit 0
@@ -97,13 +90,7 @@ $reboot)
 	run_cmd --reboot
 	;;
 $lock)
-	if [[ -x '/usr/local/bin/lock' ]]; then
-		/usr/local/bin/lock
-	elif [[ -x '/usr/bin/betterlockscreen' ]]; then
-		betterlockscreen -l
-	elif [[ -x '/usr/bin/i3lock' ]]; then
-		i3lock
-	fi
+	run_cmd --lock
 	;;
 $hibernate)
 	run_cmd --hibernate

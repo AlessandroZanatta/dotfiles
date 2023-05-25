@@ -29,7 +29,7 @@ ram() {
 }
 
 backlight() {
-	printf "%.0f\n" "$(xbacklight -get)"
+	brightnessctl -m | cut -d',' -f4 | tr -d '%'
 }
 
 wifi() {
