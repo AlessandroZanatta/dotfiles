@@ -71,7 +71,7 @@ export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
 export PATH="$PATH:$ANDROID_SDK_ROOT/emulator"
 
 # Chromium depot tools
-export PATH="$PATH:$HOME/Documents/pwn/chromium/depot_tools"
+export PATH="$PATH:/opt/depot_tools"
 
 # Add in front to prevent shadowing
 export PATH="/opt/pvs:$PATH"

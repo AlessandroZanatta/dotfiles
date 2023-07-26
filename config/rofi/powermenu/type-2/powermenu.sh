@@ -67,8 +67,9 @@ run_cmd() {
 		elif [[ $1 == '--reboot' ]]; then
 			systemctl reboot
 		elif [[ $1 == '--hibernate' ]]; then
-			/usr/local/bin/lock
+			/usr/local/bin/lock &
 			amixer set Master mute
+			sleep 1 # make sure screen has been locked
 			systemctl hibernate
 		elif [[ $1 == '--logout' ]]; then
 			kill "$(pgrep -f xmonad-x86_64-linux)"
@@ -83,19 +84,19 @@ run_cmd() {
 # Actions
 chosen="$(run_rofi)"
 case ${chosen} in
-$shutdown)
+"$shutdown")
 	run_cmd --shutdown
 	;;
-$reboot)
+"$reboot")
 	run_cmd --reboot
 	;;
-$lock)
+"$lock")
 	run_cmd --lock
 	;;
-$hibernate)
+"$hibernate")
 	run_cmd --hibernate
 	;;
-$logout)
+"$logout")
 	run_cmd --logout
 	;;
 esac

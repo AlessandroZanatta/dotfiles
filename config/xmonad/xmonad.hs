@@ -103,7 +103,9 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((0, xF86XK_AudioNext), spawn "playerctl next"),                                  -- XF86AudioNext                --> Next song
       ((controlMask, xF86XK_AudioRaiseVolume), spawn $ myChangeMusicVolume ++ "+0.05"), -- Ctrl+XF86AudioRaiseVolume    --> Raise music volume
       ((controlMask, xF86XK_AudioLowerVolume), spawn $ myChangeMusicVolume ++ "-0.05"), -- Ctrl+XF86AudioLowerVolume    --> Lower music volume
-      
+     
+      -- Touchpad enable/disable (uses a heavily modified fork of https://github.com/tuxedocomputers/tuxedo-touchpad-switch/)
+      ((modm .|. controlMask, xK_m), spawn "/usr/local/bin/tuxedo-touchpad-switch"),
 
       -- Switch between workspaces with arrows
       ((modm, xK_Right), nextWS),
@@ -200,8 +202,7 @@ myWorkspaces = clickable ["1 \xf269 ", "2 \xe62b ", "3 \xf0169 ", "4 \xf066f ", 
 -- Define the manageHook to use
 myManageHook =
   composeAll . concat $
-    [ -- Start SpeedCrunch at the center of the screen, resized to be small enough
-      [title =? "SpeedCrunch" --> doRectFloat (W.RationalRect 0.25 0.25 0.5 0.5)],
+    [
       -- Either by classname or title, use the infix 'cause i'm lazy!
 
       -- Shift to
@@ -246,8 +247,8 @@ myManageHook =
 
     myIgnoreClass = []
     myIgnoreTitle = []
-    myCenterFloatsClass = []
-    myCenterFloatsTitle = []
+    myCenterFloatsClass = ["Nemo"]
+    myCenterFloatsTitle = ["SpeedCrunch"]
 
 --------------------------------------------------------------------------------
 -- STARTUP
@@ -267,6 +268,7 @@ myStartupHook = do
   spawnOnce "sonixd"
   spawnOnce "Firefox"
   spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" -- Start GUI polkit agent
+  spawnOnce "/usr/local/bin/tuxedo-touchpad-switch --set" -- set touchpad state to saved one
   spawn "autorandr -c" -- launch autorandr to make sure monitor(s) geometry is updated
   spawn $ scriptsDir ++ "handle-polybar.sh" -- launch polybar (or more if multiple monitors are detected)
   spawn $ "feh --bg-fill " ++ wallpapersDir ++ "dawn.png" -- set wallpaper
@@ -280,7 +282,7 @@ myLogHook dbus =
   def
     { ppOutput = D.send dbus,
       ppSep = "    ", -- separator between things
-      ppTitle = shorten 100, -- Title of the focused window, shortened to fit my (smallest) screen
+      ppTitle = shorten 80, -- Title of the focused window, shortened to fit my (smallest) screen
       ppCurrent = wrap "%{F#61afef}" "%{F-}", -- color of selected workspace
       ppLayout = const "", -- layout string to show
       ppVisible = wrap "%{F#A3BE8C}" "%{F-}", -- color of the workspace selected on other monitors (if any)
