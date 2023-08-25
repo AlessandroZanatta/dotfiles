@@ -3,8 +3,8 @@
 ## Screenshots (outdated, will update)
 
 Hope you like it!
-![image](https://user-images.githubusercontent.com/41871589/170653122-48f35b49-e4df-4f11-80cf-b74526cace83.png)
-![image](https://user-images.githubusercontent.com/41871589/170653379-ad51b72b-ffce-47da-81a1-ca14606c500a.png)
+<img width="1280" alt="image" src="https://github.com/AlessandroZanatta/dotfiles/assets/41871589/156154f6-1079-4c62-ba81-be1fbbf96cf4">
+
 
 On a bigger monitor:
 ![image](https://user-images.githubusercontent.com/41871589/170653467-2bda581b-1fd4-46e3-b530-a310e7b16ed4.png)
