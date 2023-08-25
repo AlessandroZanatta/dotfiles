@@ -5,19 +5,15 @@
 Hope you like it!
 <img width="1280" alt="image" src="https://github.com/AlessandroZanatta/dotfiles/assets/41871589/156154f6-1079-4c62-ba81-be1fbbf96cf4">
 
-
-On a bigger monitor:
-![image](https://user-images.githubusercontent.com/41871589/170653467-2bda581b-1fd4-46e3-b530-a310e7b16ed4.png)
-
 ## My setup
 
 I'm currently running:
 
 - WM: [XMonad](https://xmonad.org/)
-- Bar: [polybar](https://github.com/polybar/polybar) inspired on [siduck's one](https://github.com/siduck/dotfiles)
+- Bar: [polybar](https://github.com/polybar/polybar) inspired by [siduck's one](https://github.com/siduck/dotfiles)
 - Notifications: [dunst](https://github.com/dunst-project/dunst)
 - IDE: NeoVim with [NvChad](https://nvchad.github.io/) by siduck with NeoVim native LSP support
-- Dashboard: modified version of the one created by [siduck](https://github.com/siduck/chadwm)
+- Control panel: modified version of the one created by [siduck](https://github.com/siduck/chadwm)
 
 ## Structure
 
