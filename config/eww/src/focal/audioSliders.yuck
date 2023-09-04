@@ -19,7 +19,7 @@
     (metric
              :class 'headphoneSlider'
              :value head_vol
-             :onchange "playerctl volume 0.{}%"
+             :onchange "playerctl volume $(echo {}/100 | bc -l)%"
              :orientation 'v'
              :flipped true 
             ))

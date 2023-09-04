@@ -21,7 +21,7 @@ music() {
 	elif [[ "$status" == "Paused" ]]; then
 		echo ""
 	else
-		echo ""
+		echo ""
 	fi
 }
 

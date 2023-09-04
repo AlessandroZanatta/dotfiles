@@ -79,6 +79,9 @@ export PATH="/opt/pvs:$PATH"
 # Solana
 export PATH="$HOME/.local/share/solana/install/active_release/bin:$PATH"
 
+# chroot path for testing AUR packages
+export CHROOT="$HOME/chroot"
+
 # -------------------------- #
 # ------- FUNCTIONS -------- #
 # -------------------------- #
@@ -279,3 +282,5 @@ cs() {
   fi
   checksec --file=$1 
 }
+
+export PATH="/home/kalex/.local/share/solana/install/active_release/bin:$PATH"
