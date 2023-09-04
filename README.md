@@ -3,21 +3,17 @@
 ## Screenshots (outdated, will update)
 
 Hope you like it!
-![image](https://user-images.githubusercontent.com/41871589/170653122-48f35b49-e4df-4f11-80cf-b74526cace83.png)
-![image](https://user-images.githubusercontent.com/41871589/170653379-ad51b72b-ffce-47da-81a1-ca14606c500a.png)
-
-On a bigger monitor:
-![image](https://user-images.githubusercontent.com/41871589/170653467-2bda581b-1fd4-46e3-b530-a310e7b16ed4.png)
+<img width="1280" alt="image" src="https://github.com/AlessandroZanatta/dotfiles/assets/41871589/156154f6-1079-4c62-ba81-be1fbbf96cf4">
 
 ## My setup
 
 I'm currently running:
 
 - WM: [XMonad](https://xmonad.org/)
-- Bar: [polybar](https://github.com/polybar/polybar) inspired on [siduck's one](https://github.com/siduck/dotfiles)
+- Bar: [polybar](https://github.com/polybar/polybar) inspired by [siduck's one](https://github.com/siduck/dotfiles)
 - Notifications: [dunst](https://github.com/dunst-project/dunst)
 - IDE: NeoVim with [NvChad](https://nvchad.github.io/) by siduck with NeoVim native LSP support
-- Dashboard: modified version of the one created by [siduck](https://github.com/siduck/chadwm)
+- Control panel: modified version of the one created by [siduck](https://github.com/siduck/chadwm)
 
 ## Structure
 
