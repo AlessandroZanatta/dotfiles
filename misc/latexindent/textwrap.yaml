@@ -2,7 +2,7 @@ modifyLineBreaks:
   textWrapOptions:
     columns: 80
     blocksBeginWith:
-      other: '\\Cref|\\emph|\\caption|\\item|\$|\\textbf'
+      other: '\\Cref|\\emph|\\item|\$|\\textbf'
     blocksFollow:
       other: |-
         \\begin\{definition\}\[.*\]
@@ -21,4 +21,8 @@ modifyLineBreaks:
         |
         \\end\{description\}
         |
+        \\label\{.*\}
+        |
         \\\]
+        |
+        \\caption\{

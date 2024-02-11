@@ -95,8 +95,8 @@ docker_connect() {
   fi
 }
 
-# okular should start in background...
-pdf() { for pdf in "$@"; do nohup okular "$pdf" > /dev/null & done }
+# evince should start in background...
+pdf() { for pdf in "$@"; do nohup evince "$pdf" > /dev/null & done }
 
 # Pandoc shortcut for a md to pdf render
 md2pdf() {

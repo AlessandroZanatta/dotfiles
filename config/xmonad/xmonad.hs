@@ -105,7 +105,7 @@ myKeyBindings conf@XConfig {XMonad.modMask = modm} =
       ((controlMask, xF86XK_AudioLowerVolume), spawn $ myChangeMusicVolume ++ "-0.05"), -- Ctrl+XF86AudioLowerVolume    --> Lower music volume
      
       -- Touchpad enable/disable (uses a heavily modified fork of https://github.com/tuxedocomputers/tuxedo-touchpad-switch/)
-      ((modm .|. controlMask, xK_m), spawn "/usr/local/bin/tuxedo-touchpad-switch"),
+      ((modm .|. controlMask, xK_m), spawn "tuxedo-touchpad-switch"),
 
       -- Switch between workspaces with arrows
       ((modm, xK_Right), nextWS),
@@ -259,13 +259,13 @@ myStartupHook = do
   spawnOnce "flameshot" -- screenshot utility daemon
   spawnOnce $ scriptsDir ++ "locker.sh" -- start automatic locking after a certain period of inactivity
   spawnOnce "picom" -- start compositor
-  spawnOnce "mailspring" -- start mail client 
-  spawnOnce "parcellite -n" -- start clipboard manager
+  -- spawnOnce "mailspring" -- start mail client 
+  -- spawnOnce "parcellite -n" -- start clipboard manager
   spawnOnce "kitty --title 'Bitwarden ssh keys unlock' env SSH_AUTH_SOCK=\"$XDG_RUNTIME_DIR/ssh-agent.socket\" /usr/local/bin/bw-ssh-add" -- unlock of ssh keys with password saved on bitwarden
   spawnOnce "dunst" -- start dunst notification daemon
   spawnOnce "eww daemon" -- start eww daemon 
   spawnOnce "xss-lock -- lock" -- make sure to lock screen when suspending/hibernating
-  spawnOnce "sonixd"
+  -- spawnOnce "sonixd"
   spawnOnce "Firefox"
   spawnOnce "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1" -- Start GUI polkit agent
   spawnOnce "/usr/local/bin/tuxedo-touchpad-switch --set" -- set touchpad state to saved one
@@ -282,7 +282,7 @@ myLogHook dbus =
   def
     { ppOutput = D.send dbus,
       ppSep = "    ", -- separator between things
-      ppTitle = shorten 80, -- Title of the focused window, shortened to fit my (smallest) screen
+      ppTitle = shorten 100, -- Title of the focused window, shortened to fit my (smallest) screen
       ppCurrent = wrap "%{F#61afef}" "%{F-}", -- color of selected workspace
       ppLayout = const "", -- layout string to show
       ppVisible = wrap "%{F#A3BE8C}" "%{F-}", -- color of the workspace selected on other monitors (if any)
