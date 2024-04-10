@@ -31,6 +31,7 @@ local plugins = {
 	{ "RRethy/vim-illuminate", lazy = false },
 	{ "NoahTheDuke/vim-just", lazy = false },
 	{ "hashivim/vim-terraform", lazy = false },
+	{ "udalov/kotlin-vim", lazy = false },
 	-- Formatting, linting and diagnostics
 	-- {
 	-- 	"jose-elias-alvarez/null-ls.nvim",
