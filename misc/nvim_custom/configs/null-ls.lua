@@ -49,6 +49,9 @@ local sources = {
 	-- Solidity
 	-- b.diagnostics.solhint,
 
+	-- Ansible
+	b.diagnostics.ansiblelint,
+
 	-- Golang
 	b.formatting.gofmt,
 }

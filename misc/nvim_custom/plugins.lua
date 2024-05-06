@@ -77,6 +77,9 @@ local plugins = {
 				-- Bash scripts
 				"bash-language-server",
 
+				-- Ansible
+				"ansible-language-server",
+
 				-- Solidity (language server)
 				"solidity-ls",
 
