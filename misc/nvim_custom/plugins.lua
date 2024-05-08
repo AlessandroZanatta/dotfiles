@@ -11,8 +11,8 @@ local plugins = {
 	{ "fladson/vim-kitty", lazy = false },
 	{ "lambdalisue/suda.vim", lazy = false },
 	{ "lervag/vimtex", lazy = false },
-	{ "whonore/Coqtail", lazy = false },
-	{ "ruudjelinssen/proverif-pi-vim", lazy = false },
+	-- { "whonore/Coqtail", lazy = false },
+	-- { "ruudjelinssen/proverif-pi-vim", lazy = false },
 
 	{
 		"neovim/nvim-lspconfig",
@@ -31,15 +31,7 @@ local plugins = {
 	{ "RRethy/vim-illuminate", lazy = false },
 	{ "NoahTheDuke/vim-just", lazy = false },
 	{ "hashivim/vim-terraform", lazy = false },
-	{ "udalov/kotlin-vim", lazy = false },
-	-- Formatting, linting and diagnostics
-	-- {
-	-- 	"jose-elias-alvarez/null-ls.nvim",
-	-- 	after = "nvim-lspconfig",
-	-- 	config = function()
-	-- 		require("custom.configs.null-ls")
-	-- 	end,
-	-- },
+	-- { "udalov/kotlin-vim", lazy = false },
 
 	-- Mason LSP installed
 	{
@@ -91,6 +83,34 @@ local plugins = {
 			},
 		},
 	},
+
+	-- {
+	-- 	"zbirenbaum/copilot.lua",
+	-- 	cmd = "Copilot",
+	-- 	event = "InsertEnter",
+	-- 	config = function()
+	-- 		require("copilot").setup({
+	-- 			suggestion = { enabled = false },
+	-- 			panel = { enabled = false },
+	-- 		})
+	-- 	end,
+	-- },
+	-- {
+	-- 	"zbirenbaum/copilot-cmp",
+	-- 	config = function()
+	-- 		require("copilot_cmp").setup()
+	-- 	end,
+	-- 	lazy = false,
+	-- },
+	--
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	opts = function()
+	-- 		plugins = require("plugins.configs.cmp")
+	-- 		table.insert(plugins.sources, { name = "copilot", group_index = 2 })
+	-- 		return plugins
+	-- 	end,
+	-- },
 }
 
 return plugins
