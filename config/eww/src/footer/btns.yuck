@@ -11,18 +11,23 @@
   (box :orientation "h"
        :class 'footerBtns'
  
-    (btn :name "󰒮"
-    :command "playerctl previous"
-      :class "previous"
-    )
+  (btn :name ""
+  :command "xdotool key super+p"
+    :class "restart"
+  )
 
-    (btn :name "${play_stop}"
-    :command "playerctl play-pause"
-    :class "playPause"
-    )
+(btn :name "󰌾"
+  :command "xdotool key super+shift+l"
+  :class "lock"
+ )
 
-    (btn :name "󰒭" 
-      :command "playerctl next"
-      :class "next"
-    )
+ (btn :name "" 
+   :command "sh -c 'nmcli con show --active | grep HomeVPN -q && nmcli con down HomeVPN || nmcli con up HomeVPN'"
+   :class vpn
+  )
+
+ (btn :name "" 
+    :command "xdotool key super+shift+q"
+    :class "sleep"
+  )
 ))

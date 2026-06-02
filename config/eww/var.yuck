@@ -45,8 +45,8 @@
 ; btns
 
 ; wifi iwdgtk btn 
-(defpoll wifi :interval "1s"
-    "scripts/system wifi")
+(defpoll vpn :interval "1s"
+    "scripts/system vpn")
 
 ;fetch 
 (defpoll os :interval '10000s'

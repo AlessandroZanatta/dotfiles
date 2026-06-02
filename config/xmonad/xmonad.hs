@@ -174,7 +174,7 @@ myLayout =
     ratio = 1 / 2
 
     -- Percent of screen to increment by when resizing panes
-    delta = 5 / 100
+    delta = 2 / 100
 
 myLayoutHook =
   avoidStruts $

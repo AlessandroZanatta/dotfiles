@@ -1,116 +1,127 @@
 local plugins = {
 
-	-- {"goolord/alpha-nvim", enabled=true}, -- enables dashboard
-	{
-		"folke/which-key.nvim", -- enable which-key
-		enabled = true,
-	},
-	{ "gauteh/vim-cppman" },
-	-- { "vim-pandoc/vim-pandoc" },
-	{ "vim-pandoc/vim-pandoc-syntax" },
-	{ "fladson/vim-kitty", lazy = false },
-	{ "lambdalisue/suda.vim", lazy = false },
-	{ "lervag/vimtex", lazy = false },
-	-- { "whonore/Coqtail", lazy = false },
-	-- { "ruudjelinssen/proverif-pi-vim", lazy = false },
+  -- {"goolord/alpha-nvim", enabled=true}, -- enables dashboard
+  {
+    "folke/which-key.nvim", -- enable which-key
+    enabled = true,
+  },
+  { "gauteh/vim-cppman" },
+  -- { "vim-pandoc/vim-pandoc" },
+  { "vim-pandoc/vim-pandoc-syntax" },
+  { "fladson/vim-kitty",           lazy = false },
+  { "lambdalisue/suda.vim",        lazy = false },
+  { "lervag/vimtex",               lazy = false },
+  -- { "whonore/Coqtail", lazy = false },
+  -- { "ruudjelinssen/proverif-pi-vim", lazy = false },
 
-	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			"jose-elias-alvarez/null-ls.nvim",
-			config = function()
-				require("custom.configs.null-ls")
-			end,
-		},
-		config = function()
-			require("plugins.configs.lspconfig")
-			require("custom.configs.lspconfig")
-		end,
-	},
+  { "evanleck/vim-svelte",         lazy = false },
 
-	{ "RRethy/vim-illuminate", lazy = false },
-	{ "NoahTheDuke/vim-just", lazy = false },
-	{ "hashivim/vim-terraform", lazy = false },
-	-- { "udalov/kotlin-vim", lazy = false },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "nvimtools/none-ls.nvim",
+      dependencies = {
+        "nvimtools/none-ls-extras.nvim",
+        "gbprod/none-ls-shellcheck.nvim",
+        "gbprod/none-ls-php.nvim",
+      },
+      config = function()
+        require("custom.configs.none-ls")
+      end,
+    },
+    config = function()
+      require("plugins.configs.lspconfig")
+      require("custom.configs.lspconfig")
+    end,
+  },
 
-	-- Mason LSP installed
-	{
-		"williamboman/mason.nvim",
-		opts = {
-			ensure_installed = {
-				-- Lua
-				"lua-language-server",
-				"stylua",
+  { "RRethy/vim-illuminate",  lazy = false },
+  { "NoahTheDuke/vim-just",   lazy = false },
+  { "hashivim/vim-terraform", lazy = false },
+  -- { "udalov/kotlin-vim", lazy = false },
 
-				-- Javascript
-				"typescript-language-server",
+  -- Mason LSP installed
+  {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        -- Lua
+        "lua-language-server",
+        "stylua",
 
-				-- Tex
-				"texlab",
+        -- Javascript
+        "typescript-language-server",
+        "eslint-lsp",
 
-				-- Python
-				"pyright",
+        -- Tex
+        "texlab",
 
-				-- YAML
-				"yaml-language-server",
+        -- Python
+        "pyright",
 
-				-- C/C++
-				"clangd",
+        -- YAML
+        "yaml-language-server",
 
-				-- OCaml
-				"ocaml-lsp",
+        -- C/C++
+        "clangd",
 
-				-- Spell and grammar checking
-				"ltex-ls",
+        -- OCaml
+        "ocaml-lsp",
 
-				-- Rust
-				"rust-analyzer",
+        -- Spell and grammar checking
+        "ltex-ls",
 
-				-- Bash scripts
-				"bash-language-server",
+        -- Rust
+        "rust-analyzer",
 
-				-- Ansible
-				"ansible-language-server",
+        -- Bash scripts
+        "bash-language-server",
 
-				-- Solidity (language server)
-				"solidity-ls",
+        -- Ansible
+        "ansible-language-server",
 
-				-- Solidity (linting)
-				-- "solhint",
+        -- Solidity (language server)
+        "solidity-ls",
 
-				-- Go
-				"gopls",
-			},
-		},
-	},
+        -- Solidity (linting)
+        -- "solhint",
 
-	-- {
-	-- 	"zbirenbaum/copilot.lua",
-	-- 	cmd = "Copilot",
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		require("copilot").setup({
-	-- 			suggestion = { enabled = false },
-	-- 			panel = { enabled = false },
-	-- 		})
-	-- 	end,
-	-- },
-	-- {
-	-- 	"zbirenbaum/copilot-cmp",
-	-- 	config = function()
-	-- 		require("copilot_cmp").setup()
-	-- 	end,
-	-- 	lazy = false,
-	-- },
-	--
-	-- {
-	-- 	"hrsh7th/nvim-cmp",
-	-- 	opts = function()
-	-- 		plugins = require("plugins.configs.cmp")
-	-- 		table.insert(plugins.sources, { name = "copilot", group_index = 2 })
-	-- 		return plugins
-	-- 	end,
-	-- },
+        -- Go
+        "gopls",
+
+        -- Terraform
+        "terraform-ls",
+      },
+    },
+  },
+
+  -- {
+  -- 	"zbirenbaum/copilot.lua",
+  -- 	cmd = "Copilot",
+  -- 	event = "InsertEnter",
+  -- 	config = function()
+  -- 		require("copilot").setup({
+  -- 			suggestion = { enabled = false },
+  -- 			panel = { enabled = false },
+  -- 		})
+  -- 	end,
+  -- },
+  -- {
+  -- 	"zbirenbaum/copilot-cmp",
+  -- 	config = function()
+  -- 		require("copilot_cmp").setup()
+  -- 	end,
+  -- 	lazy = false,
+  -- },
+  --
+  -- {
+  -- 	"hrsh7th/nvim-cmp",
+  -- 	opts = function()
+  -- 		plugins = require("plugins.configs.cmp")
+  -- 		table.insert(plugins.sources, { name = "copilot", group_index = 2 })
+  -- 		return plugins
+  -- 	end,
+  -- },
 }
 
 return plugins

@@ -272,7 +272,7 @@ yt_download() {
 }
 
 dup_screen() {
-  xrandr --output eDP-1 --mode 2560x1600 --output HDMI-1-1 --primary --scale-from 2560x1600 --same-as eDP-1
+  xrandr --output eDP-1 --mode 2560x1600 --output HDMI-1-0 --primary --scale-from 2560x1600 --same-as eDP-1
 }
 
 cs() {
@@ -283,4 +283,10 @@ cs() {
   checksec --file=$1 
 }
 
-export PATH="/home/kalex/.local/share/solana/install/active_release/bin:$PATH"
+function kmerge() {
+  if [ $# -eq 0 ]; then
+     echo "Please pass the location of the kubeconfig you wish to merge"
+  fi
+  KUBECONFIG=~/.kube/config:$1 kubectl config view --flatten > ~/.kube/mergedkub && mv ~/.kube/mergedkub ~/.kube/config
+}
+

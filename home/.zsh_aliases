@@ -51,3 +51,14 @@ alias less='less -r'
 
 # Kitty specific aliases
 alias icat='kitty +kitten icat'
+
+# Kubectl but better
+alias k=kubectl
+alias kns=kubens
+alias kctx=kubectx
+
+# Docker but better
+alias d=docker
+
+# Docker compose but better
+alias dc='docker compose'

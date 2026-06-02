@@ -1,7 +1,7 @@
 .btn {
   font-family: "JetbrainsMono Nerd Font Mono";
   font-size: 2rem;
-  padding: 0 1.4rem;
+  padding: 0 1.3rem;
   box-shadow: none;
   background-color: $grey;
   border-radius: 50%;
@@ -11,37 +11,55 @@
   color: $red;
 }
 
-.playPause {
+.sleep {
+  color: $red;
+}
+
+.restart {
+  color: $green;
+}
+
+.lock {
+  color: $blue;
+  padding: 0 1.4rem;
+}
+
+.lock:hover,
+.restart:hover,
+.vpn-active:hover,
+.vpn-not-active:hover,
+.sleep:hover {
+  background-color: $green;
+  color: $black;
+}
+
+.vpn-active {
   background-color: $blue;
   color: $black;
+  padding: 0 1.1rem;
+  font-size: 2.7rem;
 }
 
-.next,
-.previous {
-  color: $white;
-}
-
-.playPause:hover {
-  background-color: $white;
-}
-
-.next:hover,
-.previous:hover {
-  background-color: $white;
+.vpn-not-active {
+  background-color: $red;
   color: $black;
+  padding: 0 1.1rem;
+  font-size: 2.7rem;
 }
 
-.next,
-.previous,
-.playPause,
-.close {
+.lock,
+.restart,
+.close,
+.wifi,
+.vpn-active,
+.vpn-not-active {
   transition: ease-out 0.2s;
 }
 
 .btnMargin {
   background-color: $grey;
   border-radius: 50%;
-  margin: 0.5rem;
+  margin: 0.6rem;
 }
 
 .footerBtns {

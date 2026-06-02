@@ -6,7 +6,11 @@ pkgUpdates() {
 	if [ "$updates" = "" ]; then
 		echo "Up to date!"
 	else
-		echo "󱍸  $updates updates"
+		if [ "$updates" = "1" ]; then
+			echo "󱍸  $updates pkg"
+		else
+			echo "󱍸  $updates pkgs"
+		fi
 	fi
 }
 
@@ -37,6 +41,10 @@ wifi() {
 	up) printf "󰤨" ;;
 	down) printf "󰤭" ;;
 	esac
+}
+
+vpn() {
+	nmcli con show --active | grep -q HomeVPN && printf "vpn-active" || printf "vpn-not-active"
 }
 
 "$@"

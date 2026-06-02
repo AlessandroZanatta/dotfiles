@@ -1,9 +1,22 @@
 local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
 
-local lspconfig = require("lspconfig")
+local lspconfig = vim.lsp.config
 
-local servers = { "clangd", "ocamllsp", "rust_analyzer", "texlab", "tsserver", "yamlls", "pyright", "bashls", "gopls" }
+local servers = {
+  "clangd",
+  "ocamllsp",
+  "rust_analyzer",
+  "texlab",
+  "ts_ls",
+  "yamlls",
+  "pyright",
+  "bashls",
+  "gopls",
+  "terraformls",
+  "eslint",
+  "biome",
+}
 
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup({
@@ -21,7 +34,7 @@ lspconfig.ltex.setup({
 })
 
 -- Solidity language server
-local configs = require("lspconfig.configs")
+local configs = lspconfig.config
 configs.nmsolidity = {
   default_config = {
     cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
@@ -72,3 +85,5 @@ local function custom_on_publish_diagnostics(a, params, client_id, c, config)
 end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(custom_on_publish_diagnostics, {})
+
+vim.lsp.enable("biome")

@@ -4,9 +4,9 @@ local b = null_ls.builtins
 local sources = {
 
 	-- HTML, JS, TS, CSS, HTML, JSON, Markdown, and Solitidy
-	b.formatting.prettier.with({
-		extra_filetypes = { "solidity" },
-	}),
+	-- b.formatting.prettier.with({
+	--   extra_filetypes = { "solidity" },
+	-- }),
 
 	-- Markdown (prettier already provides this)
 	-- b.diagnostics.mdl,
@@ -25,35 +25,43 @@ local sources = {
 	b.formatting.cmake_format,
 
 	-- PHP
-	b.diagnostics.php,
+	require("none-ls-php.diagnostics.php"),
 
 	-- LaTeX
-	b.formatting.latexindent.with({
+	require("none-ls.formatting.latexindent").with({
 		extra_args = { "-m", "-l", "/home/kalex/dotfiles/misc/latexindent/textwrap.yaml" },
 	}),
 
 	-- OCaml
-	b.formatting.ocamlformat,
+	-- b.formatting.ocamlformat,
 
 	-- Rust
-	b.formatting.rustfmt,
+	require("none-ls.formatting.rustfmt"),
 
 	-- Verilog
-	b.formatting.verible_verilog_format,
+	-- b.formatting.verible_verilog_format,
 
 	-- Shell
 	b.formatting.shfmt,
-	b.diagnostics.shellcheck.with({ diagnostics_format = "#{m} [#{c}]" }),
+	require("none-ls-shellcheck.diagnostics").with({ diagnostics_format = "#{m} [#{c}]" }),
 	b.formatting.shellharden,
 
 	-- Solidity
 	-- b.diagnostics.solhint,
+
+	-- yaml
+	b.diagnostics.yamllint,
 
 	-- Ansible
 	b.diagnostics.ansiblelint,
 
 	-- Golang
 	b.formatting.gofmt,
+
+	-- Terraform
+	b.formatting.terraform_fmt,
+	-- b.diagnostics.tfsec,
+	b.diagnostics.terraform_validate,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
