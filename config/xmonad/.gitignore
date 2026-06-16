@@ -1,6 +1,0 @@
-*.o
-*.errors
-*.state
-*.hi
-.stack-work
-xmonad-x86_64-linux

@@ -1,0 +1,29 @@
+{
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "󰋋",
+      "headset": "󰋋",
+      "hands-free": "󰋋",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "pavucontrol",
+    "tooltip-format": "Output: {volume}%"
+  },
+  "pulseaudio#microphone": {
+    "format": "{format_source}",
+    "format-source": "",
+    "format-source-muted": "",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+  },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100,
+    "orientation": "horizontal"
+  }
+}

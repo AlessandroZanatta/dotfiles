@@ -1,0 +1,21 @@
+{
+  "custom/distro": {
+    "format": "",
+    "tooltip": false
+  },
+  "custom/terminal": {
+    "format": "󰆍",
+    "on-click": "kitty",
+    "tooltip": false
+  },
+  "custom/files": {
+    "format": "",
+    "on-click": "nemo",
+    "tooltip": false
+  },
+  "custom/browser": {
+    "format": "",
+    "on-click": "firefox",
+    "tooltip": false
+  }
+}

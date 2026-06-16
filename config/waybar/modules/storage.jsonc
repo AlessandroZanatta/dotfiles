@@ -1,0 +1,26 @@
+{
+  "custom/disk": {
+    "format": "󱙋",
+    "tooltip": false
+  },
+  "disk#root": {
+    "tooltip": false,
+    "interval": 3600,
+    "path": "/",
+    "format": " <span size='11pt'>{percentage_used}%</span>",
+    "states": {
+      "warning": 80,
+      "critical": 90
+    }
+  },
+  "disk#home": {
+    "tooltip": false,
+    "interval": 3600,
+    "path": "/home",
+    "format": " <span size='11pt'>{percentage_used}%</span>",
+    "states": {
+      "warning": 80,
+      "critical": 90
+    }
+  }
+}

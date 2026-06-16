@@ -1,0 +1,65 @@
+{
+  "group/distro-group": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 650,
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "custom/distro",
+      "custom/terminal",
+      "custom/files",
+      "custom/browser"
+    ]
+  },
+  "group/storage": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 650,
+      "transition-left-to-right": true 
+    },
+    "modules": [
+      "custom/disk",
+      "disk#root",
+      "disk#home"
+    ]
+  },
+  "group/system": {
+    "orientation": "horizontal",
+    "modules": [
+      "cpu",
+      "memory",
+      "temperature"
+    ]
+  },
+  "group/audio": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 650,
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "pulseaudio",
+      "pulseaudio/slider",
+      "pulseaudio#microphone"
+    ]
+  },
+  "group/connections": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": false
+    },
+    "modules": [
+      "network",
+      "bluetooth"
+    ]
+  },
+  "group/tray-group": {
+    "orientation": "horizontal",
+    "modules": [
+      "tray",
+      "custom/tray-arrow"
+    ]
+  }
+}

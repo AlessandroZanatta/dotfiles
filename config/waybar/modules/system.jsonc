@@ -1,0 +1,33 @@
+{
+  "cpu": {
+    "tooltip": false,
+    "interval": 10,
+    "format": " <span size='11pt'>{usage}%</span>",
+    "states": {
+      "warning": 75,
+      "critical": 90
+    }
+  },
+  "temperature": {
+    "hwmon-path": "/sys/class/hwmon/hwmon4/temp1_input",
+    "tooltip": false,
+    "interval": 10,
+    "critical-threshold": 95,
+    "format": "{icon} <span size='11pt'>{temperatureC}°C</span>",
+    "format-critical": "<span size='12pt'>󱗗 </span><span size='11pt'>{temperatureC}°C</span>",
+    "format-icons": [
+      "",
+      "",
+      ""
+    ]
+  },
+  "memory": {
+    "tooltip": false,
+    "interval": 15,
+    "format": " <span size='11pt'>{used} GB</span>",
+    "states": {
+      "warning": 75,
+      "critical": 85
+    }
+  }
+}

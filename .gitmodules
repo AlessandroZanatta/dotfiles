@@ -1,12 +1,3 @@
 [submodule "config/kitty/kitty-themes"]
 	path = config/kitty/kitty-themes
 	url = https://github.com/dexpota/kitty-themes
-[submodule "config/xmonad/xmonad"]
-	path = config/xmonad/xmonad
-	url = https://github.com/xmonad/xmonad
-[submodule "config/xmonad/xmonad-contrib"]
-	path = config/xmonad/xmonad-contrib
-	url = https://github.com/xmonad/xmonad-contrib
-[submodule "config/xmonad/xmonad-dbus"]
-	path = config/xmonad/xmonad-dbus
-	url = https://github.com/troydm/xmonad-dbus
