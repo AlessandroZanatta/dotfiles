@@ -66,6 +66,17 @@ local function center_float(match, opts)
 	float(match, rule)
 end
 
+---@param opts? HLWindowRuleOpts
+local function center_float_no_children(match, opts)
+	center_float(match, opts)
+
+	-- Prevent context menus (e.g. speedcrunch ones) from being centered too
+	-- TL;DR; already floating (inherited from parent) stuff should not be centered
+	local floatingMatch = match
+	floatingMatch.float = true
+	hl.window_rule({ match = floatingMatch, center = false })
+end
+
 -- Workspace rules
 shift({ class = "firefox" }, 1)
 shift({ class = "org.telegram.desktop" }, 4)
@@ -75,9 +86,8 @@ shift({ class = "org.mozilla.Thunderbird" }, 9, { no_initial_focus = true })
 -- Float
 
 -- Centered floats
-center_float({ class = "SpeedCrunch" })
+center_float_no_children({ class = "SpeedCrunch" })
 center_float({ class = "nemo" })
-center_float({ class = "flameshot" })
 center_float({ class = "blueman-manager" })
 center_float({ class = "com.gabm.satty" })
 
