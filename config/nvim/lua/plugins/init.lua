@@ -42,16 +42,30 @@ return {
     opts = {},
   },
 
+  -- Mermaid
+  "kevalin/mermaid.nvim",
+  dependencies = { "nvim-treesitter/nvim-treesitter" },
+  config = function()
+    require("mermaid").setup()
+
+    -- Install the Tree-sitter parser:
+    -- :TSInstall mermaid
+  end,
+
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },
 
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "vim",
+        "lua",
+        "vimdoc",
+        "html",
+        "css",
+        "mermaid",
+      },
+    },
+  },
 }
