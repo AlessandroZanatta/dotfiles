@@ -8,7 +8,6 @@ local M = {}
 M.programs = {}
 M.programs.terminal = "kitty"
 M.programs.fileManager = "nemo"
-M.programs.menu = "hyprlauncher"
 
 -- Binds variables
 M.binds = {}

@@ -86,10 +86,15 @@ shift({ class = "org.mozilla.Thunderbird" }, 9, { no_initial_focus = true })
 -- Float
 
 -- Centered floats
-center_float_no_children({ class = "SpeedCrunch" })
+center_float_no_children({ class = "org.speedcrunch.speedcrunch" })
 center_float({ class = "nemo" })
 center_float({ class = "blueman-manager" })
 center_float({ class = "com.gabm.satty" })
+
+-- Show calendar events as floating popups
+center_float({ class = "org.mozilla.Thunderbird", initial_title = "" })
+-- Show calendar reminders are floating popups on current workspace
+center_float({ class = "org.mozilla.Thunderbird", initial_title = "Calendar Reminders" }, { workspace = "e" }) -- e --> current workspace
 
 --- This type is currently missing, add it here to get autocompletion for now
 ---@meta

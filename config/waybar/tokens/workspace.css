@@ -1,5 +1,9 @@
 @import "colors.css";
 
+/* TODO: fix css a bit
+ *   - rounded border is too close for non-active workspaces 
+ *   - hovering on an icon does NOT trigger hover color on workspace, investigate
+ */
 #workspaces {
   margin: 4px 5px;
   padding: 6px 6px;
@@ -8,6 +12,16 @@
 }
 
 #workspaces button {
+  min-width: 32px;
+  padding: 0 4px;
+  margin: 0 6px;
+  background: transparent;
+  border-radius: 16px;
+  color: @tertiary;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+}
+
+#workspaces button.empty {
   min-width: 32px;
   padding: 0 4px;
   margin: 0 2px;
@@ -28,12 +42,14 @@
   color: @tertiary_fixed;
 }
 
-#workspaces button:hover {
+#workspaces button:hover, 
+#workspace .taskbar-window:hover {
   background-color: @surface_container_highest;
   color: @primary;
 }
 
-#workspaces button.active:hover {
+#workspaces button.active:hover,
+#workspace .taskbar-window.active:hover {
   background-color: @primary;
   color: @on_primary;
 }
@@ -46,10 +62,6 @@
   color: @error_container;
 }
 
-#workspaces button label:first-child {
-  margin-right: 8px;
-}
-
-#workspaces button label:last-child {
-  margin-left: 2px;
-}
+/* #workspaces button label:last-child { */
+/*   margin-left: 2px; */
+/* } */

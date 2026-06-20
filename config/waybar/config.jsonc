@@ -9,6 +9,7 @@
   "include": [
     "./modules/groups.jsonc",
     "./modules/distro.jsonc",
+    "./modules/updates.jsonc",
     "./modules/storage.jsonc",
     "./modules/system.jsonc",
     "./modules/workspace.jsonc",
@@ -21,6 +22,7 @@
   ],
   "modules-left": [
     "group/distro-group",
+    "group/updates-group",
     "group/storage",
     "group/system"
   ],

@@ -1,11 +1,16 @@
 @import "colors.css";
 
 /*======= MODULE INDEPENDENT =======*/
-#distro-group {
+#distro-group, #updates-group {
   margin: 4px 5px;
   background-color: @surface_container;
   border-radius: 20px;
   color: @primary;
+}
+
+#custom-updates {
+  color: @primary;
+  padding: 6px 10px 6px 10px;
 }
 
 #custom-distro {

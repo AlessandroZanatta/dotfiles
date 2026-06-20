@@ -12,6 +12,16 @@
       "custom/browser"
     ]
   },
+  "group/updates-group": {
+    "orientation": "horizontal",
+    "drawer": {
+      "transition-duration": 650,
+      "transition-left-to-right": true
+    },
+    "modules": [
+      "custom/updates"
+    ]
+  },
   "group/storage": {
     "orientation": "horizontal",
     "drawer": {
