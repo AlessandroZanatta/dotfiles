@@ -37,5 +37,6 @@ hl.on("hyprland.start", function()
 	else
 		hl.exec_cmd(vars.programs.terminal .. " sh -c 'ssh-agent && bw-ssh-add'") -- unlock of ssh keys with password saved on bitwarden
 		hl.exec_cmd("/usr/local/bin/tuxedo-touchpad-switch --set") -- set touchpad state to saved one (Tuxedo touchpad requires special care)
+		hl.exec_cmd("protonvpn-app")
 	end
 end)
