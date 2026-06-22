@@ -27,7 +27,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprctl setcursor " .. vars.cursor.cursorTheme .. vars.cursor.cursorSize)
 	hl.exec_cmd("wl-paste --type text --watch cliphist store")
 	hl.exec_cmd("wl-paste --type image --watch cliphist store")
-	hl.exec_cmd("hyprlauncher -d")
 
 	-- Work stuff
 	if utils.is_work_laptop() then
