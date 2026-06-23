@@ -12,6 +12,7 @@ hl.bind(mainMod .. "+ SHIFT + C", hl.dsp.window.close())
 
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("hyrpctl reload"))
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.exec_cmd("wlogout"))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("~/.config/hypr/scripts/lock.sh"))
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("pkill rofi || rofi -config config.rasi -show"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))

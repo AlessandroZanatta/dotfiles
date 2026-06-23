@@ -55,8 +55,17 @@ return {
     end,
   },
 
-  -- test new blink
-  -- { import = "nvchad.blink.lazyspec" },
+  { "towolf/vim-helm", ft = "helm", lazy = false },
+  {
+    "qvalentin/helm-ls.nvim",
+    ft = "helm",
+    lazy = false,
+    opts = {
+      ensure_installed = {
+        -- "helm",
+      },
+    },
+  },
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -68,6 +77,10 @@ return {
         "html",
         "css",
         "mermaid",
+        "yaml",
+        "go",
+        "gotmpl",
+        -- "helm",
       },
     },
   },

@@ -20,6 +20,8 @@ local servers = {
   "texlab",
   -- YAML
   "yamlls",
+  -- Helm
+  "helm-ls",
   -- C/C++
   "clangd",
   -- Bash

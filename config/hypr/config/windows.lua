@@ -62,6 +62,7 @@ local function center_float(match, opts)
 	local rule = opts or {}
 
 	rule.center = true
+	rule.no_follow_mouse = true
 
 	float(match, rule)
 end
