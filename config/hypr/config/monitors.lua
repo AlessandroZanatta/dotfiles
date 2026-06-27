@@ -24,20 +24,18 @@ local function updateMonitors()
 			scale = 1.33,
 		})
 	else
-		if has_external then
-			hl.monitor({
-				output = "HDMI-A-1",
-				mode = "2560x1440@144",
-				position = "auto-center-right",
-				scale = 1,
-			})
-		end
+		hl.monitor({
+			output = "HDMI-A-1",
+			mode = "2560x1440@144",
+			position = "auto-center-right",
+			scale = 1,
+		})
 
 		hl.monitor({
 			output = "eDP-1",
 			mode = "2560x1600@240",
 			position = "0x0",
-			scale = 1.6,
+			scale = has_external and 1.6 or 1.33,
 		})
 	end
 end

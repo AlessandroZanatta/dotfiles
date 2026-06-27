@@ -19,9 +19,7 @@ hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("swaync-client -t"))
 hl.bind(
 	mainMod .. " + SHIFT + S",
-	hl.dsp.exec_cmd(
-		'grim -g "$(slurp)" - | satty -f - --copy-command wl-copy -o ~/Pictures/Screenshots/%Y%m%d_%H%M%S.png'
-	)
+	hl.dsp.exec_cmd('grim -g "$(slurp)" - | satty -f -  -o ~/Pictures/Screenshots/%Y%m%d_%H%M%S.png')
 )
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/window-info.sh"))
 hl.bind(
