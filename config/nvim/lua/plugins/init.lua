@@ -60,11 +60,6 @@ return {
     "qvalentin/helm-ls.nvim",
     ft = "helm",
     lazy = false,
-    opts = {
-      ensure_installed = {
-        -- "helm",
-      },
-    },
   },
 
   {
