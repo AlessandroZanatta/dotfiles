@@ -81,7 +81,7 @@ end
 -- Workspace rules
 shift({ class = "firefox" }, 1)
 shift({ class = "org.telegram.desktop" }, 4)
-shift({ class = "Rocket.Chat" }, 5, { no_initial_focus = true })
+shift({ class = "rocket-chat" }, 5, { no_initial_focus = true })
 shift({ class = "org.mozilla.Thunderbird" }, 9, { no_initial_focus = true })
 
 -- Float
