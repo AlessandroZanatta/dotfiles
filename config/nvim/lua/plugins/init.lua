@@ -63,6 +63,11 @@ return {
   },
 
   {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
