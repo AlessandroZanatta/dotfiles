@@ -5,6 +5,8 @@
       "warning": 30,
       "critical": 15
     },
+    "bat": "BAT0",
+    "adapter": "ADP1",
     "format": "{icon} <span size='11pt'>{capacity}%</span>",
     "format-full": "{icon} <span size='11pt'>{capacity}%</span>",
     "format-charging": "<span size='12pt'>󱐌</span> <span size='11pt'>{capacity}%</span>",

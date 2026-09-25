@@ -20,6 +20,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("flameshot") -- screenshots
 	hl.exec_cmd("cliphist") -- clipboard manager
 	hl.exec_cmd("systemctl --user start hyprpolkitagent") -- polkit
+	hl.exec_cmd("solaar -w hide") -- solaar to get battery level of wireless stuff (not mouse :/)
 	hl.exec_cmd("swaync")
 	hl.exec_cmd("hyprsunset")
 	hl.exec_cmd("/usr/lib/xdg-desktop-portal-hyprland")

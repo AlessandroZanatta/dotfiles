@@ -12,6 +12,7 @@ local options = {
     go = { "gofmt" },
     rust = { "rustfmt" },
     json = { "biome-check" },
+    json5 = { "prettier" },
     yaml = { "prettier" },
     ansible = { "ansible-lint" },
     c = { "clang-format" },
