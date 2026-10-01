@@ -68,6 +68,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
     opts = {
       ensure_installed = {
         "vim",
@@ -79,6 +80,8 @@ return {
         "yaml",
         "go",
         "gotmpl",
+        "markdown",
+        "markdown_inline",
         -- "helm",
       },
     },
