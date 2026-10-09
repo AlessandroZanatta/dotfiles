@@ -87,7 +87,7 @@ shift({ class = "org.mozilla.Thunderbird" }, 9, { no_initial_focus = true })
 -- Float
 
 -- Centered floats
-center_float_no_children({ class = "org.speedcrunch.speedcrunch" })
+center_float_no_children({ class = "org.speedcrunch.SpeedCrunch" }, { size = "1000 550" })
 center_float({ class = "nemo" })
 center_float({ class = "blueman-manager" })
 center_float({ class = "com.gabm.satty" })
