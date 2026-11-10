@@ -1,9 +1,9 @@
 @import "colors.css";
 
 /* TODO: fix css a bit
- *   - rounded border is too close for non-active workspaces 
- *   - hovering on an icon does NOT trigger hover color on workspace, investigate
+ *   - rounded border is too close for non-active workspaces
  */
+
 #workspaces {
   margin: 4px 5px;
   padding: 6px 6px;
@@ -11,57 +11,59 @@
   border-radius: 20px;
 }
 
-#workspaces button {
+#workspaces > button {
   min-width: 32px;
   padding: 0 4px;
   margin: 0 6px;
   background: transparent;
   border-radius: 16px;
   color: @tertiary;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-#workspaces button.empty {
-  min-width: 32px;
-  padding: 0 4px;
+#workspaces > button.empty {
   margin: 0 2px;
-  background: transparent;
-  border-radius: 16px;
-  color: @tertiary;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  color: @outline_variant;
 }
 
-#workspaces button.active {
+#workspaces > button.active {
   padding: 0 12px;
   margin: 0 2px;
   background-color: @primary;
   color: @on_primary;
 }
 
-#workspaces button.special {
+#workspaces > button.special {
   color: @tertiary_fixed;
 }
 
-#workspaces button:hover, 
-#workspace .taskbar-window:hover {
+#workspaces > button.urgent {
+  color: @error_container;
+}
+
+#workspaces > button:hover {
   background-color: @surface_container_highest;
   color: @primary;
 }
 
-#workspaces button.active:hover,
-#workspace .taskbar-window.active:hover {
+#workspaces > button.active:hover {
   background-color: @primary;
   color: @on_primary;
 }
 
-#workspaces button.empty {
-  color: @outline_variant;
+/* taskbar window icons inside a workspace */
+#workspaces > button button {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0 2px;
+  background: none;
+  box-shadow: none;
+  border: none;
 }
 
-#workspaces button.urgent {
-  color: @error_container;
-}
-
-/* #workspaces button label:last-child { */
-/*   margin-left: 2px; */
+/* optional: per-icon hover feedback, uncomment if wanted */
+/* #workspaces > button button:hover { */
+/*   background-color: alpha(@on_primary, 0.15); */
+/*   border-radius: 8px; */
 /* } */
