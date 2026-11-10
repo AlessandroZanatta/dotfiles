@@ -62,3 +62,6 @@ alias d=docker
 
 # Docker compose but better
 alias dc='docker compose'
+
+# Terragrunt
+alias tg=terragrunt
